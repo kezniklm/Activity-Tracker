@@ -2,7 +2,7 @@
 
 namespace Project.DAL.Factories;
 
-internal class DbContextSqLiteFactory : IDbContextFactory<ProjectDbContext>
+public class DbContextSqLiteFactory : IDbContextFactory<ProjectDbContext>
 {
     private readonly DbContextOptionsBuilder<ProjectDbContext> _contextOptionsBuilder = new();
 
