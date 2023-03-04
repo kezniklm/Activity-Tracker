@@ -8,6 +8,8 @@
         public required DateTime Start { get; set; }
         public required DateTime End { get; set; }
         public required UserEntity User { get; set; }
+        public Guid UserId { get; set; }
         public ProjectEntity? Project { get; set; }
+        public Guid? ProjectId { get; set; }
     }
 }

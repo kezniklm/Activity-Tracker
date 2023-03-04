@@ -113,7 +113,8 @@ namespace Project.DAL.Migrations
                 {
                     b.HasOne("Project.DAL.Entities.ProjectEntity", "Project")
                         .WithMany("Activities")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Project.DAL.Entities.UserEntity", "User")
                         .WithMany("Activities")

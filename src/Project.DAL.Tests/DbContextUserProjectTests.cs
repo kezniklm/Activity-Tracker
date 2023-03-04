@@ -7,7 +7,7 @@ public class DbContextUserProjectTests : DbContextTestsBase
     }
 
     [Fact]
-    public void Test1()
+    public void Create_UserProject()
     {
 
     }
