@@ -30,6 +30,9 @@ public class ProjectDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<UserProjectEntity>()
+            .HasKey(i => new { i.UserId, i.ProjectId });
+
+            modelBuilder.Entity<UserProjectEntity>()
             .HasOne<UserEntity>(i => i.User)
             .WithMany(i => i.Projects)
             .HasForeignKey(i => i.UserId);
