@@ -1,20 +1,40 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# ICS Projekt
+## Tím: **ics-2023-xjanos19**
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+### Členovia:
+- Simona Jánošíková
+- Ela Fedorová
+- Klára Smoleňová
+- Marián Tarageľ
+- Matej Keznikl
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+# Fázy projektu
+## Prvá fáza
+-   logický návrh tříd
+-   využití abstrakce, zapouzdření, polymorfismu - kde to bude dávat smysl a eliminuje duplicity
+-   verzování v GITu po logických částech
+-   logické rozšíření datového návrhu nad rámec zadání (bonusové body) - toto rozšíření ovšem zvažte; často se stává, že si tím založíte na spoustu komplikací v pozdějších fázích; body za rozšíření dostanete až u obhajoby, pokud je naimplementujete kompletně do výsledné aplikace
+-   generovaný ER diagram (logickou strukturu)
+-   Wireframy (logickou strukturu, uživatelskou přívětivost, ne kvalitu grafického zpracování)
+-   využití **Entity Framework Core - Code First** přístupu na vytvoření databáze z entitních tříd
+-   existenci databázových migrací (alespoň InitialMigration)
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+## Druhá fáza
+- opravení chyb a zapracování připomínek, které jsme vám dali v rámci hodnocení fáze 1
+- návrh a funkčnost repositářů
+- návrh a funkčnost fasád
+- čistotu kódu
+- pokrytí aplikace testy - ukážete tím, že repositáře opravdu fungují
+- dejte pozor na zapouzdření databázových entit pod vrstvou fasád, která je nepropaguje výše, ale přemapovává na modely/DTO
+- funkční build v Azure DevOps
+- výsledek testů v Azure DevOps po buildu
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## Tretia fáza
+- opravení chyb a zapracování připomínek, které jsme vám dali v rámci hodnocení fází 1 a 2
+- funkčnost celé výsledné aplikace
+- vytvoření View, ViewModelů
+- zobrazení jednotlivých informací dle zadání – seznam, detail…
+- správné využití data-bindingu v XAML
+- čistotu kódu
+- validaci vstupů
+
