@@ -73,12 +73,6 @@ public class DbContextActivityTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task Change_ActivityData()
-    {
-
-    }
-
-    [Fact]
     public async Task Delete_Activity()
     {
         //Arrange
