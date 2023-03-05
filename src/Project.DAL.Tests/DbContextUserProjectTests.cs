@@ -10,12 +10,23 @@ public class DbContextUserProjectTests : DbContextTestsBase
     public async Task Create_UserProject()
     {
         // Setup
-        var userEntity = new UserEntity() { Name = "John", Surname = "Doe" };
-        var projectEntity = new ProjectEntity() { Name = "Sport" };
-        userEntity.Projects.Add(new UserProjectEntity() { User = userEntity, Project = projectEntity, });
+        var userEntity = new UserEntity() { Name = "John", Surname = "Doe", Id = Guid.NewGuid()};
+        var projectEntity = new ProjectEntity() { Name = "Sport", Id = Guid.NewGuid()};
+        UserProjectEntity userProjectEntity = new UserProjectEntity()
+        {
+            Id = Guid.NewGuid(),
+            UserId = userEntity.Id,
+            User = userEntity,
+            ProjectId = projectEntity.Id,
+            Project = projectEntity
+        };
+        userEntity.Projects.Add(userProjectEntity);
+        projectEntity.Users.Add(userProjectEntity);
 
         // Exercise
         ProjectDbContextSUT.Users.Add(userEntity);
+        ProjectDbContextSUT.Projects.Add(projectEntity);
+        ProjectDbContextSUT.UsersProjects.Add(userProjectEntity);
         await ProjectDbContextSUT.SaveChangesAsync();
 
         // Verify
