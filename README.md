@@ -1,14 +1,17 @@
-# ICS Projekt
-## Tím: **ics-2023-xjanos19**
+# **ICS Projekt**
+## Cieľ:
+- ### Vytvorenie aplikácie umožňujúcej jej užívateľom správu aktivít a meranie času stráveného danou aktivitou
+  
+# Tím: ics-2023-xjanos19
 
-### Členovia:
+## Členovia:
 - Simona Jánošíková
 - Ela Fedorová
 - Klára Smoleňová
 - Marián Tarageľ
 - Matej Keznikl
 
-# Fázy projektu
+# Fázy projektu zo zadania
 ## Prvá fáza
 -   logický návrh tříd
 -   využití abstrakce, zapouzdření, polymorfismu - kde to bude dávat smysl a eliminuje duplicity
