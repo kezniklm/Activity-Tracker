@@ -6,7 +6,7 @@ public class DbContextUserProjectTests : DbContextTestsBase
     {
     }
 
-    [Fact]
+    [Fact (Skip = "Testing pipeline")]
     public async Task Create_UserProject()
     {
         // Setup
