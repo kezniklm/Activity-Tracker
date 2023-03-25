@@ -9,6 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Project.BL.Facades.Interfaces;
-internal class Class1
+internal class IUserProjectFacade
 {
 }
