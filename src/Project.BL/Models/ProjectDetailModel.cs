@@ -3,12 +3,19 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Project.BL.Models;
-internal class ProjectDetailModel
+
+public record ProjectDetailModel : ModelBase
 {
+    public required string Name { get; set; }
+    public ObservableCollection<ActivityListModel> Activities { get; set; } = new();
+    public ObservableCollection<UserProjectListModel> Users { get; set; } = new();
+
+    public static ProjectDetailModel Empty = new()
+    {
+        Id = Guid.Empty,
+        Name = string.Empty,
+    };
 }

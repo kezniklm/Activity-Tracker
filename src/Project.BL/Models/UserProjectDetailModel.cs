@@ -3,12 +3,19 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Project.BL.Models;
-internal class UserProjectDetailModel
+
+public record UserProjectDetailModel : ModelBase
 {
+    public Guid ProjectId { get; set; }
+    public Guid UserId { get; set; }
+
+    public static UserProjectDetailModel Empty => new()
+    {
+        Id= Guid.Empty,
+        ProjectId= Guid.Empty,
+        UserId= Guid.Empty,
+    };
 }

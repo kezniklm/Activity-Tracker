@@ -9,6 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Project.BL.Models;
-internal class UserListModel
+public record UserListModel
 {
 }
