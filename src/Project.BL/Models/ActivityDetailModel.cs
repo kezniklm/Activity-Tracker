@@ -10,4 +10,5 @@ using System.Threading.Tasks;
 
 namespace Project.BL.Models;
 internal class ActivityDetailModel
+{ 
 }
