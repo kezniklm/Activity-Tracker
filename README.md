@@ -12,7 +12,7 @@
 - Matej Keznikl
 
 # Fázy projektu zo zadania
-## Prvá fáza
+## Prvá fáza :white_check_mark:
 -   logický návrh tříd
 -   využití abstrakce, zapouzdření, polymorfismu - kde to bude dávat smysl a eliminuje duplicity
 -   verzování v GITu po logických částech

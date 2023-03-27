@@ -1,14 +1,7 @@
-﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-//
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Project.BL.Models;
+using Project.DAL.Entities;
 
 namespace Project.BL.Facades.Interfaces;
-internal class IUserProjectFacade
+public interface IUserProjectFacade : IFacadeBase<UserProjectEntity, UserProjectListModel, UserProjectDetailModel>
 {
 }

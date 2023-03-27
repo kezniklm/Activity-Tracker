@@ -1,14 +1,7 @@
-﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-//
+﻿using Project.BL.Models;
+using Project.DAL.Entities;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Project.BL.Facades.Interfaces;
-internal class IActivityFacade
+namespace Project.BL.Facades;
+public interface IActivityFacade : IFacadeBase<ActivityEntity, ActivityListModel, ActivityDetailModel>
 {
 }
