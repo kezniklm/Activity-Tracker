@@ -1,9 +1,9 @@
 ﻿namespace Project.BL.Models;
-public record ProjectListModel
+public record ProjectListModel : ModelBase
 {
     public required string Name { get; set; }
 
-    public static ProjectDetailModel Empty = new()
+    public static ProjectListModel Empty = new()
     {
         Id = Guid.Empty,
         Name = string.Empty,
