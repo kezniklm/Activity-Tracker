@@ -1,4 +1,7 @@
-﻿namespace Project.BL.Facades.Interfaces;
-internal class IProjectFacade
+﻿using Project.BL.Models;
+using Project.DAL.Entities;
+
+namespace Project.BL.Facades;
+public interface IProjectFacade : IFacadeBase<ProjectEntity, ProjectListModel, ProjectDetailModel>
 {
 }

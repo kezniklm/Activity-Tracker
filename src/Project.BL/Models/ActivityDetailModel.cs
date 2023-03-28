@@ -1,4 +1,6 @@
-﻿namespace Project.BL.Models;
+﻿using Project.DAL.Entities;
+
+namespace Project.BL.Models;
 
 public record ActivityDetailModel : ModelBase
 {
@@ -6,6 +8,7 @@ public record ActivityDetailModel : ModelBase
     public string? Description { get; set; }
     public required DateTime Start { get; set; }
     public required DateTime End { get; set; }
+    public required UserEntity User { get; set; }
 
     public static ActivityDetailModel Empty => new()
     {
@@ -14,5 +17,6 @@ public record ActivityDetailModel : ModelBase
         Description = string.Empty,
         Start= DateTime.MinValue,
         End= DateTime.MinValue,
+        User = new UserEntity(){Name = string.Empty, Surname = string.Empty}
     };
 }
