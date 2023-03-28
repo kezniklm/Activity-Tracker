@@ -1,8 +1,4 @@
-﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-//
-
-using Project.DAL.Entities;
+﻿using Project.DAL.Entities;
 using Project.DAL.Mappers;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,23 +8,36 @@ public class Repository<TEntity> : IRepository<TEntity>
     where TEntity : class, IEntity
 {
     private readonly DbSet<TEntity> _dbSet;
+    private readonly DbContext _dbContext;
     private readonly IEntityMapper<TEntity> _entityMapper;
 
     public Repository(
         DbContext dbContext,
         IEntityMapper<TEntity> entityMapper)
     {
+        _dbContext = dbContext;
         _dbSet = dbContext.Set<TEntity>();
         _entityMapper = entityMapper;
     }
 
     public IQueryable<TEntity> Get() => _dbSet;
 
+    public TEntity GetOne(Guid entityId)
+    {
+        IQueryable<TEntity> query = _dbSet;
+        TEntity entity = query.Single(i => i.Id == entityId);
+        return entity;
+    }
+
     public async ValueTask<bool> ExistsAsync(TEntity entity)
         => entity.Id != Guid.Empty && await _dbSet.AnyAsync(e => e.Id == entity.Id);
 
     public async Task<TEntity> InsertAsync(TEntity entity)
-        => (await _dbSet.AddAsync(entity)).Entity;
+    {
+        await _dbSet.AddAsync(entity);
+        await _dbContext.SaveChangesAsync();
+        return entity;
+    }
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
@@ -37,5 +46,9 @@ public class Repository<TEntity> : IRepository<TEntity>
         return existingEntity;
     }
 
-    public void Delete(Guid entityId) => _dbSet.Remove(_dbSet.Single(i => i.Id == entityId));
+    public void Delete(Guid entityId)
+    {
+        _dbSet.Remove(_dbSet.Single(i => i.Id == entityId));
+        _dbContext.SaveChanges();
+    }
 }

@@ -1,4 +1,4 @@
-namespace Project.DAL.Tests;
+namespace Project.DAL.Tests.DbContextTests;
 
 public class DbContextTestsBase : IAsyncLifetime
 {

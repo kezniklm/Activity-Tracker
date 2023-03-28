@@ -1,4 +1,4 @@
-﻿namespace Project.DAL.Tests;
+﻿namespace Project.DAL.Tests.DbContextTests;
 public class DbContextProjectTests : DbContextTestsBase
 {
     public DbContextProjectTests(ITestOutputHelper output) : base(output)
