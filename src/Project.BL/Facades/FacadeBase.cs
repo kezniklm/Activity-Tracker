@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using System.Reflection;
-using System.Threading.Tasks;
 using Project.BL.Mappers;
 using Project.BL.Models;
 using Project.DAL.Entities;
@@ -11,7 +7,7 @@ using Project.DAL.Mappers;
 using Project.DAL.Repositories;
 using Project.DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Project.BL.Facades.Interfaces;
 
 namespace Project.BL.Facades;
 

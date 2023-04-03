@@ -17,6 +17,7 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             ? ActivityDetailModel.Empty
             : new ActivityDetailModel
             {
+                Id = entity.Id,
                 ActivityType = entity.ActivityType,
                 Start = entity.Start,
                 End = entity.End,
@@ -24,5 +25,5 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             };
 
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
-        => new() { ActivityType = model.ActivityType, Start = model.Start, End = model.End, User = model.User };
+        => new() { Id = model.Id, ActivityType = model.ActivityType, Start = model.Start, End = model.End, User = model.User };
 }

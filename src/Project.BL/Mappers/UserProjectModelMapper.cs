@@ -1,9 +1,7 @@
-﻿using System;
-using Project.BL.Models;
+﻿using Project.BL.Models;
 using Project.DAL.Entities;
-using Project.BL.Mappers;
 
-namespace CookBook.BL.Mappers;
+namespace Project.BL.Mappers;
 
 public class UserProjectModelMapper :
     ModelMapperBase<UserProjectEntity, UserProjectListModel, UserProjectDetailModel>,

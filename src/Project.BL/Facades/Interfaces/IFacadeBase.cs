@@ -1,7 +1,8 @@
 ﻿using Project.BL.Models;
 using Project.DAL.Entities;
 
-namespace Project.BL.Facades;
+namespace Project.BL.Facades.Interfaces;
+
 public interface IFacadeBase<TEntity, TListModel, TDetailModel>
     where TEntity : class, IEntity
     where TListModel : IModel
