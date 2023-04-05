@@ -10,6 +10,6 @@ public record ActivityListModel : ModelBase
         Id = Guid.Empty,
         ActivityType = string.Empty,
         Start = DateTime.MinValue,
-        End = DateTime.MinValue,
+        End = DateTime.MinValue
     };
 }

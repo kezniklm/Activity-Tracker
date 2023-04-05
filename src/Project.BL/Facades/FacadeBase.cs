@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using System.Reflection;
-using System.Threading.Tasks;
-using Project.BL.Mappers;
 using Project.BL.Models;
 using Project.DAL.Entities;
 using Project.DAL.Mappers;
 using Project.DAL.Repositories;
 using Project.DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Project.BL.Facades.Interfaces;
+using Project.BL.Mappers.Interfaces;
 
 namespace Project.BL.Facades;
 
@@ -33,7 +29,7 @@ public abstract class
         ModelMapper = modelMapper;
     }
 
-    protected virtual string IncludesNavigationPathDetail => string.Empty;
+    protected virtual string IncludesNavigationPathDetail => "User";
 
     public async Task DeleteAsync(Guid id)
     {

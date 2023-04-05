@@ -8,6 +8,6 @@ public record UserProjectListModel : ModelBase
     {
         Id = Guid.Empty,
         ProjectId = Guid.Empty,
-        UserId = Guid.Empty,
+        UserId = Guid.Empty
     };
 }

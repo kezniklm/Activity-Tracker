@@ -1,5 +1,8 @@
-// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-//
-
+global using Project.BL.Mappers;
+global using Project.DAL;
+global using Project.DAL.Mappers;
+global using Project.DAL.UnitOfWork;
+global using Microsoft.EntityFrameworkCore;
+global using Project.DAL.Factories;
+global using Xunit.Abstractions;
 global using Xunit;

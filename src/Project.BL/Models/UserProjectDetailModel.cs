@@ -7,8 +7,8 @@ public record UserProjectDetailModel : ModelBase
 
     public static UserProjectDetailModel Empty => new()
     {
-        Id= Guid.Empty,
-        ProjectId= Guid.Empty,
-        UserId= Guid.Empty,
+        Id = Guid.Empty,
+        ProjectId = Guid.Empty,
+        UserId = Guid.Empty
     };
 }
