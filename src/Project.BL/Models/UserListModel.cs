@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Project.BL.Models;
+﻿namespace Project.BL.Models;
 
 public record UserListModel : ModelBase
 {
@@ -12,6 +10,6 @@ public record UserListModel : ModelBase
     {
         Id = Guid.Empty,
         Name = string.Empty,
-        Surname = string.Empty,
+        Surname = string.Empty
     };
 }

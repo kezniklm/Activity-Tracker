@@ -9,7 +9,7 @@ public class FacadeUserTests : FacadeTestsBase
 {
     private readonly IUserFacade _userFacadeSUT;
 
-    public FacadeUserTests(ITestOutputHelper output) : base(output)
+    public FacadeUserTests()
     {
         _userFacadeSUT = new UserFacade(UnitOfWorkFactory, UserModelMapper);
     }

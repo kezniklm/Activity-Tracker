@@ -2,11 +2,8 @@ namespace Project.BL.Tests;
 
 public class FacadeTestsBase : IAsyncLifetime
 {
-    protected FacadeTestsBase(ITestOutputHelper output)
+    protected FacadeTestsBase()
     {
-        // XUnitTestOutputConverter converter = new(output);
-        // Console.SetOut(converter);
-
         DbContextFactory = new DbContextSqLiteFactory(GetType().FullName!);
 
         ActivityEntityMapper = new ActivityEntityMapper();

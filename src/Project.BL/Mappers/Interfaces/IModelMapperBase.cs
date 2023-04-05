@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Project.BL.Mappers;
+﻿namespace Project.BL.Mappers.Interfaces;
 
 public interface IModelMapperBase<TEntity, out TListModel, TDetailModel>
 {
