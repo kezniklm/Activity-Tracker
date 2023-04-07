@@ -17,13 +17,13 @@ public class FacadeUserTests : FacadeTestsBase
     [Fact]
     public async Task Create_WithNonExistingItem_DoesNotThrow()
     {
-        var detail = new UserDetailModel()
+        var userDetail = new UserDetailModel()
         {
-            Id = Guid.Empty, Name = @"User name", Surname = @"User surname", PhotoUrl = null
+            Name = @"User name", Surname = @"User surname", PhotoUrl = null
         };
 
-        var actualDetail = await _userFacadeSUT.SaveAsync(detail);
-
-        DeepAssert.Equal(detail, actualDetail);
+        var expectedDetail = await _userFacadeSUT.SaveAsync(userDetail);
+        FixIds(expectedDetail, userDetail);
+        DeepAssert.Equal(userDetail, expectedDetail);
     }
 }

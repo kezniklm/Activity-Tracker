@@ -20,7 +20,6 @@ public class FacadeProjectTests : FacadeTestsBase
         // Setup
         ProjectDetailModel projectDetail = new()
         {
-            Id = Guid.NewGuid(),
             Name = "Projekt1"
         };
 
@@ -32,23 +31,43 @@ public class FacadeProjectTests : FacadeTestsBase
         DeepAssert.Equal(projectDetail, actualDetail);
     }
 
-    //[Fact]
-    //public async Task Get_OneProject()
-    //{
-    //    // Setup
-    //    ProjectDetailModel projectDetail = new()
-    //    {
-    //        Id = Guid.NewGuid(),
-    //        Name = "Projekt1"
-    //    };
-    //    ProjectDetailModel expectedDetail = await _projectFacadeSUT.SaveAsync(projectDetail);
+    [Fact]
+    public async Task Create_2New_Projects_Same_Name_Throw()
+    {
+        // Setup
+        ProjectDetailModel projectDetail1 = new()
+        {
+            Name = "Projekt1"
+        };
 
-    //    // Exercise
-    //    ProjectDetailModel? actualDetail = await _projectFacadeSUT.GetAsync(expectedDetail.Id);
+        // Exercise
+        await _projectFacadeSUT.SaveAsync(projectDetail1);
 
-    //    // Verify
-    //    DeepAssert.Equal(expectedDetail, actualDetail);
-    //}
+        ProjectDetailModel projectDetail2 = new()
+        {
+            Name = "Projekt1"
+        };
+
+        // Verify
+        await Assert.ThrowsAnyAsync<InvalidOperationException>(() => _projectFacadeSUT.SaveAsync(projectDetail2));
+    }
+
+    [Fact]
+    public async Task Get_OneProject()
+    {
+        // Setup
+        ProjectDetailModel projectDetail = new()
+        {
+            Name = "Projekt1"
+        };
+        ProjectDetailModel expectedDetail = await _projectFacadeSUT.SaveAsync(projectDetail);
+
+        // Exercise
+        ProjectDetailModel? actualDetail = await _projectFacadeSUT.GetAsync(expectedDetail.Id, String.Empty);
+
+        // Verify
+        DeepAssert.Equal(expectedDetail, actualDetail);
+    }
 
     [Fact]
     public async Task Get_All_Projects()
@@ -56,7 +75,6 @@ public class FacadeProjectTests : FacadeTestsBase
         // Setup
         ProjectEntity projectEntity = new()
         {
-            Id = Guid.NewGuid(),
             Name = "Projekt1"
         };
 
@@ -73,28 +91,39 @@ public class FacadeProjectTests : FacadeTestsBase
         Assert.Contains(projectList, actualList);
     }
 
-    //[Fact]
-    //public async Task Delete_Project()
-    //{
-    //    // Setup
-    //    ProjectDetailModel projectDetail = new()
-    //    {
-    //        Id = Guid.NewGuid(),
-    //        Name = "Projekt1"
-    //    };
-    //    ProjectDetailModel expectedDetail = await _projectFacadeSUT.SaveAsync(projectDetail);
-
-    //    // Exercise
-    //    await _projectFacadeSUT.DeleteAsync(expectedDetail.Id);
-
-    //    // Verify
-    //    ProjectDetailModel? actualDetail = await _projectFacadeSUT.GetAsync(expectedDetail.Id);
-
-    //    Assert.Null(actualDetail);
-    //}
-
-    private static void FixIds(ModelBase expectedDetail, ModelBase actualDetail)
+    [Fact]
+    public async Task Update_Existing_Project()
     {
-        actualDetail.Id = expectedDetail.Id;
+        // Setup
+        ProjectDetailModel projectDetail = new()
+        {
+            Name = "Projekt1"
+        };
+        ProjectDetailModel expectedDetail = await _projectFacadeSUT.SaveAsync(projectDetail);
+
+        expectedDetail.Name = "ProjektPremenovany";
+
+        ProjectDetailModel changedDetail = await _projectFacadeSUT.SaveAsync(expectedDetail);
+
+        DeepAssert.Equal(expectedDetail, changedDetail);
+    }
+
+    [Fact]
+    public async Task Delete_Project()
+    {
+        // Setup
+        ProjectDetailModel projectDetail = new()
+        {
+            Name = "Projekt1"
+        };
+        ProjectDetailModel expectedDetail = await _projectFacadeSUT.SaveAsync(projectDetail);
+
+        // Exercise
+        await _projectFacadeSUT.DeleteAsync(expectedDetail.Id);
+
+        // Verify
+        ProjectDetailModel? actualDetail = await _projectFacadeSUT.GetAsync(expectedDetail.Id, string.Empty);
+
+        Assert.Null(actualDetail);
     }
 }

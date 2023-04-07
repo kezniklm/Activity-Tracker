@@ -10,7 +10,7 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
     public override ActivityListModel MapToListModel(ActivityEntity? entity)
         => entity is null
             ? ActivityListModel.Empty
-            : new ActivityListModel { ActivityType = entity.ActivityType, Start = entity.Start, End = entity.End };
+            : new ActivityListModel { Id = entity.Id, ActivityType = entity.ActivityType, Start = entity.Start, End = entity.End };
 
     public override ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
         => entity is null

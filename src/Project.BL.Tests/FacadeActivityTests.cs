@@ -21,7 +21,6 @@ public class FacadeActivityTests : FacadeTestsBase
         // Setup
         ActivityDetailModel activityDetail = new()
         {
-            Id = Guid.NewGuid(),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
@@ -42,7 +41,6 @@ public class FacadeActivityTests : FacadeTestsBase
         // Setup
         ActivityDetailModel activityDetail1 = new()
         {
-            Id = Guid.NewGuid(),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
@@ -53,7 +51,6 @@ public class FacadeActivityTests : FacadeTestsBase
 
         ActivityDetailModel activityDetail2 = new()
         {
-            Id = Guid.NewGuid(),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 14, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
@@ -70,7 +67,6 @@ public class FacadeActivityTests : FacadeTestsBase
         // Setup
         ActivityDetailModel activityDetail = new()
         {
-            Id = Guid.NewGuid(),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 16, 0, 0),
             End = new DateTime(2023, 3, 20, 15, 0, 0),
@@ -87,7 +83,6 @@ public class FacadeActivityTests : FacadeTestsBase
         // Setup
         ActivityDetailModel activityDetail = new()
         {
-            Id = Guid.NewGuid(),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
@@ -96,7 +91,7 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityDetailModel expectedDetail = await _activityFacadeSUT.SaveAsync(activityDetail);
 
         // Exercise
-        ActivityDetailModel? actualDetail = await _activityFacadeSUT.GetAsync(expectedDetail.Id);
+        ActivityDetailModel? actualDetail = await _activityFacadeSUT.GetAsync(expectedDetail.Id, "User");
 
         // Verify
         DeepAssert.Equal(expectedDetail, actualDetail);
@@ -108,7 +103,6 @@ public class FacadeActivityTests : FacadeTestsBase
         // Setup
         ActivityEntity activityEntity = new()
         {
-            Id = Guid.NewGuid(),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
@@ -132,7 +126,6 @@ public class FacadeActivityTests : FacadeTestsBase
         // Setup
         ActivityDetailModel activityDetail = new()
         {
-            Id = Guid.NewGuid(),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
@@ -144,7 +137,7 @@ public class FacadeActivityTests : FacadeTestsBase
         await _activityFacadeSUT.DeleteAsync(expectedDetail.Id);
 
         // Verify
-        ActivityDetailModel? actualDetail = await _activityFacadeSUT.GetAsync(expectedDetail.Id);
+        ActivityDetailModel? actualDetail = await _activityFacadeSUT.GetAsync(expectedDetail.Id, "User");
         Assert.Null(actualDetail);
     }
 
@@ -154,7 +147,6 @@ public class FacadeActivityTests : FacadeTestsBase
         // Setup
         ActivityEntity activityEntity1 = new()
         {
-            Id = Guid.NewGuid(),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
@@ -163,7 +155,6 @@ public class FacadeActivityTests : FacadeTestsBase
 
         ActivityEntity activityEntity2 = new()
         {
-            Id = Guid.NewGuid(),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 22, 15, 0, 0),
             End = new DateTime(2023, 3, 22, 16, 0, 0),
@@ -172,7 +163,6 @@ public class FacadeActivityTests : FacadeTestsBase
 
         ActivityEntity activityEntity3 = new()
         {
-            Id = Guid.NewGuid(),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 23, 15, 0, 0),
             End = new DateTime(2023, 3, 23, 16, 0, 0),
@@ -200,10 +190,5 @@ public class FacadeActivityTests : FacadeTestsBase
         Assert.DoesNotContain(list1, activityListModels);
         Assert.Contains(list2, activityListModels);
         Assert.Contains(list3, activityListModels);
-    }
-
-    private static void FixIds(ModelBase expectedDetail, ModelBase actualDetail)
-    {
-        actualDetail.Id = expectedDetail.Id;
     }
 }
