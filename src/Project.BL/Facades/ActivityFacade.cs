@@ -68,7 +68,7 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= thisYear)
+            .Get().Where(i => i.Start >= thisYear).Where(i => i.Start <= DateTime.Today )
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
@@ -77,13 +77,14 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
     public async Task<IEnumerable<ActivityListModel>> FilterLastMonth()
     {
         int year = DateTime.Today.Year;
-        int month = DateTime.Today.Month - 1;
-        DateTime lastMonthStart = new(year, month, 1);
+        int month = DateTime.Today.Month;
+        DateTime lastMonthStart = new(year, month - 1, 1);
+        DateTime nextMonthStart = new(year, month, 1);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= lastMonthStart)
+            .Get().Where(i => i.Start >= lastMonthStart).Where(i => i.Start < nextMonthStart)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
@@ -98,7 +99,7 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= thisMonthStart)
+            .Get().Where(i => i.Start >= thisMonthStart).Where(i => i.Start <= DateTime.Today)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
@@ -108,12 +109,12 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
     {
         DateTime today = DateTime.Today;
         int day = (int)today.DayOfWeek;
-        DateTime thisWeek = today.AddDays(day);
+        DateTime thisWeek = today.AddDays(- day + 1);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= thisWeek)
+            .Get().Where(i => i.Start >= thisWeek).Where(i => i.Start <= today)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);

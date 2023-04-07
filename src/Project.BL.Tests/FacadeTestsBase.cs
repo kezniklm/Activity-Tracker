@@ -1,3 +1,5 @@
+using Project.BL.Models;
+
 namespace Project.BL.Tests;
 
 public class FacadeTestsBase : IAsyncLifetime
@@ -44,5 +46,10 @@ public class FacadeTestsBase : IAsyncLifetime
     {
         await using var dbContext = await DbContextFactory.CreateDbContextAsync();
         await dbContext.Database.EnsureDeletedAsync();
+    }
+
+    public static void FixIds(ModelBase expectedDetail, ModelBase actualDetail)
+    {
+        actualDetail.Id = expectedDetail.Id;
     }
 }

@@ -28,9 +28,7 @@ public abstract class
         UnitOfWorkFactory = unitOfWorkFactory;
         ModelMapper = modelMapper;
     }
-
-    protected virtual string IncludesNavigationPathDetail => "User";
-
+    
     public async Task DeleteAsync(Guid id)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
@@ -45,7 +43,7 @@ public abstract class
         }
     }
 
-    public virtual async Task<TDetailModel?> GetAsync(Guid id)
+    public virtual async Task<TDetailModel?> GetAsync(Guid id, string IncludesNavigationPathDetail)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
 
