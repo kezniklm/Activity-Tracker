@@ -10,7 +10,7 @@ public class RepositoryProjectTests : RepositoryTestsBase
         await DbContext.SaveChangesAsync();
 
         // Exercise
-        ProjectEntity actualEntity = RepositorySPT.GetOne(projectEntity.Id);
+        ProjectEntity actualEntity = RepositoryProjectSUT.GetOne(projectEntity.Id);
 
         // Verify
         Assert.Equal(projectEntity, actualEntity);
@@ -30,7 +30,7 @@ public class RepositoryProjectTests : RepositoryTestsBase
         };
 
         // Exercise
-        await RepositorySPT.UpdateAsync(updateProjectEntity);
+        await RepositoryProjectSUT.UpdateAsync(updateProjectEntity);
 
         // Verify
         await using var dbx = await DbContextFactory.CreateDbContextAsync();
@@ -48,7 +48,7 @@ public class RepositoryProjectTests : RepositoryTestsBase
         await DbContext.SaveChangesAsync();
 
         // Exercise
-        RepositorySPT.Delete(projectEntity.Id);
+        RepositoryProjectSUT.Delete(projectEntity.Id);
 
         // Verify
         await using var dbx = await DbContextFactory.CreateDbContextAsync();
@@ -62,7 +62,7 @@ public class RepositoryProjectTests : RepositoryTestsBase
         ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1" };
 
         // Exercise
-        await RepositorySPT.InsertAsync(projectEntity);
+        await RepositoryProjectSUT.InsertAsync(projectEntity);
 
         // Verify
         await using var dbx = await DbContextFactory.CreateDbContextAsync();
