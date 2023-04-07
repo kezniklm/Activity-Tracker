@@ -11,7 +11,7 @@ public class RepositoryUserTests : RepositoryTestsBase
         await DbContext.SaveChangesAsync();
 
         // Exercise
-        UserEntity actualEntity = RepositorySUT.GetOne(userEntity.Id);
+        UserEntity actualEntity = RepositoryUserSUT.GetOne(userEntity.Id);
 
         // Verify
         Assert.Equal(userEntity, actualEntity);
@@ -33,7 +33,7 @@ public class RepositoryUserTests : RepositoryTestsBase
         };
 
         // Exercise
-        await RepositorySUT.UpdateAsync(updateUserEntity);
+        await RepositoryUserSUT.UpdateAsync(updateUserEntity);
 
         // Verify
         await using var dbx = await DbContextFactory.CreateDbContextAsync();
@@ -52,7 +52,7 @@ public class RepositoryUserTests : RepositoryTestsBase
         await DbContext.SaveChangesAsync();
 
         // Exercise
-        RepositorySUT.Delete(userEntity.Id);
+        RepositoryUserSUT.Delete(userEntity.Id);
 
         // Verify
         await using var dbx = await DbContextFactory.CreateDbContextAsync();
@@ -66,7 +66,7 @@ public class RepositoryUserTests : RepositoryTestsBase
         UserEntity userEntity = new() { Id = Guid.NewGuid(), Name = "John", Surname = "Doe" };
 
         // Exercise
-        await RepositorySUT.InsertAsync(userEntity);
+        await RepositoryUserSUT.InsertAsync(userEntity);
 
         // Verify
         await using var dbx = await DbContextFactory.CreateDbContextAsync();
