@@ -19,7 +19,7 @@ public class UserProjectModelMapper :
             };
 
     public override UserProjectDetailModel MapToDetailModel(UserProjectEntity? entity)
-        => entity?.User is null
+        => entity is null
             ? UserProjectDetailModel.Empty
             : new UserProjectDetailModel
             {

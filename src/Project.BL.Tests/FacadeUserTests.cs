@@ -1,10 +1,4 @@
-﻿using Project.BL.Facades;
-using Project.BL.Facades.Interfaces;
-using Project.BL.Models;
-using Project.Common.Tests;
-using Project.DAL.Entities;
-
-namespace Project.BL.Tests;
+﻿namespace Project.BL.Tests;
 
 public class FacadeUserTests : FacadeTestsBase
 {

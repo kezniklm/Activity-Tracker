@@ -1,18 +1,10 @@
-﻿using Project.BL.Facades.Interfaces;
-using Project.BL.Facades;
-using Project.BL.Models;
-using Project.Common.Tests;
-using Project.DAL.Entities;
-namespace Project.BL.Tests;
+﻿namespace Project.BL.Tests;
 
 public class FacadeActivityTests : FacadeTestsBase
 {
     private readonly IActivityFacade _activityFacadeSUT;
 
-    public FacadeActivityTests()
-    {
-        _activityFacadeSUT = new ActivityFacade(UnitOfWorkFactory, ActivityModelMapper);
-    }
+    public FacadeActivityTests() => _activityFacadeSUT = new ActivityFacade(UnitOfWorkFactory, ActivityModelMapper);
 
     [Fact]
     public async Task Create_New_Activity()
@@ -23,7 +15,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         // Exercise
@@ -43,7 +35,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         await _activityFacadeSUT.SaveAsync(activityDetail1);
@@ -53,7 +45,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 14, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         // Exercise & Verify
@@ -69,7 +61,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 16, 0, 0),
             End = new DateTime(2023, 3, 20, 15, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         // Exercise & Verify
@@ -85,7 +77,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
         ActivityDetailModel expectedDetail = await _activityFacadeSUT.SaveAsync(activityDetail);
 
@@ -105,7 +97,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
         dbContext.Activities.Add(activityEntity);
@@ -128,7 +120,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
         ActivityDetailModel expectedDetail = await _activityFacadeSUT.SaveAsync(activityDetail);
 
@@ -149,7 +141,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -157,7 +149,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 22, 15, 0, 0),
             End = new DateTime(2023, 3, 22, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity3 = new()
@@ -165,7 +157,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 23, 15, 0, 0),
             End = new DateTime(2023, 3, 23, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -185,7 +177,8 @@ public class FacadeActivityTests : FacadeTestsBase
         IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.Filter(start, end);
 
         // Verify
-        IEnumerable<ActivityListModel> activityListModels = filteredList as ActivityListModel[] ?? filteredList.ToArray();
+        IEnumerable<ActivityListModel> activityListModels =
+            filteredList as ActivityListModel[] ?? filteredList.ToArray();
         Assert.DoesNotContain(list1, activityListModels);
         Assert.Contains(list2, activityListModels);
         Assert.Contains(list3, activityListModels);
@@ -200,7 +193,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -208,7 +201,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2022, 3, 22, 15, 0, 0),
             End = new DateTime(2022, 3, 22, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -223,8 +216,9 @@ public class FacadeActivityTests : FacadeTestsBase
         IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterThisYear();
 
         // Verify
-        IEnumerable<ActivityListModel> activityListModels = filteredList as ActivityListModel[] ?? filteredList.ToArray();
-        Assert.Contains(list1, activityListModels); 
+        IEnumerable<ActivityListModel> activityListModels =
+            filteredList as ActivityListModel[] ?? filteredList.ToArray();
+        Assert.Contains(list1, activityListModels);
         Assert.DoesNotContain(list2, activityListModels);
     }
 
@@ -237,7 +231,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 1, 20, 15, 0, 0),
             End = new DateTime(2023, 1, 20, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -245,7 +239,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 4, 5, 15, 0, 0),
             End = new DateTime(2023, 4, 5, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -260,8 +254,9 @@ public class FacadeActivityTests : FacadeTestsBase
         IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterThisMonth();
 
         // Verify
-        IEnumerable<ActivityListModel> activityListModels = filteredList as ActivityListModel[] ?? filteredList.ToArray();
-        Assert.DoesNotContain(list1, activityListModels); 
+        IEnumerable<ActivityListModel> activityListModels =
+            filteredList as ActivityListModel[] ?? filteredList.ToArray();
+        Assert.DoesNotContain(list1, activityListModels);
         Assert.Contains(list2, activityListModels);
     }
 
@@ -274,7 +269,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 4, 1, 15, 0, 0),
             End = new DateTime(2023, 4, 1, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -282,7 +277,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 31, 15, 0, 0),
             End = new DateTime(2023, 3, 31, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -297,7 +292,8 @@ public class FacadeActivityTests : FacadeTestsBase
         IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterLastMonth();
 
         // Verify
-        IEnumerable<ActivityListModel> activityListModels = filteredList as ActivityListModel[] ?? filteredList.ToArray();
+        IEnumerable<ActivityListModel> activityListModels =
+            filteredList as ActivityListModel[] ?? filteredList.ToArray();
         Assert.DoesNotContain(list1, activityListModels);
         Assert.Contains(list2, activityListModels);
     }
@@ -312,9 +308,9 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityEntity activityEntity1 = new()
         {
             ActivityType = "Activity",
-            Start = today.AddDays(- 8),
-            End = today.AddDays(- 8),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            Start = today.AddDays(-8),
+            End = today.AddDays(-8),
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -322,7 +318,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = today,
             End = today,
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -337,7 +333,8 @@ public class FacadeActivityTests : FacadeTestsBase
         IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterThisWeek();
 
         // Verify
-        IEnumerable<ActivityListModel> activityListModels = filteredList as ActivityListModel[] ?? filteredList.ToArray();
+        IEnumerable<ActivityListModel> activityListModels =
+            filteredList as ActivityListModel[] ?? filteredList.ToArray();
         Assert.DoesNotContain(list1, activityListModels);
         Assert.Contains(list2, activityListModels);
     }
@@ -351,7 +348,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Name = "Name", Surname = "Surname" }
         };
 
         ActivityDetailModel newActivity = await _activityFacadeSUT.SaveAsync(activity);
@@ -365,5 +362,4 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityEntity activityFromDB = await dbxAssert.Activities.SingleAsync(i => i.Id == updatedActivity.Id);
         DeepAssert.Equal(updatedActivity, ActivityModelMapper.MapToDetailModel(activityFromDB));
     }
-
 }

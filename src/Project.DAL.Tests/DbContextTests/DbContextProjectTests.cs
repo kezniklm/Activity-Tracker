@@ -1,4 +1,5 @@
 ﻿namespace Project.DAL.Tests.DbContextTests;
+
 public class DbContextProjectTests : DbContextTestsBase
 {
     public DbContextProjectTests(ITestOutputHelper output) : base(output)
@@ -8,28 +9,20 @@ public class DbContextProjectTests : DbContextTestsBase
     [Fact]
     public async Task CreateNewProjectById()
     {
-        var projectEntity = new ProjectEntity
-        {
-            Id = new Guid(),
-            Name = "IPP",
-        };
+        ProjectEntity projectEntity = new ProjectEntity { Id = new Guid(), Name = "IPP" };
 
         ProjectDbContextSUT.Projects.Add(projectEntity);
         await ProjectDbContextSUT.SaveChangesAsync();
 
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        var actualProject = await dbx.Projects.SingleAsync(i => i.Id == projectEntity.Id);
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
+        ProjectEntity actualProject = await dbx.Projects.SingleAsync(i => i.Id == projectEntity.Id);
         DeepAssert.Equal(projectEntity, actualProject);
     }
 
     [Fact]
     public async Task DeleteProjectById()
     {
-        var projectEntity = new ProjectEntity
-        {
-            Id = new Guid(),
-            Name = "ICS"
-        };
+        ProjectEntity projectEntity = new ProjectEntity { Id = new Guid(), Name = "ICS" };
 
         ProjectDbContextSUT.Projects.Add(projectEntity);
         await ProjectDbContextSUT.SaveChangesAsync();

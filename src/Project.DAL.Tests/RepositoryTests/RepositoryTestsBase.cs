@@ -7,6 +7,7 @@ public class RepositoryTestsBase : IAsyncLifetime
     protected Repository<UserEntity> RepositoryUserSUT { get; set; }
     protected Repository<ProjectEntity> RepositoryProjectSUT { get; set; }
     protected Repository<ActivityEntity> RepositoryActivitySUT { get; set; }
+    protected Repository<UserProjectEntity> RepositoryUserProjectSUT { get; set; }
 
     public RepositoryTestsBase()
     {
@@ -15,6 +16,7 @@ public class RepositoryTestsBase : IAsyncLifetime
         RepositoryUserSUT = new Repository<UserEntity>(DbContext, new UserEntityMapper());
         RepositoryProjectSUT = new Repository<ProjectEntity>(DbContext, new ProjectEntityMapper());
         RepositoryActivitySUT = new Repository<ActivityEntity>(DbContext, new ActivityEntityMapper());
+        RepositoryUserProjectSUT = new Repository<UserProjectEntity>(DbContext, new UserProjectEntityMapper());
     }
 
     public async Task InitializeAsync()

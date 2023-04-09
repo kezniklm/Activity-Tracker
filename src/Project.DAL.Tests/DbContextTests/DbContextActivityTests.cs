@@ -1,4 +1,5 @@
 ﻿namespace Project.DAL.Tests.DbContextTests;
+
 public class DbContextActivityTests : DbContextTestsBase
 {
     public DbContextActivityTests(ITestOutputHelper output) : base(output)
@@ -9,22 +10,17 @@ public class DbContextActivityTests : DbContextTestsBase
     public async Task Add_NewActivity()
     {
         //Arrange
-        UserEntity user = new()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Name",
-            Surname = "Surname"
-        };
+        UserEntity user = new() { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" };
 
         ActivityEntity entity = new()
         {
             Id = Guid.NewGuid(),
             ActivityType = "Sport",
             Description = "Football",
-            Start = new DateTime(2023,03,05,10,0,0),
+            Start = new DateTime(2023, 03, 05, 10, 0, 0),
             End = new DateTime(2023, 03, 05, 12, 0, 0),
             User = user,
-            UserId = user.Id,
+            UserId = user.Id
         };
 
         //Act
@@ -32,8 +28,8 @@ public class DbContextActivityTests : DbContextTestsBase
         await ProjectDbContextSUT.SaveChangesAsync();
 
         //Assert
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        var actualEntity = await dbx.Activities
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
+        ActivityEntity actualEntity = await dbx.Activities
             .Include(i => i.User)
             .SingleAsync(i => i.Id == entity.Id);
         DeepAssert.Equal(entity, actualEntity);
@@ -43,12 +39,7 @@ public class DbContextActivityTests : DbContextTestsBase
     public async Task GetByTime_Activity()
     {
         //Arrange
-        UserEntity user = new()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Name",
-            Surname = "Surname"
-        };
+        UserEntity user = new() { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" };
 
         ActivityEntity entity = new()
         {
@@ -58,14 +49,14 @@ public class DbContextActivityTests : DbContextTestsBase
             Start = new DateTime(2023, 02, 10, 15, 0, 0),
             End = new DateTime(2023, 02, 10, 16, 30, 0),
             User = user,
-            UserId = user.Id,
+            UserId = user.Id
         };
 
         //Act
         ProjectDbContextSUT.Activities.Add(entity);
         await ProjectDbContextSUT.SaveChangesAsync();
 
-        var ActualEntity = await ProjectDbContextSUT.Activities
+        ActivityEntity ActualEntity = await ProjectDbContextSUT.Activities
             .SingleAsync(i => i.Start == entity.Start);
 
         //Assert
@@ -76,12 +67,7 @@ public class DbContextActivityTests : DbContextTestsBase
     public async Task Delete_Activity()
     {
         //Arrange
-        UserEntity user = new()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Name",
-            Surname = "Surname"
-        };
+        UserEntity user = new() { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" };
 
         ActivityEntity entity = new()
         {
@@ -91,7 +77,7 @@ public class DbContextActivityTests : DbContextTestsBase
             Start = new DateTime(2023, 02, 10, 15, 0, 0),
             End = new DateTime(2023, 02, 10, 16, 30, 0),
             User = user,
-            UserId = user.Id,
+            UserId = user.Id
         };
 
         //Act
