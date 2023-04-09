@@ -1,11 +1,12 @@
 ﻿namespace Project.DAL.Tests.RepositoryTests;
+
 public class RepositoryProjectTests : RepositoryTestsBase
 {
     [Fact]
     public async Task GetOneProject()
     {
         // Setup
-        ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1"};
+        ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1" };
         DbContext.Projects.Add(projectEntity);
         await DbContext.SaveChangesAsync();
 
@@ -20,21 +21,17 @@ public class RepositoryProjectTests : RepositoryTestsBase
     public async Task UpdateProject()
     {
         // Setup
-        ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt2"};
+        ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt2" };
         DbContext.Projects.Add(projectEntity);
         await DbContext.SaveChangesAsync();
-        ProjectEntity updateProjectEntity = new()
-        {
-            Id = projectEntity.Id,
-            Name = projectEntity.Name
-        };
+        ProjectEntity updateProjectEntity = new() { Id = projectEntity.Id, Name = projectEntity.Name };
 
         // Exercise
         await RepositoryProjectSUT.UpdateAsync(updateProjectEntity);
 
         // Verify
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        var actualEntity = await dbx.Projects.SingleAsync(i => i.Id == projectEntity.Id);
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
+        ProjectEntity actualEntity = await dbx.Projects.SingleAsync(i => i.Id == projectEntity.Id);
         Assert.NotEqual(projectEntity, actualEntity);
         Assert.Equal(updateProjectEntity.Name, actualEntity.Name);
     }
@@ -43,7 +40,7 @@ public class RepositoryProjectTests : RepositoryTestsBase
     public async Task RemoveProject()
     {
         // Setup
-        ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1"};
+        ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1" };
         DbContext.Projects.Add(projectEntity);
         await DbContext.SaveChangesAsync();
 
@@ -51,7 +48,7 @@ public class RepositoryProjectTests : RepositoryTestsBase
         RepositoryProjectSUT.Delete(projectEntity.Id);
 
         // Verify
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
         Assert.False(await dbx.Projects.AnyAsync(i => i.Name == projectEntity.Name));
     }
 
@@ -65,8 +62,8 @@ public class RepositoryProjectTests : RepositoryTestsBase
         await RepositoryProjectSUT.InsertAsync(projectEntity);
 
         // Verify
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        var actualEntity = await dbx.Projects.SingleOrDefaultAsync(i => i.Id == projectEntity.Id);
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
+        ProjectEntity? actualEntity = await dbx.Projects.SingleOrDefaultAsync(i => i.Id == projectEntity.Id);
         DeepAssert.Equal(projectEntity, actualEntity);
     }
 }

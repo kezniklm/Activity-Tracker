@@ -36,8 +36,8 @@ public class RepositoryUserTests : RepositoryTestsBase
         await RepositoryUserSUT.UpdateAsync(updateUserEntity);
 
         // Verify
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        var actualEntity = await dbx.Users.SingleAsync(i => i.Id == userEntity.Id);
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
+        UserEntity actualEntity = await dbx.Users.SingleAsync(i => i.Id == userEntity.Id);
         Assert.NotEqual(userEntity, actualEntity);
         Assert.Equal(updateUserEntity.Name, actualEntity.Name);
         Assert.NotEqual(updateUserEntity.PhotoUrl, actualEntity.PhotoUrl);
@@ -55,7 +55,7 @@ public class RepositoryUserTests : RepositoryTestsBase
         RepositoryUserSUT.Delete(userEntity.Id);
 
         // Verify
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
         Assert.False(await dbx.Users.AnyAsync(i => i.Name == userEntity.Name));
     }
 
@@ -69,8 +69,8 @@ public class RepositoryUserTests : RepositoryTestsBase
         await RepositoryUserSUT.InsertAsync(userEntity);
 
         // Verify
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        var actualEntity = await dbx.Users.SingleOrDefaultAsync(i => i.Id == userEntity.Id);
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
+        UserEntity? actualEntity = await dbx.Users.SingleOrDefaultAsync(i => i.Id == userEntity.Id);
         DeepAssert.Equal(userEntity, actualEntity);
     }
 }

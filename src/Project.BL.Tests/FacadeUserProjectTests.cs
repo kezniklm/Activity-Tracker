@@ -1,12 +1,5 @@
-using Project.BL.Facades.Interfaces;
-using Project.BL.Facades;
-using Project.BL.Models;
-using Project.Common.Tests;
-using Project.DAL.Entities;
-using System.Threading.Tasks;
-using System;
-
 namespace Project.BL.Tests;
+
 public class FacadeUserProjectTests : FacadeTestsBase
 {
     private readonly IUserProjectFacade _userProjectFacadeSUT;
@@ -30,7 +23,8 @@ public class FacadeUserProjectTests : FacadeTestsBase
         ProjectDetailModel project = new() { Name = "Projekt1" };
         ProjectDetailModel newProject = await _projectFacadeSUT.SaveAsync(project);
 
-        UserProjectDetailModel userProject = new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser.Id };
+        UserProjectDetailModel userProject =
+            new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser.Id };
 
         //Exercise
         UserProjectDetailModel expectedUserProject = await _userProjectFacadeSUT.SaveAsync(userProject);
@@ -50,7 +44,8 @@ public class FacadeUserProjectTests : FacadeTestsBase
         ProjectDetailModel project = new() { Name = "Projekt1" };
         ProjectDetailModel newProject = await _projectFacadeSUT.SaveAsync(project);
 
-        UserProjectDetailModel userProject = new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser.Id };
+        UserProjectDetailModel userProject =
+            new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser.Id };
         UserProjectDetailModel expectedUserProject = await _userProjectFacadeSUT.SaveAsync(userProject);
         FixIds(expectedUserProject, userProject);
 
@@ -60,7 +55,6 @@ public class FacadeUserProjectTests : FacadeTestsBase
         //Verify
         ProjectDetailModel? actualDetail = await _projectFacadeSUT.GetAsync(expectedUserProject.Id, string.Empty);
         Assert.Null(actualDetail);
-
     }
 
     [Fact]
@@ -73,12 +67,14 @@ public class FacadeUserProjectTests : FacadeTestsBase
         ProjectDetailModel project = new() { Name = "Projekt1" };
         ProjectDetailModel newProject = await _projectFacadeSUT.SaveAsync(project);
 
-        UserProjectDetailModel userProject = new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser.Id };
+        UserProjectDetailModel userProject =
+            new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser.Id };
         UserProjectDetailModel expectedUserProject = await _userProjectFacadeSUT.SaveAsync(userProject);
         FixIds(expectedUserProject, userProject);
 
         //Exercise
-        UserProjectDetailModel actualUserProject = await _userProjectFacadeSUT.GetAsync(expectedUserProject.Id, String.Empty);
+        UserProjectDetailModel actualUserProject =
+            await _userProjectFacadeSUT.GetAsync(expectedUserProject.Id, string.Empty);
 
         //Verify
         DeepAssert.Equal(expectedUserProject, actualUserProject);
@@ -94,15 +90,18 @@ public class FacadeUserProjectTests : FacadeTestsBase
         ProjectDetailModel project = new() { Name = "Projekt1" };
         ProjectDetailModel newProject = await _projectFacadeSUT.SaveAsync(project);
 
-        UserProjectDetailModel userProject = new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser.Id };
+        UserProjectDetailModel userProject =
+            new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser.Id };
         UserProjectDetailModel expectedUserProject = await _userProjectFacadeSUT.SaveAsync(userProject);
         FixIds(expectedUserProject, userProject);
 
-        UserProjectDetailModel updatedUserProject = new() { Id = expectedUserProject.Id, ProjectId = newProject.Id, UserId = newUser.Id };
+        UserProjectDetailModel updatedUserProject =
+            new() { Id = expectedUserProject.Id, ProjectId = newProject.Id, UserId = newUser.Id };
 
         //Exercise
         await _userProjectFacadeSUT.SaveAsync(updatedUserProject);
-        UserProjectDetailModel actualUserProject = await _userProjectFacadeSUT.GetAsync(expectedUserProject.Id, String.Empty);
+        UserProjectDetailModel actualUserProject =
+            await _userProjectFacadeSUT.GetAsync(expectedUserProject.Id, string.Empty);
 
         //Verify
         DeepAssert.Equal(updatedUserProject, actualUserProject);
@@ -119,13 +118,15 @@ public class FacadeUserProjectTests : FacadeTestsBase
         ProjectDetailModel project = new() { Name = "Projekt1" };
         ProjectDetailModel newProject = await _projectFacadeSUT.SaveAsync(project);
 
-        UserProjectDetailModel userProject = new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser.Id };
+        UserProjectDetailModel userProject =
+            new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser.Id };
         UserProjectDetailModel expectedUserProject = await _userProjectFacadeSUT.SaveAsync(userProject);
         FixIds(expectedUserProject, userProject);
 
 
         // Exercise
-        UserProjectDetailModel? actualDetail = await _userProjectFacadeSUT.GetAsync(expectedUserProject.Id, String.Empty);
+        UserProjectDetailModel? actualDetail =
+            await _userProjectFacadeSUT.GetAsync(expectedUserProject.Id, string.Empty);
 
         // Verify
         DeepAssert.Equal(expectedUserProject, actualDetail);
@@ -143,8 +144,10 @@ public class FacadeUserProjectTests : FacadeTestsBase
         ProjectDetailModel project = new() { Name = "Projekt1" };
         ProjectDetailModel newProject = await _projectFacadeSUT.SaveAsync(project);
 
-        UserProjectDetailModel userProject1 = new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser1.Id };
-        UserProjectDetailModel userProject2 = new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser2.Id };
+        UserProjectDetailModel userProject1 =
+            new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser1.Id };
+        UserProjectDetailModel userProject2 =
+            new() { Id = Guid.NewGuid(), ProjectId = newProject.Id, UserId = newUser2.Id };
 
         //Exercise
         UserProjectDetailModel expectedUserProject1 = await _userProjectFacadeSUT.SaveAsync(userProject1);
@@ -156,5 +159,4 @@ public class FacadeUserProjectTests : FacadeTestsBase
         Assert.Equal(newProject.Id, expectedUserProject2.ProjectId);
         Assert.Equal(newUser2.Id, expectedUserProject2.UserId);
     }
-
 }

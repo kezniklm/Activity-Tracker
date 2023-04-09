@@ -1,27 +1,16 @@
-﻿using Project.BL.Facades.Interfaces;
-using Project.BL.Facades;
-using Project.BL.Models;
-using Project.Common.Tests;
-using Project.DAL.Entities;
+﻿namespace Project.BL.Tests;
 
-namespace Project.BL.Tests;
 public class FacadeProjectTests : FacadeTestsBase
 {
     private readonly IProjectFacade _projectFacadeSUT;
 
-    public FacadeProjectTests()
-    {
-        _projectFacadeSUT = new ProjectFacade(UnitOfWorkFactory, ProjectModelMapper);
-    }
+    public FacadeProjectTests() => _projectFacadeSUT = new ProjectFacade(UnitOfWorkFactory, ProjectModelMapper);
 
     [Fact]
     public async Task Create_New_Project()
     {
         // Setup
-        ProjectDetailModel projectDetail = new()
-        {
-            Name = "Projekt1"
-        };
+        ProjectDetailModel projectDetail = new() { Name = "Projekt1" };
 
         // Exercise
         ProjectDetailModel actualDetail = await _projectFacadeSUT.SaveAsync(projectDetail);
@@ -35,18 +24,12 @@ public class FacadeProjectTests : FacadeTestsBase
     public async Task Create_2New_Projects_Same_Name_Throw()
     {
         // Setup
-        ProjectDetailModel projectDetail1 = new()
-        {
-            Name = "Projekt1"
-        };
+        ProjectDetailModel projectDetail1 = new() { Name = "Projekt1" };
 
         // Exercise
         await _projectFacadeSUT.SaveAsync(projectDetail1);
 
-        ProjectDetailModel projectDetail2 = new()
-        {
-            Name = "Projekt1"
-        };
+        ProjectDetailModel projectDetail2 = new() { Name = "Projekt1" };
 
         // Verify
         await Assert.ThrowsAnyAsync<InvalidOperationException>(() => _projectFacadeSUT.SaveAsync(projectDetail2));
@@ -56,14 +39,11 @@ public class FacadeProjectTests : FacadeTestsBase
     public async Task Get_OneProject()
     {
         // Setup
-        ProjectDetailModel projectDetail = new()
-        {
-            Name = "Projekt1"
-        };
+        ProjectDetailModel projectDetail = new() { Name = "Projekt1" };
         ProjectDetailModel expectedDetail = await _projectFacadeSUT.SaveAsync(projectDetail);
 
         // Exercise
-        ProjectDetailModel? actualDetail = await _projectFacadeSUT.GetAsync(expectedDetail.Id, String.Empty);
+        ProjectDetailModel? actualDetail = await _projectFacadeSUT.GetAsync(expectedDetail.Id, string.Empty);
 
         // Verify
         DeepAssert.Equal(expectedDetail, actualDetail);
@@ -73,10 +53,7 @@ public class FacadeProjectTests : FacadeTestsBase
     public async Task Get_All_Projects()
     {
         // Setup
-        ProjectEntity projectEntity = new()
-        {
-            Name = "Projekt1"
-        };
+        ProjectEntity projectEntity = new() { Name = "Projekt1" };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
         dbContext.Projects.Add(projectEntity);
@@ -95,10 +72,7 @@ public class FacadeProjectTests : FacadeTestsBase
     public async Task Update_Existing_Project()
     {
         // Setup
-        ProjectDetailModel projectDetail = new()
-        {
-            Name = "Projekt1"
-        };
+        ProjectDetailModel projectDetail = new() { Name = "Projekt1" };
         ProjectDetailModel expectedDetail = await _projectFacadeSUT.SaveAsync(projectDetail);
 
         expectedDetail.Name = "ProjektPremenovany";
@@ -112,10 +86,7 @@ public class FacadeProjectTests : FacadeTestsBase
     public async Task Delete_Project()
     {
         // Setup
-        ProjectDetailModel projectDetail = new()
-        {
-            Name = "Projekt1"
-        };
+        ProjectDetailModel projectDetail = new() { Name = "Projekt1" };
         ProjectDetailModel expectedDetail = await _projectFacadeSUT.SaveAsync(projectDetail);
 
         // Exercise

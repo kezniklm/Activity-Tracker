@@ -1,18 +1,12 @@
-﻿using Project.DAL.Entities;
+﻿namespace Project.DAL.Tests.RepositoryTests;
 
-namespace Project.DAL.Tests.RepositoryTests;
 public class RepositoryActivityTests : RepositoryTestsBase
 {
     [Fact]
     public async Task GetOneActivity()
     {
         //Arrange
-        UserEntity user = new()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Harry",
-            Surname = "Potter"
-        };
+        UserEntity user = new() { Id = Guid.NewGuid(), Name = "Harry", Surname = "Potter" };
 
         ActivityEntity activityEntity = new()
         {
@@ -22,7 +16,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
             Start = new DateTime(2023, 03, 05, 10, 0, 0),
             End = new DateTime(2023, 03, 05, 12, 0, 0),
             User = user,
-            UserId = user.Id,
+            UserId = user.Id
         };
 
         DbContext.Activities.Add(activityEntity);
@@ -39,12 +33,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
     public async Task AddActivity()
     {
         //Arrange
-        UserEntity user = new()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Ronald",
-            Surname = "Weasley"
-        };
+        UserEntity user = new() { Id = Guid.NewGuid(), Name = "Ronald", Surname = "Weasley" };
 
         ActivityEntity activityEntity = new()
         {
@@ -54,15 +43,15 @@ public class RepositoryActivityTests : RepositoryTestsBase
             Start = new DateTime(2023, 02, 10, 18, 30, 0),
             End = new DateTime(2023, 02, 10, 19, 50, 0),
             User = user,
-            UserId = user.Id,
+            UserId = user.Id
         };
 
         //Act
         await RepositoryActivitySUT.InsertAsync(activityEntity);
 
         //Assert
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        var actualEntity = await dbx.Activities
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
+        ActivityEntity actualEntity = await dbx.Activities
             .Include(i => i.User)
             .SingleAsync(i => i.Id == activityEntity.Id);
         DeepAssert.Equal(activityEntity, actualEntity);
@@ -72,12 +61,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
     public async Task DeleteActivity()
     {
         //Arrange
-        UserEntity user = new()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Ronald",
-            Surname = "Weasley"
-        };
+        UserEntity user = new() { Id = Guid.NewGuid(), Name = "Ronald", Surname = "Weasley" };
 
         ActivityEntity activityEntity = new()
         {
@@ -87,7 +71,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
             Start = new DateTime(2023, 02, 10, 18, 30, 0),
             End = new DateTime(2023, 02, 10, 19, 50, 0),
             User = user,
-            UserId = user.Id,
+            UserId = user.Id
         };
 
         DbContext.Activities.Add(activityEntity);
@@ -97,7 +81,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
         RepositoryActivitySUT.Delete(activityEntity.Id);
 
         //Assert
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
         Assert.False(await dbx.Activities.AnyAsync(i => i.ActivityType == activityEntity.ActivityType));
     }
 
@@ -105,12 +89,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
     public async Task UpdateActivity()
     {
         //Arrange
-        UserEntity user = new()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Harry",
-            Surname = "Potter"
-        };
+        UserEntity user = new() { Id = Guid.NewGuid(), Name = "Harry", Surname = "Potter" };
 
         ActivityEntity activityEntity = new()
         {
@@ -120,7 +99,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
             Start = new DateTime(2023, 02, 10, 18, 30, 0),
             End = new DateTime(2023, 02, 10, 19, 50, 0),
             User = user,
-            UserId = user.Id,
+            UserId = user.Id
         };
 
         DbContext.Activities.Add(activityEntity);
@@ -134,15 +113,15 @@ public class RepositoryActivityTests : RepositoryTestsBase
             Start = activityEntity.Start,
             End = activityEntity.End,
             User = activityEntity.User,
-            UserId = activityEntity.UserId,
+            UserId = activityEntity.UserId
         };
 
         //Act
         RepositoryActivitySUT.UpdateAsync(updateActivityEntity);
 
         //Assert
-        await using var dbx = await DbContextFactory.CreateDbContextAsync();
-        var actualEntity = await dbx.Activities.SingleAsync(i => i.Id == activityEntity.Id);
+        await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
+        ActivityEntity actualEntity = await dbx.Activities.SingleAsync(i => i.Id == activityEntity.Id);
         Assert.NotEqual(activityEntity, actualEntity);
         Assert.NotEqual(activityEntity.Description, actualEntity.Description);
         Assert.Equal(updateActivityEntity, activityEntity);

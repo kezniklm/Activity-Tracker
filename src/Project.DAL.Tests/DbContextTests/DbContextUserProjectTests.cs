@@ -10,15 +10,19 @@ public class DbContextUserProjectTests : DbContextTestsBase
     public async Task Create_UserProject()
     {
         // Setup
-        var userEntity = new UserEntity() { Name = "John", Surname = "Doe", Id = Guid.Parse("89F51C77-8362-4D55-9EA2-FD990C970EA4") };
+        UserEntity userEntity = new UserEntity
+        {
+            Name = "John", Surname = "Doe", Id = Guid.Parse("89F51C77-8362-4D55-9EA2-FD990C970EA4")
+        };
         ProjectDbContextSUT.Users.Add(userEntity);
         await ProjectDbContextSUT.SaveChangesAsync();
 
-        var projectEntity = new ProjectEntity() { Name = "Sport", Id = Guid.Parse("40124E0A-C1FB-456E-A32A-7188EC41A846") };
+        ProjectEntity projectEntity =
+            new ProjectEntity { Name = "Sport", Id = Guid.Parse("40124E0A-C1FB-456E-A32A-7188EC41A846") };
         ProjectDbContextSUT.Projects.Add(projectEntity);
         await ProjectDbContextSUT.SaveChangesAsync();
 
-        UserProjectEntity userProjectEntity = new UserProjectEntity()
+        UserProjectEntity userProjectEntity = new()
         {
             Id = Guid.Parse("07F1F95D-8AA8-4B90-A024-2AE8FB88C4CA"),
             UserId = userEntity.Id,
@@ -33,8 +37,8 @@ public class DbContextUserProjectTests : DbContextTestsBase
         await ProjectDbContextSUT.SaveChangesAsync();
 
         // Verify
-        await using var dbContext = await DbContextFactory.CreateDbContextAsync();
-        var actualEntity = await dbContext.Users
+        await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
+        UserEntity actualEntity = await dbContext.Users
             .Include(i => i.Projects)
             .ThenInclude(i => i.Project)
             .SingleAsync(i => i.Id == userEntity.Id);
