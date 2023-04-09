@@ -342,4 +342,28 @@ public class FacadeActivityTests : FacadeTestsBase
         Assert.Contains(list2, activityListModels);
     }
 
+    [Fact]
+    public async Task UpdateActivity()
+    {
+        // Setup
+        ActivityDetailModel activity = new()
+        {
+            ActivityType = "Activity",
+            Start = new DateTime(2023, 3, 20, 15, 0, 0),
+            End = new DateTime(2023, 3, 20, 16, 0, 0),
+            User = new UserEntity() { Name = "Name", Surname = "Surname" }
+        };
+
+        ActivityDetailModel newActivity = await _activityFacadeSUT.SaveAsync(activity);
+
+        // Exercise
+        newActivity.ActivityType = "Run";
+        ActivityDetailModel updatedActivity = await _activityFacadeSUT.SaveAsync(newActivity);
+
+        // Verify
+        await using ProjectDbContext dbxAssert = await DbContextFactory.CreateDbContextAsync();
+        ActivityEntity activityFromDB = await dbxAssert.Activities.SingleAsync(i => i.Id == updatedActivity.Id);
+        DeepAssert.Equal(updatedActivity, ActivityModelMapper.MapToDetailModel(activityFromDB));
+    }
+
 }

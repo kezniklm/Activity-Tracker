@@ -109,6 +109,10 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
     {
         DateTime today = DateTime.Today;
         int day = (int)today.DayOfWeek;
+        if (day == 0)
+        {
+            day = 7;
+        }
         DateTime thisWeek = today.AddDays(- day + 1);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
