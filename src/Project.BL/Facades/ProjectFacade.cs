@@ -22,6 +22,7 @@ public class ProjectFacade : FacadeBase<ProjectEntity, ProjectListModel, Project
     {
         ProjectDetailModel result;
 
+        GuardCollectionsAreNotSet(model);
         GuardSameName(model);
 
         ProjectEntity entity = ModelMapper.MapToEntity(model);

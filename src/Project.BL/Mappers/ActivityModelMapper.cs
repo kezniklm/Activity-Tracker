@@ -21,7 +21,7 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
                 ActivityType = entity.ActivityType,
                 Start = entity.Start,
                 End = entity.End,
-                User = entity.User
+                User = entity.User   
             };
 
     public override ActivityEntity MapToEntity(ActivityDetailModel model)

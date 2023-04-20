@@ -21,7 +21,7 @@ public class FacadeUserTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task GetById_NonExistent()
+    public async Task GetById_NonExistent_Does_Not_Throw()
     {
         // Setup
         UserDetailModel userDetail = new()
@@ -37,7 +37,7 @@ public class FacadeUserTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Get_UsersByIdFromAll()
+    public async Task Get_UsersByIdFromAll_Does_Not_Throw()
     {
         // Setup
         UserDetailModel user1 = new() { Name = "Anton", Surname = "Bernolak" };
@@ -61,7 +61,7 @@ public class FacadeUserTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task DeleteOneUserById()
+    public async Task DeleteOneUserById_Does_Not_Throw()
     {
         // Setup
         UserDetailModel user1 = new() { Name = "Anton", Surname = "Bernolak" };
@@ -81,7 +81,7 @@ public class FacadeUserTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task DeleteById_DeletedUser()
+    public async Task DeleteById_DeletedUser_Does_Not_Throw()
     {
         // Setup
         UserDetailModel user1 = new() { Name = "Anton", Surname = "Bernolak" };
@@ -96,7 +96,7 @@ public class FacadeUserTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task UpdateUser()
+    public async Task UpdateUser_Does_Not_Throw()
     {
         // Setup
         UserDetailModel user1 = new() { Name = "Anton", Surname = "Bernolak" };
