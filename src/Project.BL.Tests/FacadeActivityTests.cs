@@ -7,7 +7,7 @@ public class FacadeActivityTests : FacadeTestsBase
     public FacadeActivityTests() => _activityFacadeSUT = new ActivityFacade(UnitOfWorkFactory, ActivityModelMapper);
 
     [Fact]
-    public async Task Create_New_Activity()
+    public async Task Create_New_Activity_Does_Not_Throw()
     {
         // Setup
         ActivityDetailModel activityDetail = new()
@@ -27,7 +27,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Create_New_Activity_SameTime()
+    public async Task Create_New_Activity_SameTime_Throws()
     {
         // Setup
         ActivityDetailModel activityDetail1 = new()
@@ -53,7 +53,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Create_New_Activity_StartIsGreater()
+    public async Task Create_New_Activity_StartIsGreater_Throws()
     {
         // Setup
         ActivityDetailModel activityDetail = new()
@@ -69,7 +69,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Get_OneActivity()
+    public async Task Get_OneActivity_Does_Not_Throw()
     {
         // Setup
         ActivityDetailModel activityDetail = new()
@@ -89,7 +89,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Get_All_Activities()
+    public async Task Get_All_Activities_Does_Not_Throw()
     {
         // Setup
         ActivityEntity activityEntity = new()
@@ -112,7 +112,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Delete_Activity()
+    public async Task Delete_Activity_Does_Not_Throw()
     {
         // Setup
         ActivityDetailModel activityDetail = new()
@@ -133,7 +133,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Activity_Filter_Start_End()
+    public async Task Activity_Filter_Start_End_Does_Not_Throw()
     {
         // Setup
         ActivityEntity activityEntity1 = new()
@@ -185,7 +185,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Test_FilterThisYear()
+    public async Task Test_FilterThisYear_Does_Not_Throw()
     {
         //Setup
         ActivityEntity activityEntity1 = new()
@@ -223,7 +223,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Test_FilterThisMonth()
+    public async Task Test_FilterThisMonth_Does_Not_Throw()
     {
         //Setup
         ActivityEntity activityEntity1 = new()
@@ -261,7 +261,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Test_FilterLastMonth()
+    public async Task Test_FilterLastMonth_Does_Not_Throw()
     {
         //Setup
         ActivityEntity activityEntity1 = new()
@@ -299,7 +299,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Test_FilterThisWeek()
+    public async Task Test_FilterThisWeek_Does_Not_Throw()
     {
         //Setup
 
@@ -340,7 +340,7 @@ public class FacadeActivityTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task UpdateActivity()
+    public async Task UpdateActivity_Does_Not_Throw()
     {
         // Setup
         ActivityDetailModel activity = new()

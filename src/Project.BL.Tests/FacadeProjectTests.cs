@@ -7,7 +7,7 @@ public class FacadeProjectTests : FacadeTestsBase
     public FacadeProjectTests() => _projectFacadeSUT = new ProjectFacade(UnitOfWorkFactory, ProjectModelMapper);
 
     [Fact]
-    public async Task Create_New_Project()
+    public async Task Create_New_Project_Does_Not_Throw()
     {
         // Setup
         ProjectDetailModel projectDetail = new() { Name = "Projekt1" };
@@ -21,7 +21,7 @@ public class FacadeProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Create_2New_Projects_Same_Name_Throw()
+    public async Task Create_2New_Projects_Same_Name_Throws()
     {
         // Setup
         ProjectDetailModel projectDetail1 = new() { Name = "Projekt1" };
@@ -36,7 +36,7 @@ public class FacadeProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Get_OneProject()
+    public async Task Get_OneProject_Does_Not_Throw()
     {
         // Setup
         ProjectDetailModel projectDetail = new() { Name = "Projekt1" };
@@ -50,7 +50,7 @@ public class FacadeProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Get_All_Projects()
+    public async Task Get_All_Projects_Does_Not_Throw()
     {
         // Setup
         ProjectEntity projectEntity = new() { Name = "Projekt1" };
@@ -69,7 +69,7 @@ public class FacadeProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Update_Existing_Project()
+    public async Task Update_Existing_Project_Does_Not_Throw()
     {
         // Setup
         ProjectDetailModel projectDetail = new() { Name = "Projekt1" };
@@ -83,7 +83,7 @@ public class FacadeProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Delete_Project()
+    public async Task Delete_Project_Does_Not_Throw()
     {
         // Setup
         ProjectDetailModel projectDetail = new() { Name = "Projekt1" };

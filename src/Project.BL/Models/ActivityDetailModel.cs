@@ -9,7 +9,7 @@ public record ActivityDetailModel : ModelBase
     public required DateTime Start { get; set; }
     public required DateTime End { get; set; }
     public required UserEntity User { get; set; }
-    public ProjectEntity? Project { get; set; }
+    public ProjectDetailModel? Project { get; set; }
 
     public static ActivityDetailModel Empty => new()
     {

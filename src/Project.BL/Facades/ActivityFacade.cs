@@ -24,7 +24,7 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         ActivityDetailModel result;
 
         GuardDateTimeCorrect(model.Start, model.End);
-        GuardDateTimeIsNotSame(model);
+        GuardTwoActivitiesNotAtTheSameTime(model);
 
         ActivityEntity entity = ModelMapper.MapToEntity(model);
 
@@ -54,7 +54,7 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= start).Where(i => i.End <= end)
+            .Get().Where(i => i.Start >= start && i.End <= end)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
@@ -63,12 +63,13 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
     public async Task<IEnumerable<ActivityListModel>> FilterThisYear()
     {
         int year = DateTime.Today.Year;
-        DateTime thisYear = new (year, 1, 1);
+        DateTime startOfYear = new (year, 1, 1);
+        DateTime endOfYear = new(year+1, 1, 1);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= thisYear).Where(i => i.Start <= DateTime.Today )
+            .Get().Where(i => i.Start >= startOfYear && i.Start < endOfYear)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
@@ -79,12 +80,17 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         int year = DateTime.Today.Year;
         int month = DateTime.Today.Month;
         DateTime lastMonthStart = new(year, month - 1, 1);
-        DateTime nextMonthStart = new(year, month, 1);
+        if (month == 1)
+        {
+            lastMonthStart = new(year-1, 12, 1);
+        }
+        
+        DateTime lastMonthEnd = new(year, month, 1);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= lastMonthStart).Where(i => i.Start < nextMonthStart)
+            .Get().Where(i => i.Start >= lastMonthStart && i.Start < lastMonthEnd)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
@@ -95,11 +101,16 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         int year = DateTime.Today.Year;
         int month = DateTime.Today.Month;
         DateTime thisMonthStart = new(year, month, 1);
+        DateTime thisMonthEnd = new(year, month+1, 1);
+        if (month == 12)
+        {
+            thisMonthEnd = new(year+1, 1, 1);
+        }
 
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+            await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= thisMonthStart).Where(i => i.Start <= DateTime.Today)
+            .Get().Where(i => i.Start >= thisMonthStart && i.Start < thisMonthEnd)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
@@ -113,18 +124,19 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         {
             day = 7;
         }
-        DateTime thisWeek = today.AddDays(- day + 1);
+        DateTime thisWeekStart = today.AddDays(1 - day);
+        DateTime thisWeekEnd = thisWeekStart.AddDays(7); 
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= thisWeek).Where(i => i.Start <= today)
+            .Get().Where(i => i.Start >= thisWeekStart && i.Start < thisWeekEnd)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
     }
 
-    public void GuardDateTimeIsNotSame(ActivityDetailModel model)
+    public void GuardTwoActivitiesNotAtTheSameTime(ActivityDetailModel model)
     {
         IUnitOfWork uow = UnitOfWorkFactory.Create();
         IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();

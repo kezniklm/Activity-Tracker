@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.DAL.Tests", "Projec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Common.Tests", "Project.Common.Tests\Project.Common.Tests.csproj", "{BC2E1396-EA2B-4E0C-83B6-4A583F2C985D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.BL", "Project.BL\Project.BL.csproj", "{E877AD43-3499-4B39-B07C-A3234CA344EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.BL", "Project.BL\Project.BL.csproj", "{E877AD43-3499-4B39-B07C-A3234CA344EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.BL.Tests", "Project.BL.Tests\Project.BL.Tests.csproj", "{8B4FC077-8079-42E7-8184-CA2ABE57E456}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.BL.Tests", "Project.BL.Tests\Project.BL.Tests.csproj", "{8B4FC077-8079-42E7-8184-CA2ABE57E456}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.App", "Project.App\Project.App.csproj", "{3AD8F0DB-8A89-4D76-9624-71DE7425B04A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,12 @@ Global
 		{8B4FC077-8079-42E7-8184-CA2ABE57E456}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B4FC077-8079-42E7-8184-CA2ABE57E456}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B4FC077-8079-42E7-8184-CA2ABE57E456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD8F0DB-8A89-4D76-9624-71DE7425B04A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD8F0DB-8A89-4D76-9624-71DE7425B04A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD8F0DB-8A89-4D76-9624-71DE7425B04A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3AD8F0DB-8A89-4D76-9624-71DE7425B04A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD8F0DB-8A89-4D76-9624-71DE7425B04A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD8F0DB-8A89-4D76-9624-71DE7425B04A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

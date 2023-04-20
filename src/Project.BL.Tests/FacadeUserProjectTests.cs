@@ -14,7 +14,7 @@ public class FacadeUserProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Create_New_UserProject()
+    public async Task Create_New_UserProject_Does_Not_Throw()
     {
         //Setup
         UserDetailModel user = new() { Name = "John", Surname = "Doe" };
@@ -35,7 +35,7 @@ public class FacadeUserProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Delete_UserProject()
+    public async Task Delete_UserProject_Does_Not_Throw()
     {
         //Setup
         UserDetailModel user = new() { Name = "John", Surname = "Doe" };
@@ -58,7 +58,7 @@ public class FacadeUserProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Get_UserProject_By_Id()
+    public async Task Get_UserProject_By_Id_Does_Not_Throw()
     {
         //Setup
         UserDetailModel user = new() { Name = "John", Surname = "Doe" };
@@ -81,7 +81,7 @@ public class FacadeUserProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Update_UserProject()
+    public async Task Update_UserProject_Does_Not_Throw()
     {
         //Setup
         UserDetailModel user = new() { Name = "John", Surname = "Doe" };
@@ -108,7 +108,7 @@ public class FacadeUserProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Get_One_UserProject()
+    public async Task Get_One_UserProject_Does_Not_Throw()
     {
         // Setup
 
@@ -133,7 +133,7 @@ public class FacadeUserProjectTests : FacadeTestsBase
     }
 
     [Fact]
-    public async Task Create_2Users_With_Same_Project()
+    public async Task Create_2Users_With_Same_Project_Does_Not_Throw()
     {
         //Setup
         UserDetailModel user1 = new() { Name = "John", Surname = "Doe" };
