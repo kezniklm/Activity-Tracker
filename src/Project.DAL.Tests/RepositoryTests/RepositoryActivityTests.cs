@@ -117,7 +117,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
         };
 
         //Act
-        RepositoryActivitySUT.UpdateAsync(updateActivityEntity);
+        await RepositoryActivitySUT.UpdateAsync(updateActivityEntity);
 
         //Assert
         await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
