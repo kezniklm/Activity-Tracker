@@ -6,6 +6,9 @@ public class RepositoryActivityTests : RepositoryTestsBase
     public async Task GetOneActivity()
     {
         //Arrange
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<ActivityEntity> RepositoryActivitySUT = new ActivityRepository(DbContext, new ActivityEntityMapper());
+
         UserEntity user = new() { Id = Guid.NewGuid(), Name = "Harry", Surname = "Potter" };
 
         ActivityEntity activityEntity = new()
@@ -23,16 +26,20 @@ public class RepositoryActivityTests : RepositoryTestsBase
         await DbContext.SaveChangesAsync();
 
         //Act
-        ActivityEntity actualEntity = RepositoryActivitySUT.GetOne(activityEntity.Id);
+        ActivityEntity? actualEntity = await RepositoryActivitySUT.GetOneAsync(activityEntity.Id);
 
         //Assert
-        Assert.Equal(activityEntity, actualEntity);
+        DeepAssert.Equal(activityEntity, actualEntity);
     }
 
     [Fact]
     public async Task AddActivity()
     {
         //Arrange
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<ActivityEntity> RepositoryActivitySUT =
+            unitOfWork.GetRepository<ActivityEntity, ActivityEntityMapper>();
+
         UserEntity user = new() { Id = Guid.NewGuid(), Name = "Ronald", Surname = "Weasley" };
 
         ActivityEntity activityEntity = new()
@@ -48,6 +55,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
 
         //Act
         await RepositoryActivitySUT.InsertAsync(activityEntity);
+        await unitOfWork.CommitAsync();
 
         //Assert
         await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
@@ -61,6 +69,9 @@ public class RepositoryActivityTests : RepositoryTestsBase
     public async Task DeleteActivity()
     {
         //Arrange
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<ActivityEntity> RepositoryActivitySUT =
+            unitOfWork.GetRepository<ActivityEntity, ActivityEntityMapper>();
         UserEntity user = new() { Id = Guid.NewGuid(), Name = "Ronald", Surname = "Weasley" };
 
         ActivityEntity activityEntity = new()
@@ -79,6 +90,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
 
         //Act
         RepositoryActivitySUT.Delete(activityEntity.Id);
+        await unitOfWork.CommitAsync();
 
         //Assert
         await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
@@ -89,6 +101,9 @@ public class RepositoryActivityTests : RepositoryTestsBase
     public async Task UpdateActivity()
     {
         //Arrange
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<ActivityEntity> RepositoryActivitySUT = new ActivityRepository(DbContext, new ActivityEntityMapper());
+
         UserEntity user = new() { Id = Guid.NewGuid(), Name = "Harry", Surname = "Potter" };
 
         ActivityEntity activityEntity = new()
@@ -118,6 +133,7 @@ public class RepositoryActivityTests : RepositoryTestsBase
 
         //Act
         await RepositoryActivitySUT.UpdateAsync(updateActivityEntity);
+        await unitOfWork.CommitAsync();
 
         //Assert
         await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();

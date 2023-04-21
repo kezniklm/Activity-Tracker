@@ -107,7 +107,7 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
             thisMonthEnd = new(year+1, 1, 1);
         }
 
-            await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
             .Get().Where(i => i.Start >= thisMonthStart && i.Start < thisMonthEnd)

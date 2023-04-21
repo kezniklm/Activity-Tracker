@@ -13,7 +13,7 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             : new ActivityListModel { Id = entity.Id, ActivityType = entity.ActivityType, Start = entity.Start, End = entity.End };
 
     public override ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
-        => entity is null
+        => entity?.User is null
             ? ActivityDetailModel.Empty
             : new ActivityDetailModel
             {
@@ -21,12 +21,16 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
                 ActivityType = entity.ActivityType,
                 Start = entity.Start,
                 End = entity.End,
-                User = entity.User   
+                UserId = entity.User.Id,
+                UserName = entity.User.Name,
+                UserSurname = entity.User.Surname,
+                Description = entity.Description,
+                ProjectId = entity.ProjectId
             };
 
     public override ActivityEntity MapToEntity(ActivityDetailModel model)
         => new()
         {
-            Id = model.Id, ActivityType = model.ActivityType, Start = model.Start, End = model.End, User = model.User, UserId = model.User.Id
+            Id = model.Id, ActivityType = model.ActivityType, Start = model.Start, End = model.End, UserId = model.UserId, Description = model.Description, ProjectId = model.ProjectId, User = new(){Id = model.UserId, Name = model.UserName, Surname = model.UserSurname}
         };
 }

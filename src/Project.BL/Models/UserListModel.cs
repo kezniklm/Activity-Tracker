@@ -10,6 +10,7 @@ public record UserListModel : ModelBase
     {
         Id = Guid.Empty,
         Name = string.Empty,
-        Surname = string.Empty
+        Surname = string.Empty,
+        PhotoUrl = string.Empty
     };
 }

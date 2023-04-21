@@ -10,7 +10,7 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
     public override UserListModel MapToListModel(UserEntity? entity)
         => entity is null
             ? UserListModel.Empty
-            : new UserListModel { Id = entity.Id, Name = entity.Name, Surname = entity.Surname };
+            : new UserListModel { Id = entity.Id, Name = entity.Name, Surname = entity.Surname, PhotoUrl = entity.PhotoUrl};
 
     public override UserDetailModel MapToDetailModel(UserEntity? entity)
         => entity is null
@@ -19,9 +19,10 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                Surname = entity.Surname
+                Surname = entity.Surname,
+                PhotoUrl = entity.PhotoUrl
             };
 
     public override UserEntity MapToEntity(UserDetailModel model)
-        => new() {Id = model.Id, Name = model.Name, Surname = model.Surname };
+        => new() {Id = model.Id, Name = model.Name, Surname = model.Surname, PhotoUrl = model.PhotoUrl};
 }

@@ -1,15 +1,11 @@
-﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-//
-
-namespace Project.App;
+﻿namespace Project.App;
 
 public partial class App : Application
 {
-    public App()
+    public App(IServiceProvider serviceProvider)
     {
         InitializeComponent();
 
-        MainPage = new AppShell();
+        MainPage = serviceProvider.GetRequiredService<AppShell>();
     }
 }

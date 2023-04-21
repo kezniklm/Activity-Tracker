@@ -5,8 +5,10 @@ namespace Project.DAL;
 
 public class ProjectDbContext : DbContext
 {
-    public ProjectDbContext(DbContextOptions contextOptions)
-        : base(contextOptions) { }
+    private readonly bool _seedDemoData;
+
+    public ProjectDbContext(DbContextOptions contextOptions, bool seedDemoData = false)
+        : base(contextOptions) => _seedDemoData = seedDemoData;
 
     public DbSet<ActivityEntity> Activities => Set<ActivityEntity>();
     public DbSet<ProjectEntity> Projects => Set<ProjectEntity>();
@@ -32,7 +34,7 @@ public class ProjectDbContext : DbContext
         modelBuilder.Entity<UserProjectEntity>()
             .HasKey(i => new { i.UserId, i.ProjectId });
 
-            modelBuilder.Entity<UserProjectEntity>()
+        modelBuilder.Entity<UserProjectEntity>()
             .HasOne<UserEntity>(i => i.User)
             .WithMany(i => i.Projects)
             .HasForeignKey(i => i.UserId);
@@ -41,5 +43,8 @@ public class ProjectDbContext : DbContext
             .HasOne<ProjectEntity>(i => i.Project)
             .WithMany(i => i.Users)
             .HasForeignKey(i => i.ProjectId);
+
+        if (_seedDemoData)
+        { }
     }
 }

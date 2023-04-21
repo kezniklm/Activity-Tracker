@@ -73,7 +73,7 @@ public class FacadeUserProjectTests : FacadeTestsBase
         FixIds(expectedUserProject, userProject);
 
         //Exercise
-        UserProjectDetailModel actualUserProject =
+        UserProjectDetailModel? actualUserProject =
             await _userProjectFacadeSUT.GetAsync(expectedUserProject.Id, string.Empty);
 
         //Verify
@@ -100,7 +100,7 @@ public class FacadeUserProjectTests : FacadeTestsBase
 
         //Exercise
         await _userProjectFacadeSUT.SaveAsync(updatedUserProject);
-        UserProjectDetailModel actualUserProject =
+        UserProjectDetailModel? actualUserProject =
             await _userProjectFacadeSUT.GetAsync(expectedUserProject.Id, string.Empty);
 
         //Verify

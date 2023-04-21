@@ -6,21 +6,28 @@ public class RepositoryProjectTests : RepositoryTestsBase
     public async Task GetOneProject()
     {
         // Setup
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+
         ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1" };
         DbContext.Projects.Add(projectEntity);
         await DbContext.SaveChangesAsync();
 
         // Exercise
-        ProjectEntity actualEntity = RepositoryProjectSUT.GetOne(projectEntity.Id);
+        ProjectEntity? actualEntity = await RepositoryProjectSUT.GetOneAsync(projectEntity.Id);
+        await unitOfWork.CommitAsync();
 
         // Verify
-        Assert.Equal(projectEntity, actualEntity);
+        DeepAssert.Equal(projectEntity, actualEntity);
     }
 
     [Fact]
     public async Task UpdateProject()
     {
         // Setup
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+
         ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt2" };
         DbContext.Projects.Add(projectEntity);
         await DbContext.SaveChangesAsync();
@@ -28,6 +35,7 @@ public class RepositoryProjectTests : RepositoryTestsBase
 
         // Exercise
         await RepositoryProjectSUT.UpdateAsync(updateProjectEntity);
+        await unitOfWork.CommitAsync();
 
         // Verify
         await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
@@ -40,12 +48,16 @@ public class RepositoryProjectTests : RepositoryTestsBase
     public async Task RemoveProject()
     {
         // Setup
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+
         ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1" };
         DbContext.Projects.Add(projectEntity);
         await DbContext.SaveChangesAsync();
 
         // Exercise
         RepositoryProjectSUT.Delete(projectEntity.Id);
+        await unitOfWork.CommitAsync();
 
         // Verify
         await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
@@ -56,10 +68,14 @@ public class RepositoryProjectTests : RepositoryTestsBase
     public async Task AddProject()
     {
         // Setup
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+
         ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1" };
 
         // Exercise
         await RepositoryProjectSUT.InsertAsync(projectEntity);
+        await unitOfWork.CommitAsync();
 
         // Verify
         await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
