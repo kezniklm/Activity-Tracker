@@ -53,7 +53,7 @@ public class FacadeProjectTests : FacadeTestsBase
     public async Task Get_All_Projects_Does_Not_Throw()
     {
         // Setup
-        ProjectEntity projectEntity = new() { Name = "Projekt1" };
+        ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1" };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
         dbContext.Projects.Add(projectEntity);

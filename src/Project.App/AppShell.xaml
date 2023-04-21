@@ -3,12 +3,24 @@
     x:Class="Project.App.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Project.App"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:a="clr-namespace:Project.App.Views.Activities"
+    xmlns:o="clr-namespace:Project.App.Views.Overview"
+    xmlns:p="clr-namespace:Project.App.Views.Projects"
+    FlyoutHeaderBehavior="CollapseOnScroll">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    <FlyoutItem Title="Overview">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate o:OverviewView}" Route="overview" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Activities">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate a:ActivityListView}" Route="activities" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Projects">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate p:ProjectListView}" Route="projects" />
+        </Tab>
+    </FlyoutItem>
 </Shell>

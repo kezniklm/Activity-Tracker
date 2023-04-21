@@ -7,48 +7,34 @@ namespace Project.DAL.Repositories;
 public class Repository<TEntity> : IRepository<TEntity>
     where TEntity : class, IEntity
 {
-    private readonly DbSet<TEntity> _dbSet;
-    private readonly DbContext _dbContext;
-    private readonly IEntityMapper<TEntity> _entityMapper;
+    protected readonly DbSet<TEntity> DbSet;
+    protected readonly IEntityMapper<TEntity> EntityMapper;
 
     public Repository(
         DbContext dbContext,
         IEntityMapper<TEntity> entityMapper)
     {
-        _dbContext = dbContext;
-        _dbSet = dbContext.Set<TEntity>();
-        _entityMapper = entityMapper;
+        DbSet = dbContext.Set<TEntity>();
+        EntityMapper = entityMapper;
     }
 
-    public IQueryable<TEntity> Get() => _dbSet;
+    public virtual IQueryable<TEntity> Get() => DbSet;
 
-    public TEntity GetOne(Guid entityId)
+    public virtual async Task<TEntity?> GetOneAsync(Guid entityId)
+        => await DbSet.SingleOrDefaultAsync(i => i.Id == entityId);
+
+    public virtual async ValueTask<bool> ExistsAsync(TEntity entity)
+        => entity.Id != Guid.Empty && await DbSet.AnyAsync(e => e.Id == entity.Id);
+
+    public virtual async Task<TEntity> InsertAsync(TEntity entity)
+        => (await DbSet.AddAsync(entity)).Entity;
+
+    public virtual async Task<TEntity> UpdateAsync(TEntity entity)
     {
-        IQueryable<TEntity> query = _dbSet;
-        TEntity entity = query.Single(i => i.Id == entityId);
-        return entity;
-    }
-
-    public async ValueTask<bool> ExistsAsync(TEntity entity)
-        => entity.Id != Guid.Empty && await _dbSet.AnyAsync(e => e.Id == entity.Id);
-
-    public async Task<TEntity> InsertAsync(TEntity entity)
-    {
-        await _dbSet.AddAsync(entity);
-        await _dbContext.SaveChangesAsync();
-        return entity;
-    }
-
-    public async Task<TEntity> UpdateAsync(TEntity entity)
-    {
-        TEntity existingEntity = await _dbSet.SingleAsync(e => e.Id == entity.Id);
-        _entityMapper.MapToExistingEntity(existingEntity, entity);
+        TEntity existingEntity = await DbSet.SingleAsync(e => e.Id == entity.Id);
+        EntityMapper.MapToExistingEntity(existingEntity, entity);
         return existingEntity;
     }
 
-    public void Delete(Guid entityId)
-    {
-        _dbSet.Remove(_dbSet.Single(i => i.Id == entityId));
-        _dbContext.SaveChanges();
-    }
+    public virtual void Delete(Guid entityId) => DbSet.Remove(DbSet.Single(i => i.Id == entityId));
 }

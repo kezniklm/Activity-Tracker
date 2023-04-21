@@ -56,11 +56,11 @@ public class DbContextActivityTests : DbContextTestsBase
         ProjectDbContextSUT.Activities.Add(entity);
         await ProjectDbContextSUT.SaveChangesAsync();
 
-        ActivityEntity ActualEntity = await ProjectDbContextSUT.Activities
+        ActivityEntity actualEntity = await ProjectDbContextSUT.Activities
             .SingleAsync(i => i.Start == entity.Start);
 
         //Assert
-        Assert.Equal(entity.Start, ActualEntity.Start);
+        Assert.Equal(entity.Start, actualEntity.Start);
     }
 
     [Fact]

@@ -4,17 +4,14 @@ namespace Project.DAL.Factories;
 
 public class DbContextSqLiteFactory : IDbContextFactory<ProjectDbContext>
 {
-    private readonly string _databaseName;
+    private readonly bool _seedDemoData;
+    private readonly DbContextOptionsBuilder<ProjectDbContext> _contextOptionsBuilder = new();
 
-    public DbContextSqLiteFactory(string databaseName)
+    public DbContextSqLiteFactory(string databaseName, bool seedDemoData = false)
     {
-        _databaseName = databaseName;
+        _seedDemoData = seedDemoData;
+        _contextOptionsBuilder.UseSqlite($"Data Source={databaseName};Cache=Shared");
     }
 
-    public ProjectDbContext CreateDbContext()
-    {
-        DbContextOptionsBuilder<ProjectDbContext> builder = new();
-        builder.UseSqlite($"Data Source={_databaseName};Cache=Shared");
-        return new ProjectDbContext(builder.Options);
-    }
+    public ProjectDbContext CreateDbContext() => new(_contextOptionsBuilder.Options, _seedDemoData);
 }

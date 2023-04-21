@@ -1,9 +1,9 @@
-﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-//
+﻿using CommunityToolkit.Maui;
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Project.App.Services;
 
-using Microsoft.Extensions.Logging;
-
+[assembly: System.Resources.NeutralResourcesLanguage("en")]
 namespace Project.App;
 public static class MauiProgram
 {
@@ -12,16 +12,43 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-#if DEBUG
-		builder.Logging.AddDebug();
-#endif
+        ConfigureAppSettings(builder);
+        builder.Services.AddAppServices();
 
-        return builder.Build();
+        var app = builder.Build();
+        RegisterRouting(app.Services.GetRequiredService<INavigationService>());
+
+        return app;
+    }
+
+    private static void ConfigureAppSettings(MauiAppBuilder builder)
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+
+        var assembly = Assembly.GetExecutingAssembly();
+        const string appSettingsFilePath = "Project.App.appsettings.json";
+        using var appSettingsStream = assembly.GetManifestResourceStream(appSettingsFilePath);
+        if (appSettingsStream is not null)
+        {
+            configurationBuilder.AddJsonStream(appSettingsStream);
+        }
+
+        var configuration = configurationBuilder.Build();
+        builder.Configuration.AddConfiguration(configuration);
+    }
+
+    private static void RegisterRouting(INavigationService navigationService)
+    {
+        foreach (var route in navigationService.Routes)
+        {
+            Routing.RegisterRoute(route.Route, route.ViewType);
+        }
     }
 }

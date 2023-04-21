@@ -8,8 +8,10 @@ public record ActivityDetailModel : ModelBase
     public string? Description { get; set; }
     public required DateTime Start { get; set; }
     public required DateTime End { get; set; }
-    public required UserEntity User { get; set; }
-    public ProjectDetailModel? Project { get; set; }
+    public required string UserName { get; set; }
+    public required string UserSurname { get; set; }
+    public required Guid UserId { get; set; }
+    public Guid? ProjectId { get; set; }
 
     public static ActivityDetailModel Empty => new()
     {
@@ -18,6 +20,9 @@ public record ActivityDetailModel : ModelBase
         Description = string.Empty,
         Start = DateTime.MinValue,
         End = DateTime.MinValue,
-        User = new UserEntity(){Name = string.Empty, Surname = string.Empty}
+        UserName = string.Empty,
+        UserSurname = string.Empty,
+        UserId = Guid.Empty,
+        ProjectId = Guid.Empty
     };
 }

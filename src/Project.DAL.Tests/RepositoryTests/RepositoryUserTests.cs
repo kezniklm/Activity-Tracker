@@ -6,21 +6,25 @@ public class RepositoryUserTests : RepositoryTestsBase
     public async Task GetOneUser()
     {
         // Setup
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<UserEntity> repositoryUserSUT = unitOfWork.GetRepository<UserEntity, UserEntityMapper>();
         UserEntity userEntity = new() { Id = Guid.NewGuid(), Name = "John", Surname = "Doe" };
         DbContext.Users.Add(userEntity);
         await DbContext.SaveChangesAsync();
 
         // Exercise
-        UserEntity actualEntity = RepositoryUserSUT.GetOne(userEntity.Id);
+        UserEntity? actualEntity = await repositoryUserSUT.GetOneAsync(userEntity.Id);
 
         // Verify
-        Assert.Equal(userEntity, actualEntity);
+        DeepAssert.Equal(userEntity, actualEntity);
     }
 
     [Fact]
     public async Task UpdateUser()
     {
         // Setup
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<UserEntity> RepositoryUserSUT = unitOfWork.GetRepository<UserEntity, UserEntityMapper>();
         UserEntity userEntity = new() { Id = Guid.NewGuid(), Name = "Anton", Surname = "Bernolák", PhotoUrl = null };
         DbContext.Users.Add(userEntity);
         await DbContext.SaveChangesAsync();
@@ -47,12 +51,15 @@ public class RepositoryUserTests : RepositoryTestsBase
     public async Task RemoveUser()
     {
         // Setup
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<UserEntity> RepositoryUserSUT = unitOfWork.GetRepository<UserEntity, UserEntityMapper>();
         UserEntity userEntity = new() { Id = Guid.NewGuid(), Name = "John", Surname = "Doe" };
         DbContext.Users.Add(userEntity);
         await DbContext.SaveChangesAsync();
 
         // Exercise
         RepositoryUserSUT.Delete(userEntity.Id);
+        await unitOfWork.CommitAsync();
 
         // Verify
         await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
@@ -63,10 +70,13 @@ public class RepositoryUserTests : RepositoryTestsBase
     public async Task AddUser()
     {
         // Setup
+        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
+        IRepository<UserEntity> RepositoryUserSUT = unitOfWork.GetRepository<UserEntity, UserEntityMapper>();
         UserEntity userEntity = new() { Id = Guid.NewGuid(), Name = "John", Surname = "Doe" };
 
         // Exercise
         await RepositoryUserSUT.InsertAsync(userEntity);
+        await unitOfWork.CommitAsync();
 
         // Verify
         await using ProjectDbContext dbx = await DbContextFactory.CreateDbContextAsync();
