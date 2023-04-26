@@ -5,4 +5,5 @@ namespace Project.BL.Mappers.Interfaces;
 
 public interface IUserProjectModelMapper
     : IModelMapperBase<UserProjectEntity, UserProjectListModel, UserProjectDetailModel>
-{ }
+{
+}

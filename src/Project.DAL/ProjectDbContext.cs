@@ -45,6 +45,7 @@ public class ProjectDbContext : DbContext
             .HasForeignKey(i => i.ProjectId);
 
         if (_seedDemoData)
-        { }
+        {
+        }
     }
 }

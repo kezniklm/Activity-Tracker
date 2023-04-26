@@ -2,9 +2,9 @@ namespace Project.BL.Tests;
 
 public class FacadeUserProjectTests : FacadeTestsBase
 {
-    private readonly IUserProjectFacade _userProjectFacadeSUT;
-    private readonly IUserFacade _userFacadeSUT;
     private readonly IProjectFacade _projectFacadeSUT;
+    private readonly IUserFacade _userFacadeSUT;
+    private readonly IUserProjectFacade _userProjectFacadeSUT;
 
     public FacadeUserProjectTests()
     {

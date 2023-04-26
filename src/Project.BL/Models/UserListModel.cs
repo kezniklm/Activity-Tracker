@@ -8,9 +8,6 @@ public record UserListModel : ModelBase
 
     public static UserListModel Empty => new()
     {
-        Id = Guid.Empty,
-        Name = string.Empty,
-        Surname = string.Empty,
-        PhotoUrl = string.Empty
+        Id = Guid.Empty, Name = string.Empty, Surname = string.Empty, PhotoUrl = string.Empty
     };
 }

@@ -10,19 +10,19 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
     public override UserListModel MapToListModel(UserEntity? entity)
         => entity is null
             ? UserListModel.Empty
-            : new UserListModel { Id = entity.Id, Name = entity.Name, Surname = entity.Surname, PhotoUrl = entity.PhotoUrl};
+            : new UserListModel
+            {
+                Id = entity.Id, Name = entity.Name, Surname = entity.Surname, PhotoUrl = entity.PhotoUrl
+            };
 
     public override UserDetailModel MapToDetailModel(UserEntity? entity)
         => entity is null
             ? UserDetailModel.Empty
             : new UserDetailModel
             {
-                Id = entity.Id,
-                Name = entity.Name,
-                Surname = entity.Surname,
-                PhotoUrl = entity.PhotoUrl
+                Id = entity.Id, Name = entity.Name, Surname = entity.Surname, PhotoUrl = entity.PhotoUrl
             };
 
     public override UserEntity MapToEntity(UserDetailModel model)
-        => new() {Id = model.Id, Name = model.Name, Surname = model.Surname, PhotoUrl = model.PhotoUrl};
+        => new() { Id = model.Id, Name = model.Name, Surname = model.Surname, PhotoUrl = model.PhotoUrl };
 }
