@@ -7,9 +7,9 @@ public class DbContextProjectTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task CreateNewProjectById()
+    public async Task CreateNewProjectById_Does_Not_Throw()
     {
-        ProjectEntity projectEntity = new ProjectEntity { Id = new Guid(), Name = "IPP" };
+        ProjectEntity projectEntity = new() { Id = new Guid(), Name = "IPP" };
 
         ProjectDbContextSUT.Projects.Add(projectEntity);
         await ProjectDbContextSUT.SaveChangesAsync();
@@ -20,9 +20,9 @@ public class DbContextProjectTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task DeleteProjectById()
+    public async Task DeleteProjectById_Does_Not_Throw()
     {
-        ProjectEntity projectEntity = new ProjectEntity { Id = new Guid(), Name = "ICS" };
+        ProjectEntity projectEntity = new() { Id = new Guid(), Name = "ICS" };
 
         ProjectDbContextSUT.Projects.Add(projectEntity);
         await ProjectDbContextSUT.SaveChangesAsync();

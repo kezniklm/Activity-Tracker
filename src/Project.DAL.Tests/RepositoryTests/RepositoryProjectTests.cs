@@ -3,7 +3,7 @@
 public class RepositoryProjectTests : RepositoryTestsBase
 {
     [Fact]
-    public async Task GetOneProject()
+    public async Task GetOneProject_Does_Not_Throw()
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();

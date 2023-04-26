@@ -3,13 +3,15 @@
 public class RepositoryUserProjectTests : RepositoryTestsBase
 {
     [Fact]
-    public async Task AddUserProject()
+    public async Task AddUserProject_Does_Not_Throw()
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
         IRepository<UserEntity> RepositoryUserSUT = unitOfWork.GetRepository<UserEntity, UserEntityMapper>();
-        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
-        IRepository<UserProjectEntity> RepositoryUserProjectSUT = unitOfWork.GetRepository<UserProjectEntity, UserProjectEntityMapper>();
+        IRepository<ProjectEntity> RepositoryProjectSUT =
+            unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+        IRepository<UserProjectEntity> RepositoryUserProjectSUT =
+            unitOfWork.GetRepository<UserProjectEntity, UserProjectEntityMapper>();
 
         UserEntity userEntity = new() { Id = Guid.NewGuid(), Name = "John", Surname = "Doe" };
         await RepositoryUserSUT.InsertAsync(userEntity);
@@ -41,24 +43,23 @@ public class RepositoryUserProjectTests : RepositoryTestsBase
     }
 
     [Fact]
-    public async Task RemoveUserProject()
+    public async Task RemoveUserProject_Does_Not_Throw()
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
-        IRepository<UserProjectEntity> RepositoryUserProjectSUT = unitOfWork.GetRepository<UserProjectEntity, UserProjectEntityMapper>();
+        IRepository<UserProjectEntity> RepositoryUserProjectSUT =
+            unitOfWork.GetRepository<UserProjectEntity, UserProjectEntityMapper>();
 
         // Setup
-        UserEntity userEntity = new UserEntity
+        UserEntity userEntity = new()
         {
-            Name = "John",
-            Surname = "Doe",
-            Id = Guid.Parse("89F51C77-8362-4D55-9EA2-FD990C970EA4")
+            Name = "John", Surname = "Doe", Id = Guid.Parse("89F51C77-8362-4D55-9EA2-FD990C970EA4")
         };
         DbContext.Users.Add(userEntity);
         await DbContext.SaveChangesAsync();
 
         ProjectEntity projectEntity =
-            new ProjectEntity { Name = "Sport", Id = Guid.Parse("40124E0A-C1FB-456E-A32A-7188EC41A846") };
+            new() { Name = "Sport", Id = Guid.Parse("40124E0A-C1FB-456E-A32A-7188EC41A846") };
         DbContext.Projects.Add(projectEntity);
         await DbContext.SaveChangesAsync();
 
@@ -88,13 +89,15 @@ public class RepositoryUserProjectTests : RepositoryTestsBase
     }
 
     [Fact]
-    public async Task GetOneUserProject()
+    public async Task GetOneUserProject_Does_Not_Throw()
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
-        IRepository<UserProjectEntity> RepositoryUserProjectSUT = unitOfWork.GetRepository<UserProjectEntity, UserProjectEntityMapper>();
+        IRepository<UserProjectEntity> RepositoryUserProjectSUT =
+            unitOfWork.GetRepository<UserProjectEntity, UserProjectEntityMapper>();
         IRepository<UserEntity> RepositoryUserSUT = unitOfWork.GetRepository<UserEntity, UserEntityMapper>();
-        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+        IRepository<ProjectEntity> RepositoryProjectSUT =
+            unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
 
         UserEntity userEntity = new() { Id = Guid.NewGuid(), Name = "John", Surname = "Doe" };
         await RepositoryUserSUT.InsertAsync(userEntity);
@@ -122,13 +125,15 @@ public class RepositoryUserProjectTests : RepositoryTestsBase
     }
 
     [Fact]
-    public async Task UpdateUserProject()
+    public async Task UpdateUserProject_Does_Not_Throw()
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
-        IRepository<UserProjectEntity> RepositoryUserProjectSUT = unitOfWork.GetRepository<UserProjectEntity, UserProjectEntityMapper>();
+        IRepository<UserProjectEntity> RepositoryUserProjectSUT =
+            unitOfWork.GetRepository<UserProjectEntity, UserProjectEntityMapper>();
         IRepository<UserEntity> RepositoryUserSUT = unitOfWork.GetRepository<UserEntity, UserEntityMapper>();
-        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+        IRepository<ProjectEntity> RepositoryProjectSUT =
+            unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
 
         UserEntity userEntity = new() { Id = Guid.NewGuid(), Name = "John", Surname = "Doe" };
         await RepositoryUserSUT.InsertAsync(userEntity);
@@ -148,17 +153,13 @@ public class RepositoryUserProjectTests : RepositoryTestsBase
         await RepositoryUserProjectSUT.InsertAsync(userProjectEntity);
         await unitOfWork.CommitAsync();
 
-        UserProjectEntity updateUserProjectEntity = new UserProjectEntity
+        UserProjectEntity updatedUserProjectEntity = userProjectEntity with
         {
-            Id = userProjectEntity.Id,
-            UserId = userProjectEntity.UserId,
-            User = new UserEntity { Id = userProjectEntity.User.Id, Name = "Anton", Surname = "Bernolák" },
-            ProjectId = userProjectEntity.ProjectId,
-            Project = userProjectEntity.Project
+            User = new UserEntity { Id = userProjectEntity.User.Id, Name = "Anton", Surname = "Bernolák" }
         };
 
         // Exercise
-        await RepositoryUserProjectSUT.UpdateAsync(updateUserProjectEntity);
+        await RepositoryUserProjectSUT.UpdateAsync(updatedUserProjectEntity);
         await unitOfWork.CommitAsync();
 
         // Verify
@@ -166,7 +167,7 @@ public class RepositoryUserProjectTests : RepositoryTestsBase
         UserProjectEntity actualEntity = await dbx.UsersProjects.SingleAsync(i => i.Id == userProjectEntity.Id);
         Assert.NotEqual(userProjectEntity, actualEntity);
         Assert.NotEqual(userProjectEntity.User, actualEntity.User);
-        Assert.Equal(updateUserProjectEntity.Id, actualEntity.Id);
-        Assert.Equal(updateUserProjectEntity.User.Id, actualEntity.UserId);
+        Assert.Equal(updatedUserProjectEntity.Id, actualEntity.Id);
+        Assert.Equal(updatedUserProjectEntity.User.Id, actualEntity.UserId);
     }
 }

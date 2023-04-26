@@ -7,18 +7,17 @@ public class DbContextUserProjectTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task Create_UserProject()
+    public async Task Create_UserProject_Does_Not_Throw()
     {
         // Setup
-        UserEntity userEntity = new UserEntity
+        UserEntity userEntity = new()
         {
             Name = "John", Surname = "Doe", Id = Guid.Parse("89F51C77-8362-4D55-9EA2-FD990C970EA4")
         };
         ProjectDbContextSUT.Users.Add(userEntity);
         await ProjectDbContextSUT.SaveChangesAsync();
 
-        ProjectEntity projectEntity =
-            new ProjectEntity { Name = "Sport", Id = Guid.Parse("40124E0A-C1FB-456E-A32A-7188EC41A846") };
+        ProjectEntity projectEntity = new() { Name = "Sport", Id = Guid.Parse("40124E0A-C1FB-456E-A32A-7188EC41A846") };
         ProjectDbContextSUT.Projects.Add(projectEntity);
         await ProjectDbContextSUT.SaveChangesAsync();
 

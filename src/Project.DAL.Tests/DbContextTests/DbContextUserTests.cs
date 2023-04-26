@@ -7,7 +7,7 @@ public class DbContextUserTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task CreateNewUserById()
+    public async Task CreateNewUserById_Does_Not_Throw()
     {
         // Setup
         UserEntity userEntity = new()
@@ -29,7 +29,7 @@ public class DbContextUserTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task CreateNewUserByPhotoUrl()
+    public async Task CreateNewUserByPhotoUrl_Does_Not_Throw()
     {
         // Setup
         UserEntity userEntity = new()
@@ -52,7 +52,7 @@ public class DbContextUserTests : DbContextTestsBase
 
 
     [Fact]
-    public async Task DeleteUserById()
+    public async Task DeleteUserById_Does_Not_Throw()
     {
         // Setup
         UserEntity userEntity = new()
@@ -75,7 +75,7 @@ public class DbContextUserTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task DeleteUserByName()
+    public async Task DeleteUserByName_Does_Not_Throw()
     {
         // Setup
         UserEntity userEntity = new()

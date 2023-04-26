@@ -7,7 +7,7 @@ public class DbContextActivityTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task Add_NewActivity()
+    public async Task Add_NewActivity_Does_Not_Throw()
     {
         //Arrange
         UserEntity user = new() { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" };
@@ -36,7 +36,7 @@ public class DbContextActivityTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task GetByTime_Activity()
+    public async Task GetByTime_Activity_Does_Not_Throw()
     {
         //Arrange
         UserEntity user = new() { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" };
@@ -64,7 +64,7 @@ public class DbContextActivityTests : DbContextTestsBase
     }
 
     [Fact]
-    public async Task Delete_Activity()
+    public async Task Delete_Activity_Does_Not_Throw()
     {
         //Arrange
         UserEntity user = new() { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" };
