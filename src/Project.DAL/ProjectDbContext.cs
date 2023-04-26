@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.DAL.Entities;
-using Project.DAL.Seeds;
 
 namespace Project.DAL;
 
@@ -47,7 +46,6 @@ public class ProjectDbContext : DbContext
 
         if (_seedDemoData)
         {
-            modelBuilder.Seed();
         }
     }
 }
