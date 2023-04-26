@@ -3,10 +3,9 @@
 public class RepositoryActivityTests : RepositoryTestsBase
 {
     [Fact]
-    public async Task GetOneActivity()
+    public async Task GetOneActivity_Does_Not_Throw()
     {
         //Arrange
-        IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
         IRepository<ActivityEntity> RepositoryActivitySUT = new ActivityRepository(DbContext, new ActivityEntityMapper());
 
         UserEntity user = new() { Id = Guid.NewGuid(), Name = "Harry", Surname = "Potter" };

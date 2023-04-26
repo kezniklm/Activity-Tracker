@@ -3,7 +3,7 @@
 public class RepositoryUserTests : RepositoryTestsBase
 {
     [Fact]
-    public async Task GetOneUser()
+    public async Task GetOneUser_Does_Not_Throw()
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
@@ -20,7 +20,7 @@ public class RepositoryUserTests : RepositoryTestsBase
     }
 
     [Fact]
-    public async Task UpdateUser()
+    public async Task UpdateUser_Does_Not_Throw()
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
@@ -48,7 +48,7 @@ public class RepositoryUserTests : RepositoryTestsBase
     }
 
     [Fact]
-    public async Task RemoveUser()
+    public async Task RemoveUser_Does_Not_Throw()
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
@@ -67,7 +67,7 @@ public class RepositoryUserTests : RepositoryTestsBase
     }
 
     [Fact]
-    public async Task AddUser()
+    public async Task AddUser_Does_Not_Throw()
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
