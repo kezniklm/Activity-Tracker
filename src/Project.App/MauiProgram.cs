@@ -20,7 +20,9 @@ public static class MauiProgram
             });
 
         ConfigureAppSettings(builder);
-        builder.Services.AddAppServices();
+        builder.Services
+            .AddDALServices(builder.Configuration)
+            .AddAppServices();
 
         var app = builder.Build();
         RegisterRouting(app.Services.GetRequiredService<INavigationService>());

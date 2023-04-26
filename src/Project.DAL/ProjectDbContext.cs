@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.DAL.Entities;
+using Project.DAL.Seeds;
 
 namespace Project.DAL;
 
@@ -45,6 +46,8 @@ public class ProjectDbContext : DbContext
             .HasForeignKey(i => i.ProjectId);
 
         if (_seedDemoData)
-        { }
+        {
+            modelBuilder.Seed();
+        }
     }
 }
