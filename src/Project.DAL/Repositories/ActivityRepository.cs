@@ -11,12 +11,10 @@ public class ActivityRepository : Repository<ActivityEntity>
     {
     }
 
-    public override async Task<ActivityEntity?> GetOneAsync(Guid entityId)
-    {
-        return await DbSet
+    public override async Task<ActivityEntity?> GetOneAsync(Guid entityId) =>
+        await DbSet
             .Include(i => i.User)
             .SingleOrDefaultAsync(i => i.Id == entityId);
-    }
 
     public override async Task<ActivityEntity> UpdateAsync(ActivityEntity entity)
     {

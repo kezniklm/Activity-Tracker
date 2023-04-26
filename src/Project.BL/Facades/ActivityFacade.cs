@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.BL.Facades.Interfaces;
+using Project.BL.Mappers;
 using Project.BL.Mappers.Interfaces;
 using Project.BL.Models;
 using Project.DAL.Entities;
@@ -25,21 +26,28 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
 
         GuardDateTimeCorrect(model.Start, model.End);
         GuardTwoActivitiesNotAtTheSameTime(model);
-
-        ActivityEntity entity = ModelMapper.MapToEntity(model);
-
         IUnitOfWork uow = UnitOfWorkFactory.Create();
-        IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+        IRepository<ActivityEntity> activityRepository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+        IRepository<UserEntity> userRepository = uow.GetRepository<UserEntity, UserEntityMapper>();
 
-        if (await repository.ExistsAsync(entity))
+        UserEntity? user;
+        user = await userRepository.GetOneAsync(model.UserId);
+        if (user is null)
         {
-            ActivityEntity updatedEntity = await repository.UpdateAsync(entity);
+            throw new InvalidOperationException("Activity cannot be without user");
+        }
+
+        ActivityEntity entity = ActivityModelMapper.MapToActivityEntity(model, user);
+
+        if (await activityRepository.ExistsAsync(entity))
+        {
+            ActivityEntity updatedEntity = await activityRepository.UpdateAsync(entity);
             result = ModelMapper.MapToDetailModel(updatedEntity);
         }
         else
         {
             entity.Id = Guid.NewGuid();
-            ActivityEntity insertedEntity = await repository.InsertAsync(entity);
+            ActivityEntity insertedEntity = await activityRepository.InsertAsync(entity);
             result = ModelMapper.MapToDetailModel(insertedEntity);
         }
 
@@ -63,8 +71,8 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
     public async Task<IEnumerable<ActivityListModel>> FilterThisYear()
     {
         int year = DateTime.Today.Year;
-        DateTime startOfYear = new (year, 1, 1);
-        DateTime endOfYear = new(year+1, 1, 1);
+        DateTime startOfYear = new(year, 1, 1);
+        DateTime endOfYear = new(year + 1, 1, 1);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
@@ -82,9 +90,9 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         DateTime lastMonthStart = new(year, month - 1, 1);
         if (month == 1)
         {
-            lastMonthStart = new(year-1, 12, 1);
+            lastMonthStart = new DateTime(year - 1, 12, 1);
         }
-        
+
         DateTime lastMonthEnd = new(year, month, 1);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
@@ -101,10 +109,10 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         int year = DateTime.Today.Year;
         int month = DateTime.Today.Month;
         DateTime thisMonthStart = new(year, month, 1);
-        DateTime thisMonthEnd = new(year, month+1, 1);
+        DateTime thisMonthEnd = new(year, month + 1, 1);
         if (month == 12)
         {
-            thisMonthEnd = new(year+1, 1, 1);
+            thisMonthEnd = new DateTime(year + 1, 1, 1);
         }
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
@@ -124,8 +132,9 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         {
             day = 7;
         }
+
         DateTime thisWeekStart = today.AddDays(1 - day);
-        DateTime thisWeekEnd = thisWeekStart.AddDays(7); 
+        DateTime thisWeekEnd = thisWeekStart.AddDays(7);
 
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
@@ -140,9 +149,9 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
     {
         IUnitOfWork uow = UnitOfWorkFactory.Create();
         IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
-        var activities = repository.Get();
+        IQueryable<ActivityEntity> activities = repository.Get();
 
-        foreach (var activity in activities)
+        foreach (ActivityEntity activity in activities)
         {
             if (activity.Id != model.Id)
             {

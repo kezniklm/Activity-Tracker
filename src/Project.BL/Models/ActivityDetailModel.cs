@@ -1,6 +1,4 @@
-﻿using Project.DAL.Entities;
-
-namespace Project.BL.Models;
+﻿namespace Project.BL.Models;
 
 public record ActivityDetailModel : ModelBase
 {

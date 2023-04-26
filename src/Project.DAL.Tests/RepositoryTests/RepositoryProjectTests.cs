@@ -7,7 +7,8 @@ public class RepositoryProjectTests : RepositoryTestsBase
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
-        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+        IRepository<ProjectEntity> RepositoryProjectSUT =
+            unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
 
         ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1" };
         DbContext.Projects.Add(projectEntity);
@@ -26,7 +27,8 @@ public class RepositoryProjectTests : RepositoryTestsBase
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
-        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+        IRepository<ProjectEntity> RepositoryProjectSUT =
+            unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
 
         ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt2" };
         DbContext.Projects.Add(projectEntity);
@@ -49,7 +51,8 @@ public class RepositoryProjectTests : RepositoryTestsBase
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
-        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+        IRepository<ProjectEntity> RepositoryProjectSUT =
+            unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
 
         ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1" };
         DbContext.Projects.Add(projectEntity);
@@ -69,7 +72,8 @@ public class RepositoryProjectTests : RepositoryTestsBase
     {
         // Setup
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
-        IRepository<ProjectEntity> RepositoryProjectSUT = unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
+        IRepository<ProjectEntity> RepositoryProjectSUT =
+            unitOfWork.GetRepository<ProjectEntity, ProjectEntityMapper>();
 
         ProjectEntity projectEntity = new() { Id = Guid.NewGuid(), Name = "Projekt1" };
 

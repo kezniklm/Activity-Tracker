@@ -15,11 +15,7 @@ public class ProjectModelMapper : ModelMapperBase<ProjectEntity, ProjectListMode
     public override ProjectDetailModel MapToDetailModel(ProjectEntity? entity)
         => entity is null
             ? ProjectDetailModel.Empty
-            : new ProjectDetailModel
-            {
-                Id = entity.Id,
-                Name = entity.Name
-            };
+            : new ProjectDetailModel { Id = entity.Id, Name = entity.Name };
 
     public override ProjectEntity MapToEntity(ProjectDetailModel model)
         => new() { Id = model.Id, Name = model.Name };

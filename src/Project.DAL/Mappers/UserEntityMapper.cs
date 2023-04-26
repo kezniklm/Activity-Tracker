@@ -1,6 +1,7 @@
 ﻿using Project.DAL.Entities;
 
 namespace Project.DAL.Mappers;
+
 public class UserEntityMapper : IEntityMapper<UserEntity>
 {
     public void MapToExistingEntity(UserEntity existingEntity, UserEntity newEntity)

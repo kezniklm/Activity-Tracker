@@ -4,8 +4,8 @@ namespace Project.DAL.Factories;
 
 public class DbContextSqLiteFactory : IDbContextFactory<ProjectDbContext>
 {
-    private readonly bool _seedDemoData;
     private readonly DbContextOptionsBuilder<ProjectDbContext> _contextOptionsBuilder = new();
+    private readonly bool _seedDemoData;
 
     public DbContextSqLiteFactory(string databaseName, bool seedDemoData = false)
     {

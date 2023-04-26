@@ -6,7 +6,8 @@ public class RepositoryActivityTests : RepositoryTestsBase
     public async Task GetOneActivity_Does_Not_Throw()
     {
         //Arrange
-        IRepository<ActivityEntity> RepositoryActivitySUT = new ActivityRepository(DbContext, new ActivityEntityMapper());
+        IRepository<ActivityEntity> RepositoryActivitySUT =
+            new ActivityRepository(DbContext, new ActivityEntityMapper());
 
         UserEntity user = new() { Id = Guid.NewGuid(), Name = "Harry", Surname = "Potter" };
 
@@ -101,7 +102,8 @@ public class RepositoryActivityTests : RepositoryTestsBase
     {
         //Arrange
         IUnitOfWork unitOfWork = UnitOfWorkFactory.Create();
-        IRepository<ActivityEntity> RepositoryActivitySUT = new ActivityRepository(DbContext, new ActivityEntityMapper());
+        IRepository<ActivityEntity> RepositoryActivitySUT =
+            new ActivityRepository(DbContext, new ActivityEntityMapper());
 
         UserEntity user = new() { Id = Guid.NewGuid(), Name = "Harry", Surname = "Potter" };
 

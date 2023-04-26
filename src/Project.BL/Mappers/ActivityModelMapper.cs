@@ -10,7 +10,10 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
     public override ActivityListModel MapToListModel(ActivityEntity? entity)
         => entity is null
             ? ActivityListModel.Empty
-            : new ActivityListModel { Id = entity.Id, ActivityType = entity.ActivityType, Start = entity.Start, End = entity.End };
+            : new ActivityListModel
+            {
+                Id = entity.Id, ActivityType = entity.ActivityType, Start = entity.Start, End = entity.End
+            };
 
     public override ActivityDetailModel MapToDetailModel(ActivityEntity? entity)
         => entity?.User is null
@@ -28,9 +31,18 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
                 ProjectId = entity.ProjectId
             };
 
-    public override ActivityEntity MapToEntity(ActivityDetailModel model)
+    public override ActivityEntity MapToEntity(ActivityDetailModel model) => throw new NotImplementedException();
+
+    public static ActivityEntity MapToActivityEntity(ActivityDetailModel model, UserEntity? user)
         => new()
         {
-            Id = model.Id, ActivityType = model.ActivityType, Start = model.Start, End = model.End, UserId = model.UserId, Description = model.Description, ProjectId = model.ProjectId, User = new(){Id = model.UserId, Name = model.UserName, Surname = model.UserSurname}
+            Id = model.Id,
+            ActivityType = model.ActivityType,
+            Start = model.Start,
+            End = model.End,
+            UserId = model.UserId,
+            Description = model.Description,
+            ProjectId = model.ProjectId,
+            User = user
         };
 }

@@ -1,6 +1,7 @@
 ﻿using KellermanSoftware.CompareNetObjects;
 
 namespace Project.Common.Tests;
+
 public static class DeepAssert
 {
     public static void Equal<T>(T? expected, T? actual, params string[] propertiesToIgnore)

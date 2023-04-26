@@ -1,6 +1,6 @@
-﻿using Project.DAL.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.DAL.Entities;
 using Project.DAL.Mappers;
-using Microsoft.EntityFrameworkCore;
 
 namespace Project.DAL.Repositories;
 

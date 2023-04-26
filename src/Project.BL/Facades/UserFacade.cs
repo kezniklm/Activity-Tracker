@@ -16,5 +16,4 @@ public class UserFacade : FacadeBase<UserEntity, UserListModel, UserDetailModel,
         : base(unitOfWorkFactory, modelMapper)
     {
     }
-
 }

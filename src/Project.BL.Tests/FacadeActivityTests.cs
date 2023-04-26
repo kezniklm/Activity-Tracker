@@ -3,21 +3,28 @@
 public class FacadeActivityTests : FacadeTestsBase
 {
     private readonly IActivityFacade _activityFacadeSUT;
+    private readonly IUserFacade _userFacadeSUT;
 
-    public FacadeActivityTests() => _activityFacadeSUT = new ActivityFacade(UnitOfWorkFactory, ActivityModelMapper);
+    public FacadeActivityTests()
+    {
+        _activityFacadeSUT = new ActivityFacade(UnitOfWorkFactory, ActivityModelMapper);
+        _userFacadeSUT = new UserFacade(UnitOfWorkFactory, UserModelMapper);
+    }
 
     [Fact]
     public async Task Create_New_Activity_Does_Not_Throw()
     {
         // Setup
+        UserDetailModel user = new() { Name = "Anton", Surname = "Bernolák" };
+        UserDetailModel actualUser = await _userFacadeSUT.SaveAsync(user);
         ActivityDetailModel activityDetail = new()
         {
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            UserId = Guid.NewGuid(),
-            UserName = "Name",
-            UserSurname = "Surname"
+            UserId = actualUser.Id,
+            UserName = actualUser.Name,
+            UserSurname = actualUser.Surname
         };
 
         // Exercise
@@ -32,14 +39,16 @@ public class FacadeActivityTests : FacadeTestsBase
     public async Task Create_New_Activity_SameTime_Throws()
     {
         // Setup
+        UserDetailModel user = new() { Name = "Anton", Surname = "Bernolák" };
+        UserDetailModel actualUser = await _userFacadeSUT.SaveAsync(user);
         ActivityDetailModel activityDetail1 = new()
         {
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            UserId = Guid.NewGuid(),
-            UserName = "Name",
-            UserSurname = "Surname"
+            UserId = actualUser.Id,
+            UserName = actualUser.Name,
+            UserSurname = actualUser.Surname
         };
 
         await _activityFacadeSUT.SaveAsync(activityDetail1);
@@ -49,9 +58,9 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 14, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            UserId = Guid.NewGuid(),
-            UserName = "Name",
-            UserSurname = "Surname"
+            UserId = actualUser.Id,
+            UserName = actualUser.Name,
+            UserSurname = actualUser.Surname
         };
 
         // Exercise & Verify
@@ -62,14 +71,16 @@ public class FacadeActivityTests : FacadeTestsBase
     public async Task Create_New_Activity_StartIsGreater_Throws()
     {
         // Setup
+        UserDetailModel user = new() { Name = "Anton", Surname = "Bernolák" };
+        UserDetailModel actualUser = await _userFacadeSUT.SaveAsync(user);
         ActivityDetailModel activityDetail = new()
         {
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 16, 0, 0),
             End = new DateTime(2023, 3, 20, 15, 0, 0),
-            UserId = Guid.NewGuid(),
-            UserName = "Name",
-            UserSurname = "Surname"
+            UserId = actualUser.Id,
+            UserName = actualUser.Name,
+            UserSurname = actualUser.Surname
         };
 
         // Exercise & Verify
@@ -80,14 +91,16 @@ public class FacadeActivityTests : FacadeTestsBase
     public async Task Get_OneActivity_Does_Not_Throw()
     {
         // Setup
+        UserDetailModel user = new() { Name = "Anton", Surname = "Bernolák" };
+        UserDetailModel actualUser = await _userFacadeSUT.SaveAsync(user);
         ActivityDetailModel activityDetail = new()
         {
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            UserId = Guid.NewGuid(),
-            UserName = "Name",
-            UserSurname = "Surname"
+            UserId = actualUser.Id,
+            UserName = actualUser.Name,
+            UserSurname = actualUser.Surname
         };
         ActivityDetailModel expectedDetail = await _activityFacadeSUT.SaveAsync(activityDetail);
 
@@ -109,7 +122,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
         dbContext.Activities.Add(activityEntity);
@@ -127,14 +140,16 @@ public class FacadeActivityTests : FacadeTestsBase
     public async Task Delete_Activity_Does_Not_Throw()
     {
         // Setup
+        UserDetailModel user = new() { Name = "Anton", Surname = "Bernolák" };
+        UserDetailModel actualUser = await _userFacadeSUT.SaveAsync(user);
         ActivityDetailModel activityDetail = new()
         {
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            UserId = Guid.NewGuid(),
-            UserName = "Name",
-            UserSurname = "Surname"
+            UserId = actualUser.Id,
+            UserName = actualUser.Name,
+            UserSurname = actualUser.Surname
         };
         ActivityDetailModel expectedDetail = await _activityFacadeSUT.SaveAsync(activityDetail);
 
@@ -157,7 +172,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -167,7 +182,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 22, 15, 0, 0),
             End = new DateTime(2023, 3, 22, 16, 0, 0),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity3 = new()
@@ -177,7 +192,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 23, 15, 0, 0),
             End = new DateTime(2023, 3, 23, 16, 0, 0),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -215,7 +230,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -225,7 +240,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2022, 3, 22, 15, 0, 0),
             End = new DateTime(2022, 3, 22, 16, 0, 0),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -257,7 +272,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 1, 20, 15, 0, 0),
             End = new DateTime(2023, 1, 20, 16, 0, 0),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -267,7 +282,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 4, 5, 15, 0, 0),
             End = new DateTime(2023, 4, 5, 16, 0, 0),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -299,7 +314,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 4, 1, 15, 0, 0),
             End = new DateTime(2023, 4, 1, 16, 0, 0),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -309,7 +324,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 31, 15, 0, 0),
             End = new DateTime(2023, 3, 31, 16, 0, 0),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -344,7 +359,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = today.AddDays(-8),
             End = today.AddDays(-8),
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -354,7 +369,7 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = today,
             End = today,
-            User = new UserEntity {Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -375,20 +390,21 @@ public class FacadeActivityTests : FacadeTestsBase
         Assert.Contains(list2, activityListModels);
     }
 
-    [Fact(Skip = "Todo: fix update")]
+    [Fact]
     public async Task UpdateActivity_Does_Not_Throw()
     {
         // Setup
+        UserDetailModel user = new() { Name = "Anton", Surname = "Bernolák" };
+        UserDetailModel actualUser = await _userFacadeSUT.SaveAsync(user);
         ActivityDetailModel activity = new()
         {
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            UserId = Guid.NewGuid(),
-            UserName = "Name",
-            UserSurname = "Surname"
+            UserId = actualUser.Id,
+            UserName = actualUser.Name,
+            UserSurname = actualUser.Surname
         };
-
         ActivityDetailModel newActivity = await _activityFacadeSUT.SaveAsync(activity);
 
         // Exercise
@@ -397,7 +413,8 @@ public class FacadeActivityTests : FacadeTestsBase
 
         // Verify
         await using ProjectDbContext dbxAssert = await DbContextFactory.CreateDbContextAsync();
-        ActivityEntity activityFromDb = await dbxAssert.Activities.SingleAsync(i => i.Id == updatedActivity.Id);
+        ActivityEntity activityFromDb =
+            await dbxAssert.Activities.Include(i => i.User).SingleAsync(i => i.Id == updatedActivity.Id);
         DeepAssert.Equal(updatedActivity, ActivityModelMapper.MapToDetailModel(activityFromDb));
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Project.DAL.Entities;
 
 namespace Project.DAL.Repositories;
+
 public interface IRepository<TEntity>
     where TEntity : class, IEntity
 {

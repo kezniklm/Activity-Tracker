@@ -3,8 +3,6 @@
 public class RepositoryTestsBase : IAsyncLifetime
 {
     protected ProjectDbContext DbContext;
-    protected IDbContextFactory<ProjectDbContext> DbContextFactory { get; }
-    protected IUnitOfWorkFactory UnitOfWorkFactory { get; set; }
 
     public RepositoryTestsBase()
     {
@@ -12,6 +10,9 @@ public class RepositoryTestsBase : IAsyncLifetime
         DbContext = DbContextFactory.CreateDbContext();
         UnitOfWorkFactory = new UnitOfWorkFactory(DbContextFactory);
     }
+
+    protected IDbContextFactory<ProjectDbContext> DbContextFactory { get; }
+    protected IUnitOfWorkFactory UnitOfWorkFactory { get; set; }
 
     public async Task InitializeAsync()
     {

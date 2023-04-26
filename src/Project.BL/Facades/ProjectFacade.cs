@@ -51,11 +51,11 @@ public class ProjectFacade : FacadeBase<ProjectEntity, ProjectListModel, Project
     {
         IUnitOfWork uow = UnitOfWorkFactory.Create();
         IRepository<ProjectEntity> repository = uow.GetRepository<ProjectEntity, ProjectEntityMapper>();
-        var projects = repository.Get();
+        IQueryable<ProjectEntity> projects = repository.Get();
 
-        foreach (var project in projects) 
+        foreach (ProjectEntity project in projects)
         {
-            if ((project.Name == saveProjectDetail.Name) && (project.Id != saveProjectDetail.Id))
+            if (project.Name == saveProjectDetail.Name && project.Id != saveProjectDetail.Id)
             {
                 throw new InvalidOperationException("Two projects can not have the same name!");
             }
