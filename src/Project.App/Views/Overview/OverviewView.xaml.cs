@@ -1,9 +1,11 @@
+using Project.App.ViewModels;
+
 namespace Project.App.Views.Overview;
 
-public partial class OverviewView : ContentPage
+public partial class OverviewView
 {
-	public OverviewView()
-	{
-		InitializeComponent();
-	}
+    public OverviewView(OverviewViewModel viewModel) : base(viewModel)
+    {
+        InitializeComponent();
+    }
 }

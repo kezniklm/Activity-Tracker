@@ -2,6 +2,7 @@
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Project.App.Services;
+using Project.BL;
 
 [assembly: System.Resources.NeutralResourcesLanguage("en")]
 namespace Project.App;
@@ -22,6 +23,7 @@ public static class MauiProgram
         ConfigureAppSettings(builder);
         builder.Services
             .AddDALServices(builder.Configuration)
+            .AddBLServices()
             .AddAppServices();
 
         var app = builder.Build();

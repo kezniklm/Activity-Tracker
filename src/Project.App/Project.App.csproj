@@ -56,13 +56,20 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Scrutor" Version="4.2.2" />
 	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Project.BL\Project.BL.csproj" />
   </ItemGroup>
 
-	<ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\ContentPageBase.xaml.cs">
+      <DependentUpon>ContentPageBase.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
 	  <MauiXaml Update="Views\Activities\ActivityListView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
