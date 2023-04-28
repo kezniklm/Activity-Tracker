@@ -7,25 +7,13 @@
                        x:Class="Project.App.Views.Overview.OverviewView"
                        x:DataType="vm:OverviewViewModel"
                        Title="Overview">
-    <VerticalStackLayout>
-        <CollectionView ItemsSource="{Binding Path=Users}">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Horizontal"
-                                 HorizontalItemSpacing="10"
-                                 VerticalItemSpacing="10"/>
-            </CollectionView.ItemsLayout>
-
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="m:UserListModel">
-                    <Frame>
-                        <Label Margin="22,12"
-                               FontSize="20"
-                               LineBreakMode="WordWrap"
-                               Text="{Binding Path=Name}"
-                               TextColor="Black"/>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+    <CollectionView ItemsSource="{Binding Users}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="m:UserListModel">
+                <Label FontSize="20"
+                       Text="{Binding Path=Name}"
+                       TextColor="Red"/>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </views:ContentPageBase>

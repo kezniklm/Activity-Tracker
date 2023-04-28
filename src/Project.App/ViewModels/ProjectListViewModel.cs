@@ -6,5 +6,9 @@ public partial class ProjectListViewModel : ViewModelBase
 {
     private readonly INavigationService _navigationService;
 
-    public ProjectListViewModel(INavigationService navigationService) => _navigationService = navigationService;
+    public ProjectListViewModel(INavigationService navigationService,
+        IMessengerService messengerService) : base(messengerService)
+    {
+        _navigationService = navigationService;
+    }
 }

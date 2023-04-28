@@ -1,4 +1,5 @@
-﻿using Project.App.Services;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Project.App.Services;
 using Project.App.ViewModels;
 using Project.App.Views;
 
@@ -9,6 +10,9 @@ public static class AppInstaller
     public static IServiceCollection AddAppServices(this IServiceCollection services)
     {
         services.AddSingleton<AppShell>();
+
+        services.AddSingleton<IMessenger>(_ => StrongReferenceMessenger.Default);
+        services.AddSingleton<IMessengerService, MessengerService>();
 
         services.Scan(selector => selector
             .FromAssemblyOf<App>()
