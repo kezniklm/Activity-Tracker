@@ -1,6 +1,7 @@
 ﻿using Project.App.Models;
 using Project.App.ViewModels;
 using Project.App.Views.Activities;
+using Project.App.Views.Login;
 using Project.App.Views.Overview;
 using Project.App.Views.Projects;
 
@@ -12,7 +13,8 @@ public class NavigationService : INavigationService
     {
         new("//activities", typeof(ActivityListView), typeof(ActivityListViewModel)),
         new("//projects", typeof(ProjectListView), typeof(ProjectListViewModel)),
-        new("//overview", typeof(OverviewView), typeof(OverviewViewModel))
+        new("//overview", typeof(OverviewView), typeof(OverviewViewModel)),
+        new("//login", typeof(LoginView), typeof(LoginViewModel))
     };
 
     public async Task GoToAsync<TViewModel>()

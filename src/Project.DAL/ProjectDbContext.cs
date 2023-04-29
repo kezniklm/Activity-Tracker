@@ -47,7 +47,9 @@ public class ProjectDbContext : DbContext
 
         if (_seedDemoData)
         {
-            modelBuilder.Seed();
+            UserSeeds.Seed(modelBuilder);
+            ProjectSeeds.Seed(modelBuilder);
+            ActivitySeeds.Seed(modelBuilder);
         }
     }
 }
