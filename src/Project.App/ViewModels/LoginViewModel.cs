@@ -19,7 +19,6 @@ public partial class LoginViewModel : ViewModelBase
     {
         _navigationService = navigationService;
         _userFacade = userFacade;
-        LoadDataAsync();
     }
 
     public override async Task LoadDataAsync()
