@@ -15,8 +15,7 @@ public partial class ContentPageBase
 
     protected override async void OnAppearing()
     {
-        base.OnAppearing();
-
         await ViewModel.OnAppearingAsync();
+        base.OnAppearing();
     }
 }
