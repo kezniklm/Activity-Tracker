@@ -11,7 +11,7 @@ public static class ActivitySeeds
         ActivityType = "Projekt",
         Start = new DateTime(2023, 03, 05, 10, 0, 0),
         End = new DateTime(2023, 03, 05, 11, 0, 0),
-        UserId = Guid.Parse("269E8B7C-C61E-4261-9446-7810288FB52D"),
+        UserId = UserSeeds.User2.Id
     };
 
     public static readonly ActivityEntity Activity2 = new()
@@ -20,7 +20,7 @@ public static class ActivitySeeds
         ActivityType = "beh",
         Start = new DateTime(2023, 03, 05, 12, 0, 0),
         End = new DateTime(2023, 03, 05, 13, 0, 0),
-        UserId = Guid.Parse("269E8B7C-C61E-4261-9446-7810288FB52D"),
+        UserId = UserSeeds.User2.Id
     };
 
     public static readonly ActivityEntity Activity3 = new()
@@ -29,7 +29,7 @@ public static class ActivitySeeds
         ActivityType = "skola",
         Start = new DateTime(2023, 03, 05, 14, 0, 0),
         End = new DateTime(2023, 03, 05, 15, 0, 0),
-        UserId = Guid.Parse("269E8B7C-C61E-4261-9446-7810288FB52D"),
+        UserId = UserSeeds.User1.Id
     };
 
     public static void Seed(this ModelBuilder modelBuilder) =>

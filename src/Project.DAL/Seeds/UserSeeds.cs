@@ -9,14 +9,14 @@ public static class UserSeeds
     {
         Id = Guid.Parse("269E8B7C-C61E-4261-9446-7810288FB52D"),
         Name = "John",
-        Surname = "Doe"
+        Surname = "Doe",
     };
 
     public static readonly UserEntity User2 = new()
     {
         Id = Guid.Parse("8A96B175-22DC-4F9C-96E0-DA7B10C6344D"),
         Name = "Oliver",
-        Surname = "Smith"
+        Surname = "Smith",
     };
 
     public static readonly UserEntity User3 = new()

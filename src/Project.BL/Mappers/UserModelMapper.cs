@@ -1,4 +1,5 @@
-﻿using Project.BL.Mappers.Interfaces;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using Project.BL.Mappers.Interfaces;
 using Project.BL.Models;
 using Project.DAL.Entities;
 
@@ -7,6 +8,15 @@ namespace Project.BL.Mappers;
 public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDetailModel>,
     IUserModelMapper
 {
+    private readonly IUserProjectModelMapper _userProjectModelMapper;
+    private readonly IActivityModelMapper _activityModelMapper;
+
+    public UserModelMapper(IUserProjectModelMapper userProjectModelMapper, IActivityModelMapper activityModelMapper)
+    {
+        _userProjectModelMapper = userProjectModelMapper;
+        _activityModelMapper = activityModelMapper;
+    }
+
     public override UserListModel MapToListModel(UserEntity? entity)
         => entity is null
             ? UserListModel.Empty
@@ -20,7 +30,14 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
             ? UserDetailModel.Empty
             : new UserDetailModel
             {
-                Id = entity.Id, Name = entity.Name, Surname = entity.Surname, PhotoUrl = entity.PhotoUrl
+                Id = entity.Id,
+                Name = entity.Name,
+                Surname = entity.Surname,
+                PhotoUrl = entity.PhotoUrl,
+                Projects = _userProjectModelMapper.MapToListModel(entity.Projects)
+                    .ToObservableCollection(),
+                Activities = _activityModelMapper.MapToEnumerableList(entity.Activities)
+                    .ToObservableCollection()
             };
 
     public override UserEntity MapToEntity(UserDetailModel model)

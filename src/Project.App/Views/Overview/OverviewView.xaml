@@ -6,14 +6,27 @@
                        xmlns:views="clr-namespace:Project.App.Views"
                        x:Class="Project.App.Views.Overview.OverviewView"
                        x:DataType="vm:OverviewViewModel"
+                       x:Name="OverviewViewRoot"
                        Title="Overview">
-    <CollectionView ItemsSource="{Binding Users}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="m:UserListModel">
-                <Label FontSize="20"
-                       Text="{Binding Path=Name}"
-                       TextColor="Red"/>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <VerticalStackLayout>
+        <Label
+            Text="{Binding Id}"></Label>
+        <Label
+            Text="{Binding User.Name}"></Label>
+        <VerticalStackLayout>
+            <CollectionView ItemsSource="{Binding User.Activities}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:ActivityListModel">
+                        <Label FontSize="20"
+                               Text="{Binding Path=ActivityType}"
+                               TextColor="Red"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+        <Button
+            Text="Add Activity"
+            Command="{Binding CreateActivityCommand}">
+        </Button>
+    </VerticalStackLayout>
 </views:ContentPageBase>

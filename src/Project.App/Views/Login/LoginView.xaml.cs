@@ -4,7 +4,7 @@ namespace Project.App.Views.Login;
 
 public partial class LoginView
 {
-    public LoginView(OverviewViewModel viewModel) : base(viewModel)
+    public LoginView(LoginViewModel viewModel) : base(viewModel)
     {
         InitializeComponent();
     }

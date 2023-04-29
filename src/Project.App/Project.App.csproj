@@ -84,6 +84,9 @@
 	  <MauiXaml Update="Views\Login\LoginView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Overview\ActivityEditView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Overview\OverviewView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -8,14 +8,15 @@
              x:DataType="vm:LoginViewModel"
              Title="Login">
     <VerticalStackLayout>
-        <CollectionView ItemsSource="{Binding Users}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="m:UserListModel">
-                    <Label FontSize="20"
-                           Text="{Binding Path=Name}"
-                           TextColor="Red"/>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <Picker
+            ItemsSource="{Binding Users}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding SelectedUser}"
+            SelectedIndex="0">
+        </Picker>
+        <Button
+            Text="Login"
+            Command="{Binding GoToOverviewCommand}">
+        </Button>
     </VerticalStackLayout>
 </views:ContentPageBase>

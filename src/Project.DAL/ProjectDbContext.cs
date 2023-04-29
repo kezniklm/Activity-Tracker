@@ -50,6 +50,7 @@ public class ProjectDbContext : DbContext
             UserSeeds.Seed(modelBuilder);
             ProjectSeeds.Seed(modelBuilder);
             ActivitySeeds.Seed(modelBuilder);
+            UserProjectsSeeds.Seed(modelBuilder);
         }
     }
 }

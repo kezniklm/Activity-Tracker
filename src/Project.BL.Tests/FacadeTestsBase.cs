@@ -13,8 +13,8 @@ public class FacadeTestsBase : IAsyncLifetime
 
         ActivityModelMapper = new ActivityModelMapper();
         ProjectModelMapper = new ProjectModelMapper();
-        UserModelMapper = new UserModelMapper();
         UserProjectModelMapper = new UserProjectModelMapper();
+        UserModelMapper = new UserModelMapper(UserProjectModelMapper, ActivityModelMapper);
 
         UnitOfWorkFactory = new UnitOfWorkFactory(DbContextFactory);
     }

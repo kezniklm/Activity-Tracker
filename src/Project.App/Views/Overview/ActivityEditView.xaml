@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="using:Project.App.Views"
+             x:Class="Project.App.Views.Overview.ActivityEditView"
+             xmlns:vm="clr-namespace:Project.App.ViewModels"
+             x:DataType="vm:ActivityEditViewModel"
+             Title="ActivityEditView">
+    <VerticalStackLayout>
+        <Label Text="Activity Type"></Label>
+        <Entry
+            Text="{Binding Activity.ActivityType}"></Entry>
+
+        <Label Text="Description"></Label>
+        <Entry
+            Text="{Binding Activity.Description}"></Entry>
+
+        <Label
+            Text="Start"></Label>
+        <DatePicker></DatePicker>
+
+        <Label
+            Text="End"></Label>
+        <DatePicker></DatePicker>
+
+
+
+        <Button
+            Text="Save"
+            Command="{Binding SaveCommand}">
+        </Button>
+    </VerticalStackLayout>
+</views:ContentPageBase>

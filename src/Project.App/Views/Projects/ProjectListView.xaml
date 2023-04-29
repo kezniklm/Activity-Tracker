@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Project.App.Views.Projects.ProjectListView"
-             Title="ProjectListView">
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:m="clr-namespace:Project.BL.Models;assembly=Project.BL"
+                       xmlns:vm="clr-namespace:Project.App.ViewModels"
+                       xmlns:views="clr-namespace:Project.App.Views"
+                       x:Class="Project.App.Views.Projects.ProjectListView"
+                       x:DataType="vm:ProjectListViewModel"
+                       Title="Projects">
     <VerticalStackLayout>
-        <Label 
-            Text="Projects!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label
+            Text="{Binding User.Name}"></Label>
+        <VerticalStackLayout>
+            <CollectionView ItemsSource="{Binding User.Projects}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:UserProjectListModel">
+                        <Label FontSize="20"
+                               Text="{Binding UserId}"
+                               TextColor="Red"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <CollectionView ItemsSource="{Binding User.Projects}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:UserProjectListModel">
+                        <Label FontSize="20"
+                               Text="{Binding ProjectId}"
+                               TextColor="Blue"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
     </VerticalStackLayout>
-</ContentPage>
+</views:ContentPageBase>

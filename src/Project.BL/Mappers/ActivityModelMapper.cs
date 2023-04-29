@@ -45,4 +45,18 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             ProjectId = model.ProjectId,
             User = user
         };
+
+    public IEnumerable<ActivityListModel> MapToEnumerableList(ICollection<ActivityEntity> activities)
+    {
+        IEnumerable<ActivityListModel> result = new List<ActivityListModel>();
+        foreach (ActivityEntity activity in activities)
+        {
+            ActivityListModel activityListModel = new()
+            {
+                ActivityType = activity.ActivityType, Start = activity.Start, End = activity.End, Id = activity.Id
+            };
+            result = result.Append(activityListModel);
+        }
+        return result;
+    }
 }

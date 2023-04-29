@@ -3,8 +3,13 @@
 public class FacadeUserTests : FacadeTestsBase
 {
     private readonly IUserFacade _userFacadeSUT;
+    private readonly IActivityFacade _activityFacadeSUT;
 
-    public FacadeUserTests() => _userFacadeSUT = new UserFacade(UnitOfWorkFactory, UserModelMapper);
+    public FacadeUserTests()
+    {
+        _activityFacadeSUT = new ActivityFacade(UnitOfWorkFactory, ActivityModelMapper);
+        _userFacadeSUT = new UserFacade(UnitOfWorkFactory, UserModelMapper);
+    }
 
     [Fact]
     public async Task Create_WithNonExistingItem_DoesNotThrow()
@@ -123,5 +128,25 @@ public class FacadeUserTests : FacadeTestsBase
         await using ProjectDbContext dbxAssert = await DbContextFactory.CreateDbContextAsync();
         UserEntity userFromDB = await dbxAssert.Users.SingleAsync(i => i.Id == actualUpdate.Id);
         DeepAssert.Equal(actualUpdate, UserModelMapper.MapToDetailModel(userFromDB));
+    }
+
+    [Fact]
+    public async Task GetOne_User_Activity_Does_Not_Throw()
+    {
+        UserDetailModel user = new() { Name = "Anton", Surname = "Bernolák" };
+        UserDetailModel actualUser = await _userFacadeSUT.SaveAsync(user);
+        ActivityDetailModel activityDetail = new()
+        {
+            ActivityType = "Activity",
+            Start = new DateTime(2023, 3, 20, 15, 0, 0),
+            End = new DateTime(2023, 3, 20, 16, 0, 0),
+            UserId = actualUser.Id,
+            UserName = actualUser.Name,
+            UserSurname = actualUser.Surname
+        };
+        ActivityDetailModel expectedDetail = await _activityFacadeSUT.SaveAsync(activityDetail);
+
+        UserDetailModel? actualDetail = await _userFacadeSUT.GetAsync(actualUser.Id, "Activities");
+        Assert.NotNull(actualDetail);
     }
 }
