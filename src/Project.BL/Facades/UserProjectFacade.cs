@@ -1,4 +1,5 @@
-﻿using Project.BL.Facades.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.BL.Facades.Interfaces;
 using Project.BL.Mappers.Interfaces;
 using Project.BL.Models;
 using Project.DAL.Entities;
@@ -11,10 +12,51 @@ public class UserProjectFacade :
     FacadeBase<UserProjectEntity, UserProjectListModel, UserProjectDetailModel,
         UserProjectEntityMapper>, IUserProjectFacade
 {
+    protected readonly IModelMapperBase<ProjectEntity, ProjectListModel, ProjectDetailModel> ProjectMapper;
+
     public UserProjectFacade(
         IUnitOfWorkFactory unitOfWorkFactory,
-        IUserProjectModelMapper modelMapper)
-        : base(unitOfWorkFactory, modelMapper)
+        IUserProjectModelMapper modelMapper, IProjectModelMapper projectMapper)
+        : base(unitOfWorkFactory, modelMapper) =>
+        ProjectMapper = projectMapper;
+
+    public async Task<IEnumerable<ProjectListModel>?> DisplayProjectsOfUser(Guid userId)
     {
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        List<UserProjectEntity>? entities = await uow.GetRepository<UserProjectEntity, UserProjectEntityMapper>().Get()
+            .Where(e => e.UserId == userId).ToListAsync();
+        List<ProjectListModel>? result = new();
+
+        foreach (UserProjectEntity entity in entities)
+        {
+            ProjectEntity? projectEntity =
+                await uow.GetRepository<ProjectEntity, ProjectEntityMapper>().GetOneAsync(entity.ProjectId);
+
+            result.Add(ProjectMapper.MapToListModel(projectEntity));
+        }
+
+        return result is not null
+            ? result.AsEnumerable()
+            : null;
+    }
+
+    public async Task<IEnumerable<ProjectListModel>?> DoNotDisplayProjectsOfUser(Guid userId)
+    {
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        List<UserProjectEntity>? entities = await uow.GetRepository<UserProjectEntity, UserProjectEntityMapper>().Get()
+            .Where(e => e.UserId != userId).ToListAsync();
+        List<ProjectListModel>? result = new();
+
+        foreach (UserProjectEntity entity in entities)
+        {
+            ProjectEntity? projectEntity =
+                await uow.GetRepository<ProjectEntity, ProjectEntityMapper>().GetOneAsync(entity.ProjectId);
+
+            result.Add(ProjectMapper.MapToListModel(projectEntity));
+        }
+
+        return result is not null
+            ? result.AsEnumerable()
+            : null;
     }
 }
