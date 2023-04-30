@@ -7,6 +7,7 @@ using Project.BL.Models;
 namespace Project.App.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
+[QueryProperty(nameof(ActivityId), nameof(ActivityId))]
 public partial class ActivityEditViewModel : ViewModelBase
 {
     private readonly INavigationService _navigationService;
@@ -16,15 +17,17 @@ public partial class ActivityEditViewModel : ViewModelBase
 
     public Guid Id { get; set; }
 
-    public DateTime StartDate { get; set; }
+    public Guid ActivityId { get; set; } 
+
+    public DateTime StartDate { get; set; } = DateTime.Today;
     public TimeSpan StartTime { get; set; }
-    public DateTime EndDate { get; set; }
-    public TimeSpan EndTime { get; set; }
+    public DateTime EndDate { get; set; } = DateTime.Today;
+    public TimeSpan EndTime { get; set; } 
 
     public List<ProjectListModel> Projects { get; set; } = null!;
     public ProjectListModel? SelectedProject { get; set; } = ProjectListModel.Empty;
 
-    public ActivityDetailModel Activity { get; init; } = ActivityDetailModel.Empty;
+    public ActivityDetailModel? Activity { get; set; } = ActivityDetailModel.Empty;
 
     public ActivityEditViewModel(
         IMessengerService messengerService,
@@ -44,6 +47,11 @@ public partial class ActivityEditViewModel : ViewModelBase
         await base.LoadDataAsync();
         var projects = await _userProjectFacade.DisplayProjectsOfUser(Id);
         Projects = projects.ToList();
+
+        if (ActivityId != Guid.Empty)
+        {
+            Activity = await _activityFacade.GetAsync(ActivityId, "User");
+        }
     }
 
     [RelayCommand]

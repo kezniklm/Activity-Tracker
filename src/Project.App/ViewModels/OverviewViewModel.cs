@@ -43,6 +43,12 @@ public partial class OverviewViewModel : ViewModelBase, IRecipient<UserLoginMess
         await _navigationService.GoToAsync("/edit", new Dictionary<string, object?> { [nameof(ActivityEditViewModel.Id)] = Id});
     }
 
+    [RelayCommand]
+    public async Task EditActivityAsync(Guid SelectedActivityId)
+    {
+        await _navigationService.GoToAsync("/edit", new Dictionary<string, object?> { [nameof(ActivityEditViewModel.ActivityId)] = SelectedActivityId, [nameof(ActivityEditViewModel.Id)] = Id});
+    }
+
     public async void Receive(ActivityEditMessage message)
     {
         await LoadDataAsync();

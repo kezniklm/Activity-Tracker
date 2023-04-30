@@ -10,22 +10,53 @@
                        Title="Overview">
     <VerticalStackLayout>
         <Label
-            Text="{Binding User.Name}"></Label>
+            Text="{Binding User.Name}"
+            Margin="10"></Label>
 
         <Button
             Text="Add Activity"
-            Command="{Binding CreateActivityCommand}">
+            Command="{Binding CreateActivityCommand}"
+            Margin="10">
         </Button>
 
         <Label
-            Text="My activities:"></Label>
+            Text="My activities:"
+            Margin="20"></Label>
         <VerticalStackLayout>
-            <CollectionView ItemsSource="{Binding User.Activities}">
+            <CollectionView ItemsSource="{Binding User.Activities}" x:Name="ActivitiesCollection">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="m:ActivityListModel">
-                        <Label FontSize="20"
-                               Text="{Binding Path=ActivityType}"
-                               TextColor="Red"/>
+                        <Grid>
+                            <Frame>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="600"></ColumnDefinition>
+                                        <ColumnDefinition Width="150"></ColumnDefinition>
+                                        <ColumnDefinition Width="150"></ColumnDefinition>
+                                        <ColumnDefinition Width="190"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label FontSize="20"
+                                           Text="{Binding Path=ActivityType}"
+                                           TextColor="Red"
+                                           VerticalTextAlignment="Center"
+                                           Grid.Column="0"></Label>
+                                    <Label Text="{Binding Path=Start}"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           Grid.Column="1"></Label>
+                                    <Label Text="{Binding Path=End}"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           Grid.Column="2"></Label>
+                                    <Button Text="Edit"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Center"
+                                            Grid.Column="3"
+                                            Command="{Binding Source={x:Reference ActivitiesCollection}, Path=BindingContext.EditActivityCommand}"
+                                            CommandParameter="{Binding Path=Id}"></Button>
+                                </Grid>
+                            </Frame>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
