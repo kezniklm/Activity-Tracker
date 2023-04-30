@@ -1,3 +1,5 @@
+using Project.BL.Mappers.Interfaces;
+
 namespace Project.BL.Tests;
 
 public class FacadeTestsBase : IAsyncLifetime
@@ -12,8 +14,8 @@ public class FacadeTestsBase : IAsyncLifetime
         UserProjectEntityMapper = new UserProjectEntityMapper();
 
         ActivityModelMapper = new ActivityModelMapper();
-        ProjectModelMapper = new ProjectModelMapper();
         UserProjectModelMapper = new UserProjectModelMapper();
+        ProjectModelMapper = new ProjectModelMapper(ActivityModelMapper, UserProjectModelMapper);
         UserModelMapper = new UserModelMapper(UserProjectModelMapper, ActivityModelMapper);
 
         UnitOfWorkFactory = new UnitOfWorkFactory(DbContextFactory);

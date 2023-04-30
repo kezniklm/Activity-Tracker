@@ -11,7 +11,8 @@ public static class ActivitySeeds
         ActivityType = "Projekt",
         Start = new DateTime(2023, 03, 05, 10, 0, 0),
         End = new DateTime(2023, 03, 05, 11, 0, 0),
-        UserId = UserSeeds.User2.Id
+        UserId = UserSeeds.User1.Id,
+        ProjectId = ProjectSeeds.Project1.Id
     };
 
     public static readonly ActivityEntity Activity2 = new()

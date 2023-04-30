@@ -211,7 +211,7 @@ public class FacadeUserProjectTests : FacadeTestsBase
         UserProjectDetailModel expectedUserProject2 = await _userProjectFacadeSUT.SaveAsync(userProject2);
 
         //Exercise
-        IEnumerable<ProjectListModel>? projectsList = await _userProjectFacadeSUT.DoNotDisplayProjectsOfUser(newUser1.Id);
+        IEnumerable<ProjectListModel>? projectsList = await _userProjectFacadeSUT.DisplayOtherProjectsForUser(newUser1.Id);
 
         // Verify
         await using ProjectDbContext dbxAssert = await DbContextFactory.CreateDbContextAsync();

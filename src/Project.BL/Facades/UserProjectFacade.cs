@@ -40,7 +40,7 @@ public class UserProjectFacade :
             : null;
     }
 
-    public async Task<IEnumerable<ProjectListModel>?> DoNotDisplayProjectsOfUser(Guid userId)
+    public async Task<IEnumerable<ProjectListModel>?> DisplayOtherProjectsForUser(Guid userId)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<UserProjectEntity>? entities = await uow.GetRepository<UserProjectEntity, UserProjectEntityMapper>().Get()

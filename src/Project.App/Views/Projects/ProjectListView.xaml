@@ -6,52 +6,70 @@
                        xmlns:views="clr-namespace:Project.App.Views"
                        x:Class="Project.App.Views.Projects.ProjectListView"
                        x:DataType="vm:ProjectListViewModel"
+                       x:Name="ProjectListViewRoot"
                        Title="Projects">
     <VerticalStackLayout>
-        <VerticalStackLayout>
-            <Button Text="Vytvoriť nový projekt"
-                    Command="{Binding GoToCreateProjectCommand}"/>
-            <Label
-                Text="{Binding User.Name}"></Label>
-        
-            <!--<CollectionView ItemsSource="{Binding User.Projects}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="m:UserProjectListModel">
-                        <Label FontSize="20"
-                               Text="{Binding UserId}"
-                               TextColor="Red"/>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>-->
-
-            <CollectionView ItemsSource="{Binding User.Projects}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="m:UserProjectListModel">
-                        
+        <Button Text="Vytvoriť nový projekt"
+                Command="{Binding GoToCreateProjectCommand}"/>
+        <Label
+            Text="{Binding User.Name}"></Label>
+        <Label Text="My projects"></Label>
+        <CollectionView ItemsSource="{Binding MyProjects}" x:Name="ProjectsCollection">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ProjectListModel">
+                    <Grid>
+                        <Frame>
+                            <Label FontSize="15"
+                               Text="{Binding Name}"
+                               TextColor="Blue"
+                               HorizontalTextAlignment="Center"
+                               HorizontalOptions="Start"
+                            />
+                        </Frame>
                         <Grid>
-                            <Frame>
-                                <Label FontSize="15"
-                                   Text="{Binding ProjectId}"
-                                   TextColor="Blue"
-                                   HorizontalTextAlignment="Center"
-                                   HorizontalOptions="Start"
-                                   
-                                />
-                            </Frame>
-                            
-                            <Button  Text="Upraviť"
-                                     HorizontalOptions="End"
+                            <Button  Text="Edit"
                                      TextColor="White"
                                      BackgroundColor="Green"
-                                     HeightRequest="10">
-                                    
+                                     HeightRequest="10"
+                                     HorizontalOptions="Center"
+                                     Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.GotoEditProjectCommand}"
+                                     CommandParameter="{Binding Id}"
+                                    >
                             </Button>
-
+                            <Button  Text="Log out"
+                                     TextColor="White"
+                                     BackgroundColor="Red"
+                                     HeightRequest="10"
+                                     HorizontalOptions="End"
+                                    >
+                            </Button>
                         </Grid>
-                        
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="Other projects"></Label>
+        <CollectionView ItemsSource="{Binding OtherProjects}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ProjectListModel">
+                    <Grid>
+                        <Frame>
+                            <Label FontSize="15"
+                                   Text="{Binding Name}"
+                                   TextColor="Red"
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Start"
+                            />
+                        </Frame>
+                        <Button  Text="Join project"
+                                 HorizontalOptions="End"
+                                 TextColor="White"
+                                 BackgroundColor="Green"
+                                 HeightRequest="10">
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </views:ContentPageBase>

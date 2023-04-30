@@ -42,4 +42,21 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
 
     public override UserEntity MapToEntity(UserDetailModel model)
         => new() { Id = model.Id, Name = model.Name, Surname = model.Surname, PhotoUrl = model.PhotoUrl };
+
+    public IEnumerable<UserListModel> MapToEnumerableList(ICollection<UserEntity> users)
+    {
+        IEnumerable<UserListModel> result = new List<UserListModel>();
+        foreach (UserEntity user in users)
+        {
+            UserListModel userListModel = new()
+            {
+                Name = user.Name,
+                Surname = user.Surname,
+                PhotoUrl = user.PhotoUrl,
+                Id = user.Id
+            };
+            result = result.Append(userListModel);
+        }
+        return result;
+    }
 }
