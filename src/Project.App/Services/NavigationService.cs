@@ -17,6 +17,11 @@ public class NavigationService : INavigationService
         new("//login", typeof(LoginView), typeof(LoginViewModel)),
 
         new("//overview/edit", typeof(ActivityEditView), typeof(ActivityEditViewModel)),
+        new("//login/edit", typeof(UserEditView), typeof(UserEditViewModel)),
+        new("//login/detail", typeof(UserDetailView), typeof(UserDetailViewModel)),
+        new("//login/detail/edit", typeof(UserEditView), typeof(UserEditViewModel)),
+
+        new("//projects/create", typeof(ProjectCreateView), typeof(ProjectCreateViewModel))
     };
 
     public async Task GoToAsync<TViewModel>()

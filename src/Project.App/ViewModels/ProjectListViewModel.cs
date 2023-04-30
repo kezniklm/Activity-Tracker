@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Project.App.Messages;
 using Project.App.Services;
 using Project.BL.Facades.Interfaces;
@@ -34,5 +35,12 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     {
         Id = message.UserId;
         await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    public async Task GoToCreateProjectAsync()
+    {
+        await _navigationService.GoToAsync( "/create",
+            new Dictionary<string, object?> { [nameof(ProjectCreateViewModel.Id)] = Id });
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="using:Project.App.Views"
+             x:Class="Project.App.Views.Login.UserEditView"
+             xmlns:vm="clr-namespace:Project.App.ViewModels"
+             Title="UserEditView"
+             x:DataType="vm:UserEditViewModel">
+    <VerticalStackLayout>
+        <Label
+            Text="Name">
+        </Label>
+        <Entry
+            Text="{Binding User.Name}">
+        </Entry>
+
+        <Label
+            Text="Surname">
+        </Label>
+        <Entry
+            Text="{Binding User.Surname}">
+        </Entry>
+
+        <Button
+            Text="Save"
+            Command="{Binding SaveUserCommand}">
+        </Button>
+    </VerticalStackLayout>
+</views:ContentPageBase>

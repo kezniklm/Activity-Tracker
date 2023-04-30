@@ -8,10 +8,13 @@
                        x:DataType="vm:ProjectListViewModel"
                        Title="Projects">
     <VerticalStackLayout>
-        <Label
-            Text="{Binding User.Name}"></Label>
         <VerticalStackLayout>
-            <CollectionView ItemsSource="{Binding User.Projects}">
+            <Button Text="Vytvoriť nový projekt"
+                    Command="{Binding GoToCreateProjectCommand}"/>
+            <Label
+                Text="{Binding User.Name}"></Label>
+        
+            <!--<CollectionView ItemsSource="{Binding User.Projects}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="m:UserProjectListModel">
                         <Label FontSize="20"
@@ -19,14 +22,33 @@
                                TextColor="Red"/>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
+            </CollectionView>-->
 
             <CollectionView ItemsSource="{Binding User.Projects}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="m:UserProjectListModel">
-                        <Label FontSize="20"
-                               Text="{Binding ProjectId}"
-                               TextColor="Blue"/>
+                        
+                        <Grid>
+                            <Frame>
+                                <Label FontSize="15"
+                                   Text="{Binding ProjectId}"
+                                   TextColor="Blue"
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Start"
+                                   
+                                />
+                            </Frame>
+                            
+                            <Button  Text="Upraviť"
+                                     HorizontalOptions="End"
+                                     TextColor="White"
+                                     BackgroundColor="Green"
+                                     HeightRequest="10">
+                                    
+                            </Button>
+
+                        </Grid>
+                        
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
