@@ -57,6 +57,16 @@ public partial class LoginViewModel : ViewModelBase, IRecipient<UserEditMessage>
         }
     }
 
+    [RelayCommand]
+    public async Task GoToActivityListAsync()
+    {
+        if (SelectedUser != null)
+        {
+            await _navigationService.GoToAsync<ActivityListViewModel>(
+                new Dictionary<string, object?> { [nameof(ActivityListViewModel.Id)] = SelectedUser.Id });
+        }
+    }
+
     public async void Receive(UserEditMessage message)
     {
         await LoadDataAsync();

@@ -56,19 +56,19 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         return result;
     }
 
-    public async Task<IEnumerable<ActivityListModel>> Filter(DateTime start, DateTime end)
+    public async Task<IEnumerable<ActivityListModel>> Filter(DateTime start, DateTime end, Guid userId)
     {
         GuardDateTimeCorrect(start, end);
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= start && i.End <= end)
+            .Get().Where(i => i.Start >= start && i.End <= end && i.User!.Id == userId)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
     }
 
-    public async Task<IEnumerable<ActivityListModel>> FilterThisYear()
+    public async Task<IEnumerable<ActivityListModel>> FilterThisYear(Guid userId)
     {
         int year = DateTime.Today.Year;
         DateTime startOfYear = new(year, 1, 1);
@@ -77,13 +77,13 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= startOfYear && i.Start < endOfYear)
+            .Get().Where(i => i.Start >= startOfYear && i.Start < endOfYear && i.User!.Id == userId)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
     }
 
-    public async Task<IEnumerable<ActivityListModel>> FilterLastMonth()
+    public async Task<IEnumerable<ActivityListModel>> FilterLastMonth(Guid userId)
     {
         int year = DateTime.Today.Year;
         int month = DateTime.Today.Month;
@@ -98,13 +98,13 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= lastMonthStart && i.Start < lastMonthEnd)
+            .Get().Where(i => i.Start >= lastMonthStart && i.Start < lastMonthEnd && i.User!.Id == userId)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
     }
 
-    public async Task<IEnumerable<ActivityListModel>> FilterThisMonth()
+    public async Task<IEnumerable<ActivityListModel>> FilterThisMonth(Guid userId)
     {
         int year = DateTime.Today.Year;
         int month = DateTime.Today.Month;
@@ -118,13 +118,13 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= thisMonthStart && i.Start < thisMonthEnd)
+            .Get().Where(i => i.Start >= thisMonthStart && i.Start < thisMonthEnd && i.User!.Id == userId)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);
     }
 
-    public async Task<IEnumerable<ActivityListModel>> FilterThisWeek()
+    public async Task<IEnumerable<ActivityListModel>> FilterThisWeek(Guid userId)
     {
         DateTime today = DateTime.Today;
         int day = (int)today.DayOfWeek;
@@ -139,7 +139,7 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         List<ActivityEntity> entities = await uow
             .GetRepository<ActivityEntity, ActivityEntityMapper>()
-            .Get().Where(i => i.Start >= thisWeekStart && i.Start < thisWeekEnd)
+            .Get().Where(i => i.Start >= thisWeekStart && i.Start < thisWeekEnd && i.User!.Id == userId)
             .ToListAsync();
 
         return ModelMapper.MapToListModel(entities);

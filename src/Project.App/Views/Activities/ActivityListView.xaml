@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Project.App.Views.Activities.ActivityListView"
-             Title="ActivityListView">
+<views:ContentPageBase
+                        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:m="clr-namespace:Project.BL.Models;assembly=Project.BL"
+                       xmlns:viewModels="using:Project.App.ViewModels"
+                       x:Class="Project.App.Views.Activities.ActivityListView"
+                       x:DataType="viewModels:ActivityListViewModel"
+                        xmlns:views="clr-namespace:Project.App.Views"
+                       Title="Activities">
+    
     <VerticalStackLayout>
-        <Label 
-            Text="Activities!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+       <CollectionView ItemsSource="{Binding ListOfActivities}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:ActivityListModel">
+                    <Grid>
+                        <Frame>
+                            <Label FontSize="15"
+                                   Text="{Binding ActivityType}"
+                                   TextColor="Blue"
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Start"
+                                   />
+                        </Frame>
+                    </Grid>
+                    </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
-</ContentPage>
+</views:ContentPageBase>
