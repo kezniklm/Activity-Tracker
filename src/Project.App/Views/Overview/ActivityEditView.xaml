@@ -17,13 +17,19 @@
 
         <Label
             Text="Start"></Label>
-        <DatePicker></DatePicker>
+        <DatePicker
+            Date="{Binding StartDate}"></DatePicker>
+        <TimePicker
+            Time="{Binding StartTime}"></TimePicker>
 
         <Label
             Text="End"></Label>
-        <DatePicker></DatePicker>
+        <DatePicker
+            Date="{Binding EndDate}"></DatePicker>
+        <TimePicker
+            Time="{Binding EndTime}"></TimePicker>
 
-
+       
 
         <Button
             Text="Save"

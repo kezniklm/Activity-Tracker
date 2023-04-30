@@ -40,7 +40,7 @@ public partial class OverviewViewModel : ViewModelBase, IRecipient<UserLoginMess
     [RelayCommand]
     public async Task CreateActivityAsync()
     {
-        await _navigationService.GoToAsync("/edit");
+        await _navigationService.GoToAsync("/edit", new Dictionary<string, object?> { [nameof(ActivityEditViewModel.Id)] = Id});
     }
 
     public async void Receive(ActivityEditMessage message)

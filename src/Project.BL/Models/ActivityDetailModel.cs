@@ -21,6 +21,6 @@ public record ActivityDetailModel : ModelBase
         UserName = string.Empty,
         UserSurname = string.Empty,
         UserId = Guid.Empty,
-        ProjectId = Guid.Empty
+        ProjectId = null
     };
 }
