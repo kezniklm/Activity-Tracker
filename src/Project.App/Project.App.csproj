@@ -96,6 +96,9 @@
 	  <MauiXaml Update="Views\Overview\OverviewView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Projects\ProjectCreateView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Projects\ProjectListView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
