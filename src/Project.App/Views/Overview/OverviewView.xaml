@@ -10,9 +10,15 @@
                        Title="Overview">
     <VerticalStackLayout>
         <Label
-            Text="{Binding Id}"></Label>
-        <Label
             Text="{Binding User.Name}"></Label>
+
+        <Button
+            Text="Add Activity"
+            Command="{Binding CreateActivityCommand}">
+        </Button>
+
+        <Label
+            Text="My activities:"></Label>
         <VerticalStackLayout>
             <CollectionView ItemsSource="{Binding User.Activities}">
                 <CollectionView.ItemTemplate>
@@ -24,9 +30,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </VerticalStackLayout>
-        <Button
-            Text="Add Activity"
-            Command="{Binding CreateActivityCommand}">
-        </Button>
+        
     </VerticalStackLayout>
 </views:ContentPageBase>
