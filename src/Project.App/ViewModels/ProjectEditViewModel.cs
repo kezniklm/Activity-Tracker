@@ -43,9 +43,9 @@ public partial class ProjectEditViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task DeleteFromProjectAsync(Guid RemoveId)
+    private Task DeleteFromProjectAsync(Guid RemoveId)
     {
-
+        return Task.CompletedTask;
     }
 
 }

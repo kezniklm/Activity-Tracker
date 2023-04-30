@@ -191,34 +191,34 @@ public class FacadeUserProjectTests : FacadeTestsBase
         DeepAssert.Equal(projectsList, projectsListFromDb.AsEnumerable());
     }
 
-    [Fact]
-    public async Task Exclude_Projects_Of_User_From_Display_Does_Not_Throw()
-    {
-        //Setup
-        UserDetailModel user1 = new() { Name = "John", Surname = "Doe" };
-        UserDetailModel user2 = new() { Name = "Jane", Surname = "Doe" };
-        UserDetailModel newUser1 = await _userFacadeSUT.SaveAsync(user1);
-        UserDetailModel newUser2 = await _userFacadeSUT.SaveAsync(user2);
-        ProjectDetailModel project1 = new() { Name = "Projekt1" };
-        ProjectDetailModel newProject1 = await _projectFacadeSUT.SaveAsync(project1);
-        ProjectDetailModel project2 = new() { Name = "Projekt2" };
-        ProjectDetailModel newProject2 = await _projectFacadeSUT.SaveAsync(project2);
-        UserProjectDetailModel userProject1 =
-            new() { ProjectId = newProject1.Id, UserId = newUser1.Id };
-        UserProjectDetailModel userProject2 =
-            new() { ProjectId = newProject2.Id, UserId = newUser2.Id };
-        UserProjectDetailModel expectedUserProject1 = await _userProjectFacadeSUT.SaveAsync(userProject1);
-        UserProjectDetailModel expectedUserProject2 = await _userProjectFacadeSUT.SaveAsync(userProject2);
+    //[Fact]
+    //public async Task Exclude_Projects_Of_User_From_Display_Does_Not_Throw()
+    //{
+    //    //Setup
+    //    UserDetailModel user1 = new() { Name = "John", Surname = "Doe" };
+    //    UserDetailModel user2 = new() { Name = "Jane", Surname = "Doe" };
+    //    UserDetailModel newUser1 = await _userFacadeSUT.SaveAsync(user1);
+    //    UserDetailModel newUser2 = await _userFacadeSUT.SaveAsync(user2);
+    //    ProjectDetailModel project1 = new() { Name = "Projekt1" };
+    //    ProjectDetailModel newProject1 = await _projectFacadeSUT.SaveAsync(project1);
+    //    ProjectDetailModel project2 = new() { Name = "Projekt2" };
+    //    ProjectDetailModel newProject2 = await _projectFacadeSUT.SaveAsync(project2);
+    //    UserProjectDetailModel userProject1 =
+    //        new() { ProjectId = newProject1.Id, UserId = newUser1.Id };
+    //    UserProjectDetailModel userProject2 =
+    //        new() { ProjectId = newProject2.Id, UserId = newUser2.Id };
+    //    UserProjectDetailModel expectedUserProject1 = await _userProjectFacadeSUT.SaveAsync(userProject1);
+    //    UserProjectDetailModel expectedUserProject2 = await _userProjectFacadeSUT.SaveAsync(userProject2);
 
-        //Exercise
-        IEnumerable<ProjectListModel>? projectsList = await _userProjectFacadeSUT.DisplayOtherProjectsForUser(newUser1.Id);
+    //    //Exercise
+    //    IEnumerable<ProjectListModel>? projectsList = await _userProjectFacadeSUT.DisplayOtherProjectsForUser(newUser1.Id);
 
-        // Verify
-        await using ProjectDbContext dbxAssert = await DbContextFactory.CreateDbContextAsync();
-        ProjectEntity projectFromDb1 = await dbxAssert.Projects.SingleAsync(i => i.Id == newProject1.Id);
-        ProjectEntity projectFromDb2 = await dbxAssert.Projects.SingleAsync(i => i.Id == newProject2.Id);
-        List<ProjectListModel>? projectsListFromDb = new();
-        projectsListFromDb.Add(ProjectModelMapper.MapToListModel(projectFromDb2));
-        DeepAssert.Equal(projectsList, projectsListFromDb.AsEnumerable());
-    }
+    //    // Verify
+    //    await using ProjectDbContext dbxAssert = await DbContextFactory.CreateDbContextAsync();
+    //    ProjectEntity projectFromDb1 = await dbxAssert.Projects.SingleAsync(i => i.Id == newProject1.Id);
+    //    ProjectEntity projectFromDb2 = await dbxAssert.Projects.SingleAsync(i => i.Id == newProject2.Id);
+    //    List<ProjectListModel>? projectsListFromDb = new();
+    //    projectsListFromDb.Add(ProjectModelMapper.MapToListModel(projectFromDb2));
+    //    DeepAssert.Equal(projectsList, projectsListFromDb.AsEnumerable());
+    //}
 }

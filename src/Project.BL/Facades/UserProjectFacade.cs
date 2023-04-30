@@ -20,6 +20,18 @@ public class UserProjectFacade :
         : base(unitOfWorkFactory, modelMapper) =>
         ProjectMapper = projectMapper;
 
+    public async Task<UserProjectDetailModel?> GetUserProjectByIds(Guid userId, Guid projectId)
+    {
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        IQueryable<UserProjectEntity> query = uow.GetRepository<UserProjectEntity, UserProjectEntityMapper>().Get();
+        UserProjectEntity? entity = await query.SingleOrDefaultAsync(e => e.UserId == userId && e.ProjectId == projectId);
+
+        return entity is null
+            ? null
+            : ModelMapper.MapToDetailModel(entity);
+
+    }
+
     public async Task<IEnumerable<ProjectListModel>?> DisplayProjectsOfUser(Guid userId)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();

@@ -8,7 +8,7 @@ using Project.BL.Models;
 namespace Project.App.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
-public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginMessage>, IRecipient<ProjectCreateMessage>, IRecipient<ProjectEditMessage>
+public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginMessage>, IRecipient<ProjectCreateMessage>, IRecipient<ProjectEditMessage>, IRecipient<LogOutFromProjectMessage>
 {
     private readonly INavigationService _navigationService;
     private readonly IProjectFacade _projectFacade;
@@ -57,12 +57,25 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
             new Dictionary<string, object?> { [nameof(ProjectEditViewModel.ActualProjectId)] = selectedProjectID });
     }
 
+    [RelayCommand]
+    public async Task LogOutFromProjectAsync(Guid selectedProjectID)
+    {
+        UserProjectDetailModel? UserProject = await _userProjectFacade.GetUserProjectByIds(Id, selectedProjectID);
+        await _userProjectFacade.DeleteAsync(UserProject.Id);
+        MessengerService.Send(new LogOutFromProjectMessage());
+    }
+
     public async void Receive(ProjectCreateMessage message)
     {
         await LoadDataAsync();
     }
 
     public async void Receive(ProjectEditMessage message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(LogOutFromProjectMessage message)
     {
         await LoadDataAsync();
     }

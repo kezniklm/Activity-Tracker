@@ -37,6 +37,8 @@
                                     >
                             </Button>
                             <Button  Text="Log out"
+                                     Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.LogOutFromProjectCommand}"
+                                     CommandParameter="{Binding Id}"
                                      TextColor="White"
                                      BackgroundColor="Red"
                                      HeightRequest="10"
