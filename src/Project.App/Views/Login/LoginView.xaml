@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Project.App.Views.Login.LoginView"
              xmlns:views="clr-namespace:Project.App.Views"
-             xmlns:m="clr-namespace:Project.BL.Models;assembly=Project.BL"
              xmlns:vm="clr-namespace:Project.App.ViewModels"
              x:DataType="vm:LoginViewModel"
              Title="Login">
@@ -17,6 +16,14 @@
         <Button
             Text="Login"
             Command="{Binding GoToOverviewCommand}">
+        </Button>
+        <Button
+            Text="Create User"
+            Command="{Binding GoToCreateUserCommand}">
+        </Button>
+        <Button
+            Text="User Detail"
+            Command="{Binding GoToUserDetailCommand}">
         </Button>
     </VerticalStackLayout>
 </views:ContentPageBase>
