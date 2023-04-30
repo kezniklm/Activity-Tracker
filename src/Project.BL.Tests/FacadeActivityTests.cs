@@ -282,8 +282,8 @@ public class FacadeActivityTests : FacadeTestsBase
             Id = Guid.NewGuid(),
             UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
-            Start = new DateTime(2023, 4, 5, 15, 0, 0),
-            End = new DateTime(2023, 4, 5, 16, 0, 0),
+            Start = new DateTime(2023, 5, 5, 15, 0, 0),
+            End = new DateTime(2023, 5, 5, 16, 0, 0),
             User = activityEntity1.User
         };
 
@@ -314,8 +314,8 @@ public class FacadeActivityTests : FacadeTestsBase
             Id = Guid.NewGuid(),
             UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
-            Start = new DateTime(2023, 4, 1, 15, 0, 0),
-            End = new DateTime(2023, 4, 1, 16, 0, 0),
+            Start = new DateTime(2023, 5, 1, 15, 0, 0),
+            End = new DateTime(2023, 5, 1, 16, 0, 0),
             User = new UserEntity { Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname" }
         };
 
@@ -324,8 +324,8 @@ public class FacadeActivityTests : FacadeTestsBase
             Id = Guid.NewGuid(),
             UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
-            Start = new DateTime(2023, 3, 31, 15, 0, 0),
-            End = new DateTime(2023, 3, 31, 16, 0, 0),
+            Start = new DateTime(2023, 4, 29, 15, 0, 0),
+            End = new DateTime(2023, 4, 29, 16, 0, 0),
             User = activityEntity1.User
         };
 

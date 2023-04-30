@@ -51,7 +51,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Label Text="Other projects"></Label>
-        <CollectionView ItemsSource="{Binding OtherProjects}">
+        <CollectionView ItemsSource="{Binding OtherProjects}" x:Name="OtherProjectsCollection">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:ProjectListModel">
                     <Grid>
@@ -64,6 +64,8 @@
                             />
                         </Frame>
                         <Button  Text="Join project"
+                                 Command="{Binding Source={x:Reference OtherProjectsCollection}, Path=BindingContext.JoinProjectCommand}"
+                                 CommandParameter="{Binding Id}"
                                  HorizontalOptions="End"
                                  TextColor="White"
                                  BackgroundColor="Green"

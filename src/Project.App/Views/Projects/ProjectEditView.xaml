@@ -10,7 +10,7 @@
     <VerticalStackLayout>
         <Label Text="Name"></Label>
         <Entry Text="{Binding Project.Name}"></Entry>
-        <Label Text="Activities"></Label>
+        <Label Text="Activities in Project"></Label>
         <CollectionView ItemsSource="{Binding Project.Activities}"
                         x:Name="ActivityInProjectCollectionView">
             <CollectionView.ItemTemplate>
@@ -27,7 +27,20 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Label Text="Users"></Label>
+        <Label Text="My Activities not in Project"></Label>
+        <CollectionView ItemsSource="{Binding Activities}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ActivityListModel">
+                    <HorizontalStackLayout>
+                        <Frame>
+                            <Label Text="{Binding ActivityType}"/>
+                        </Frame>
+                        <Button Text="Add to project">
+                        </Button>
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
         <Button Text="Save" Command="{Binding SaveDataCommand}"></Button>
     </VerticalStackLayout>
 

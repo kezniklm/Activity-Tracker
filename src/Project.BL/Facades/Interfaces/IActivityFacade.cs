@@ -10,4 +10,5 @@ public interface IActivityFacade : IFacadeBase<ActivityEntity, ActivityListModel
     Task<IEnumerable<ActivityListModel>> FilterLastMonth(Guid userId);
     Task<IEnumerable<ActivityListModel>> FilterThisMonth(Guid userId);
     Task<IEnumerable<ActivityListModel>> FilterThisWeek(Guid userId);
+    public Task<IEnumerable<ActivityListModel?>> GetUserActivitiesNotInProject(Guid userId);
 }

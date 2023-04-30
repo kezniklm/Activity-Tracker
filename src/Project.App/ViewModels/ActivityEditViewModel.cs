@@ -46,7 +46,7 @@ public partial class ActivityEditViewModel : ViewModelBase
     {
         await base.LoadDataAsync();
         var projects = await _userProjectFacade.DisplayProjectsOfUser(Id);
-        Projects = projects.ToList();
+        Projects = projects.Item1.ToList();
 
         if (ActivityId != Guid.Empty)
         {
@@ -71,6 +71,10 @@ public partial class ActivityEditViewModel : ViewModelBase
         if (SelectedProject != null)
         {
             Activity.ProjectId = SelectedProject.Id;
+        }
+        else
+        {
+            Activity.ProjectId = null;
         }
 
         await _activityFacade.SaveAsync(Activity);
