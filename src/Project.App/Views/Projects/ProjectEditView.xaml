@@ -35,7 +35,9 @@
                         <Frame>
                             <Label Text="{Binding ActivityType}"/>
                         </Frame>
-                        <Button Text="Add to project">
+                        <Button Text="Add to project"
+                                Command="{Binding Source={x:Reference ActivityInProjectCollectionView}, Path=BindingContext.AddToProjectCommand}"
+                                CommandParameter="{Binding Id}">
                         </Button>
                     </HorizontalStackLayout>
                 </DataTemplate>
