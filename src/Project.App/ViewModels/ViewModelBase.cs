@@ -1,12 +1,14 @@
-﻿using Project.App.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Project.App.Services;
 
 namespace Project.App.ViewModels;
 
 public abstract class ViewModelBase : ObservableRecipient, IViewModel
 {
-    private bool _isRefreshRequired = true;
     protected readonly IMessengerService MessengerService;
+    private bool _isRefreshRequired = true;
+
+    public static Guid Id { get; set; }
 
     protected ViewModelBase(IMessengerService messengerService) : base(messengerService.Messenger)
     {

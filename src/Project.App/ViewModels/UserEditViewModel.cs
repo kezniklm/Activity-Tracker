@@ -11,16 +11,17 @@ public partial class UserEditViewModel : ViewModelBase
 {
     private readonly INavigationService _navigationService;
     private readonly IUserFacade _userFacade;
-
-    public UserDetailModel User { get; set; } = UserDetailModel.Empty;
-    public Guid Id { get; set; }
-
-    public UserEditViewModel(IMessengerService messengerService, INavigationService navigationService, IUserFacade userFacade) : base(messengerService)
+    
+    public UserEditViewModel(IMessengerService messengerService, INavigationService navigationService,
+        IUserFacade userFacade) : base(messengerService)
     {
         _navigationService = navigationService;
         _userFacade = userFacade;
     }
 
+    public UserDetailModel User { get; set; } = UserDetailModel.Empty;
+
+    
     protected override async Task LoadDataAsync()
     {
         await base.LoadDataAsync();
@@ -31,7 +32,7 @@ public partial class UserEditViewModel : ViewModelBase
     private async Task SaveUserAsync()
     {
         await _userFacade.SaveAsync(User);
-        MessengerService.Send(new UserEditMessage(){UserId = User.Id});
+        MessengerService.Send(new UserEditMessage { UserId = User.Id });
         _navigationService.SendBackButtonPressed();
     }
 }

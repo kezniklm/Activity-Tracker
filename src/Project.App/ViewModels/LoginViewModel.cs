@@ -12,9 +12,6 @@ public partial class LoginViewModel : ViewModelBase, IRecipient<UserEditMessage>
     private readonly INavigationService _navigationService;
     private readonly IUserFacade _userFacade;
 
-    public List<UserListModel> Users { get; set; } = null!;
-    public UserListModel? SelectedUser { get; set; } = UserListModel.Empty;
-
     public LoginViewModel(
         INavigationService navigationService,
         IUserFacade userFacade,
@@ -24,10 +21,17 @@ public partial class LoginViewModel : ViewModelBase, IRecipient<UserEditMessage>
         _userFacade = userFacade;
     }
 
+    public List<UserListModel> Users { get; set; } = null!;
+    public UserListModel? SelectedUser { get; set; } = UserListModel.Empty;
+
+    public async void Receive(UserDeleteMessage message) => await LoadDataAsync();
+
+    public async void Receive(UserEditMessage message) => await LoadDataAsync();
+
     protected override async Task LoadDataAsync()
     {
         await base.LoadDataAsync();
-        var users = await _userFacade.GetAsync();
+        IEnumerable<UserListModel> users = await _userFacade.GetAsync();
         Users = users.ToList();
     }
 
@@ -36,16 +40,15 @@ public partial class LoginViewModel : ViewModelBase, IRecipient<UserEditMessage>
     {
         if (SelectedUser != null)
         {
-            MessengerService.Send(new UserLoginMessage(){UserId = SelectedUser.Id});
-            await _navigationService.GoToAsync<OverviewViewModel>(new Dictionary<string, object?>() { [nameof(OverviewViewModel.Id)] = SelectedUser.Id });
+            Id =  SelectedUser.Id;
+                MessengerService.Send(new UserLoginMessage { UserId = SelectedUser.Id });
+            await _navigationService.GoToAsync<OverviewViewModel>(
+                new Dictionary<string, object?> { [nameof(OverviewViewModel.Id)] = SelectedUser.Id });
         }
     }
 
     [RelayCommand]
-    public async Task GoToCreateUserAsync()
-    {
-        await _navigationService.GoToAsync("/edit");
-    }
+    public async Task GoToCreateUserAsync() => await _navigationService.GoToAsync("/edit");
 
     [RelayCommand]
     public async Task GoToUserDetailAsync()
@@ -65,15 +68,5 @@ public partial class LoginViewModel : ViewModelBase, IRecipient<UserEditMessage>
             await _navigationService.GoToAsync<ActivityListViewModel>(
                 new Dictionary<string, object?> { [nameof(ActivityListViewModel.Id)] = SelectedUser.Id });
         }
-    }
-
-    public async void Receive(UserEditMessage message)
-    {
-        await LoadDataAsync();
-    }
-
-    public async void Receive(UserDeleteMessage message)
-    {
-        await LoadDataAsync();
     }
 }

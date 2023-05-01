@@ -7,21 +7,29 @@ using Project.BL.Models;
 
 namespace Project.App.ViewModels;
 
-
 [QueryProperty(nameof(Id), nameof(Id))]
 public partial class UserDetailViewModel : ViewModelBase, IRecipient<UserEditMessage>, IRecipient<UserDeleteMessage>
 {
-    private readonly IUserFacade _userFacade;
     private readonly INavigationService _navigationService;
-
-    public UserDetailModel? User { get; set; }
-    public Guid Id { get; set; }
-
+    private readonly IUserFacade _userFacade;
+    
     public UserDetailViewModel(IMessengerService messengerService, IUserFacade userFacade,
         INavigationService navigationService) : base(messengerService)
     {
         _userFacade = userFacade;
         _navigationService = navigationService;
+    }
+
+    public UserDetailModel? User { get; set; }
+
+    public async void Receive(UserDeleteMessage message) => await LoadDataAsync();
+
+    public async void Receive(UserEditMessage message)
+    {
+        if (message.UserId == User?.Id)
+        {
+            await LoadDataAsync();
+        }
     }
 
     protected override async Task LoadDataAsync()
@@ -47,20 +55,7 @@ public partial class UserDetailViewModel : ViewModelBase, IRecipient<UserEditMes
         if (User != null)
         {
             await _navigationService.GoToAsync("/edit",
-                new Dictionary<string, object?> { [nameof(UserEditViewModel.Id)] = User.Id});
+                new Dictionary<string, object?> { [nameof(UserEditViewModel.Id)] = User.Id });
         }
-    }
-
-    public async void Receive(UserEditMessage message)
-    {
-        if (message.UserId == User?.Id)
-        {
-            await LoadDataAsync();
-        }
-    }
-
-    public async void Receive(UserDeleteMessage message)
-    {
-        await LoadDataAsync();
     }
 }

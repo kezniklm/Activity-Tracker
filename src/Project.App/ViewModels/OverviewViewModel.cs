@@ -13,8 +13,6 @@ public partial class OverviewViewModel : ViewModelBase, IRecipient<UserLoginMess
     private readonly INavigationService _navigationService;
     private readonly IUserFacade _userFacade;
 
-    public UserDetailModel? User { get; set; }
-    public Guid Id { get; set; }
 
     public OverviewViewModel(
         INavigationService navigationService,
@@ -25,11 +23,11 @@ public partial class OverviewViewModel : ViewModelBase, IRecipient<UserLoginMess
         _userFacade = userFacade;
     }
 
-    protected override async Task LoadDataAsync()
-    {
-        await base.LoadDataAsync();
-        User = await _userFacade.GetAsync(Id, "Activities");
-    }
+
+    public UserDetailModel? User { get; set; }
+
+
+    public async void Receive(ActivityEditMessage message) => await LoadDataAsync();
 
     public async void Receive(UserLoginMessage message)
     {
@@ -37,20 +35,29 @@ public partial class OverviewViewModel : ViewModelBase, IRecipient<UserLoginMess
         await LoadDataAsync();
     }
 
-    [RelayCommand]
-    public async Task CreateActivityAsync()
+
+    protected override async Task LoadDataAsync()
     {
-        await _navigationService.GoToAsync("/edit", new Dictionary<string, object?> { [nameof(ActivityEditViewModel.Id)] = Id});
+        await base.LoadDataAsync();
+        User = await _userFacade.GetAsync(Id, "Activities");
     }
 
     [RelayCommand]
-    public async Task EditActivityAsync(Guid SelectedActivityId)
-    {
-        await _navigationService.GoToAsync("/edit", new Dictionary<string, object?> { [nameof(ActivityEditViewModel.ActivityId)] = SelectedActivityId, [nameof(ActivityEditViewModel.Id)] = Id});
-    }
+    public async Task CreateActivityAsync() => await _navigationService.GoToAsync("/edit",
+        new Dictionary<string, object?> { [nameof(ActivityEditViewModel.Id)] = Id });
 
-    public async void Receive(ActivityEditMessage message)
+    [RelayCommand]
+    public async Task EditActivityAsync(Guid SelectedActivityId) => await _navigationService.GoToAsync("/edit",
+        new Dictionary<string, object?>
+        {
+            [nameof(ActivityEditViewModel.ActivityId)] = SelectedActivityId, [nameof(ActivityEditViewModel.Id)] = Id
+        });
+
+    [RelayCommand]
+    public async Task GoToActivityListAsync()
     {
-        await LoadDataAsync();
+       
+            await _navigationService.GoToAsync<ActivityListViewModel>(
+                new Dictionary<string, object?> { [nameof(ActivityListViewModel.Id)] = Id });
     }
 }
