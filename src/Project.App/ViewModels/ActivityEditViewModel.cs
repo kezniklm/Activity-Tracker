@@ -14,18 +14,20 @@ public partial class ActivityEditViewModel : ViewModelBase
     private readonly INavigationService _navigationService;
     private readonly IUserFacade _userFacade;
     private readonly IUserProjectFacade _userProjectFacade;
+    private readonly IAlertService _alertService;
 
     public ActivityEditViewModel(
         IMessengerService messengerService,
         INavigationService navigationService,
         IActivityFacade activityFacade,
         IUserFacade userFacade,
-        IUserProjectFacade userProjectFacade) : base(messengerService)
+        IUserProjectFacade userProjectFacade, IAlertService alertService) : base(messengerService)
     {
         _navigationService = navigationService;
         _activityFacade = activityFacade;
         _userFacade = userFacade;
         _userProjectFacade = userProjectFacade;
+        _alertService = alertService;
     }
 
 
@@ -36,7 +38,7 @@ public partial class ActivityEditViewModel : ViewModelBase
     public DateTime EndDate { get; set; } = DateTime.Today;
     public TimeSpan EndTime { get; set; }
 
-    public List<ProjectListModel> Projects { get; set; } = null!;
+    public List<ProjectListModel?> Projects { get; set; } = null!;
     public ProjectListModel? SelectedProject { get; set; } = ProjectListModel.Empty;
 
     public ActivityDetailModel? Activity { get; set; } = ActivityDetailModel.Empty;
@@ -51,6 +53,10 @@ public partial class ActivityEditViewModel : ViewModelBase
         if (ActivityId != Guid.Empty)
         {
             Activity = await _activityFacade.GetAsync(ActivityId, "User");
+            StartDate = Activity!.Start;
+            EndDate = Activity.End;
+            StartTime = Activity.Start.TimeOfDay;
+            EndTime = Activity.End.TimeOfDay;
         }
     }
 
@@ -77,7 +83,15 @@ public partial class ActivityEditViewModel : ViewModelBase
             Activity.ProjectId = null;
         }
 
-        await _activityFacade.SaveAsync(Activity);
+        try
+        {
+            await _activityFacade.SaveAsync(Activity);
+        }
+        catch (Exception ex)
+        {
+            await _alertService.DisplayAsync("Activity Error", ex.Message);
+        }
+        
         MessengerService.Send(new ActivityEditMessage { ActivityId = Activity.Id });
         _navigationService.SendBackButtonPressed();
     }

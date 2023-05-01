@@ -19,6 +19,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <StackLayout Grid.Column="0" Padding="0,0,5,0">
                                 <Label Text="From" />
@@ -29,6 +30,16 @@
                                 <Label Text="To" />
                                 <DatePicker Date="{Binding EndDate}" />
                                 <TimePicker Time="{Binding EndTime}" />
+                            </StackLayout>
+                            <StackLayout Grid.Column="2" Padding="100,0,0,0">
+                                <Button
+                                    Command="{Binding ResetFiltersCommand}"
+                                    Text="Reset filters"
+                                    VerticalOptions="End" />
+                                <Button
+                                    Command="{Binding ActivityFilterByDateCommand}"
+                                    Text="Apply filter"
+                                    VerticalOptions="End" />
                             </StackLayout>
                         </Grid>
                     </HorizontalStackLayout>
@@ -56,18 +67,40 @@
                 </VerticalStackLayout>
             </Grid>
         </Frame>
-
-        <CollectionView ItemsSource="{Binding ListOfActivities}">
+        <CollectionView x:Name="ActivitiesCollection" ItemsSource="{Binding ListOfActivities}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:ActivityListModel">
                     <Grid>
                         <Frame>
-                            <Label
-                                FontSize="15"
-                                HorizontalOptions="Start"
-                                HorizontalTextAlignment="Center"
-                                Text="{Binding ActivityType}"
-                                TextColor="Blue" />
+                            <Grid HorizontalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="600" />
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="190" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    FontSize="20"
+                                    Text="{Binding Path=ActivityType}"
+                                    TextColor="Red"
+                                    VerticalTextAlignment="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Path=Start}"
+                                    VerticalTextAlignment="Center" />
+                                <Label
+                                    Grid.Column="2"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Path=End}"
+                                    VerticalTextAlignment="Center" />
+                                <Button
+                                    Grid.Column="3"
+                                    Command="{Binding Source={x:Reference ActivitiesCollection}, Path=BindingContext.EditActivityCommand}"
+                                    CommandParameter="{Binding Path=Id}"
+                                    Text="Edit" />
+                            </Grid>
                         </Frame>
                     </Grid>
                 </DataTemplate>

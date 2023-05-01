@@ -28,8 +28,8 @@ public static class ActivitySeeds
     {
         Id = Guid.Parse("5383FA0A-E2D1-49D4-B0B7-619F8877E7B0"),
         ActivityType = "skola",
-        Start = new DateTime(2023, 03, 05, 14, 0, 0),
-        End = new DateTime(2023, 03, 05, 15, 0, 0),
+        Start = new DateTime(2023, 05, 01, 14, 0, 0),
+        End = new DateTime(2023, 05, 02, 15, 0, 0),
         UserId = UserSeeds.User1.Id
     };
 
