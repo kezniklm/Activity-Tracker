@@ -9,69 +9,90 @@
                        x:Name="ProjectListViewRoot"
                        Title="Projects">
     <VerticalStackLayout>
-        <Button Text="Vytvoriť nový projekt"
+        <Button Text="Create new project"
+                Margin="10"
                 Command="{Binding GoToCreateProjectCommand}"/>
-        <Label
-            Text="{Binding User.Name}"></Label>
-        <Label Text="My projects"></Label>
-        <CollectionView ItemsSource="{Binding MyProjects}" x:Name="ProjectsCollection">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="m:ProjectListModel">
-                    <Grid>
+        
+        <Label Text="My projects:"
+               Margin="20"></Label>
+        <VerticalStackLayout>
+            <CollectionView ItemsSource="{Binding MyProjects}" x:Name="ProjectsCollection">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:ProjectListModel">
                         <Frame>
-                            <Label FontSize="15"
-                               Text="{Binding Name}"
-                               TextColor="Blue"
-                               HorizontalTextAlignment="Center"
-                               HorizontalOptions="Start"
-                            />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="600"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Label FontSize="15"
+                                       Text="{Binding Name}"
+                                       TextColor="Blue"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Start"
+                                       Grid.Column="0"/>
+                                
+                                <Button  Text="Edit"
+                                         TextColor="White"
+                                         BackgroundColor="Green"
+                                         HeightRequest="15"
+                                         WidthRequest="110"
+                                         Margin="0,0,30,0"
+                                         Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.GotoEditProjectCommand}"
+                                         CommandParameter="{Binding Id}"
+                                         Grid.Column="1">
+                                </Button>
+                                <Button  Text="Log out"
+                                             Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.LogOutFromProjectCommand}"
+                                             CommandParameter="{Binding Id}"
+                                             TextColor="White"
+                                             BackgroundColor="Red"
+                                             HeightRequest="15"
+                                             WidthRequest="110"
+                                             Margin="30,0,0,0"
+                                             Grid.Column="2">
+                                </Button>
+                            </Grid>
                         </Frame>
-                        <Grid>
-                            <Button  Text="Edit"
-                                     TextColor="White"
-                                     BackgroundColor="Green"
-                                     HeightRequest="10"
-                                     HorizontalOptions="Center"
-                                     Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.GotoEditProjectCommand}"
-                                     CommandParameter="{Binding Id}"
-                                    >
-                            </Button>
-                            <Button  Text="Log out"
-                                     Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.LogOutFromProjectCommand}"
-                                     CommandParameter="{Binding Id}"
-                                     TextColor="White"
-                                     BackgroundColor="Red"
-                                     HeightRequest="10"
-                                     HorizontalOptions="End"
-                                    >
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        <Label Text="Other projects"></Label>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+        
+
+        <Label Text="Other projects:"
+               Margin="20"></Label>
         <CollectionView ItemsSource="{Binding OtherProjects}" x:Name="OtherProjectsCollection">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:ProjectListModel">
-                    <Grid>
-                        <Frame>
+                    <Frame>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="600"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
                             <Label FontSize="15"
                                    Text="{Binding Name}"
                                    TextColor="Red"
                                    HorizontalTextAlignment="Center"
                                    HorizontalOptions="Start"
-                            />
-                        </Frame>
-                        <Button  Text="Join project"
-                                 Command="{Binding Source={x:Reference OtherProjectsCollection}, Path=BindingContext.JoinProjectCommand}"
-                                 CommandParameter="{Binding Id}"
-                                 HorizontalOptions="End"
-                                 TextColor="White"
-                                 BackgroundColor="Green"
-                                 HeightRequest="10">
-                        </Button>
-                    </Grid>
+                                   VerticalOptions="Center"
+                                   Grid.Column="0"/>
+                            
+                            <Button  Text="Join project"
+                                     Command="{Binding Source={x:Reference OtherProjectsCollection}, Path=BindingContext.JoinProjectCommand}"
+                                     CommandParameter="{Binding Id}"
+                                     TextColor="White"
+                                     BackgroundColor="Green"
+                                     HeightRequest="15"
+                                     WidthRequest="110"
+                                     Grid.Column="1">
+                            </Button>
+                        </Grid>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

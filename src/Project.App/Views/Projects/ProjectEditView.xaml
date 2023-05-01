@@ -7,45 +7,70 @@
                        x:DataType="vm:ProjectEditViewModel"
                        Title="Projects">
 
-    <VerticalStackLayout>
-        <Label Text="Name"></Label>
-        <Entry Text="{Binding Project.Name}"></Entry>
-        <Label Text="Activities in Project"></Label>
+    <VerticalStackLayout HorizontalOptions="Center"
+                         WidthRequest="400"
+                         Margin="0,10,0,10">
+        <Label Text="Name:"></Label>
+        <Entry Text="{Binding Project.Name}"
+               WidthRequest="400"
+               Margin="0,10,0,10"></Entry>
+
+        <Label Text="Activities in Project:"
+               Margin="0,10,0,10"></Label>
         <CollectionView ItemsSource="{Binding Project.Activities}"
                         x:Name="ActivityInProjectCollectionView">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:ActivityListModel">
                     <HorizontalStackLayout>
-                        <Frame>
-                            <Label Text="{Binding ActivityType}"/>
+                        <Frame Padding="10"
+                               WidthRequest="150"
+                               Margin="0,0,90,0">
+                            <Label Text="{Binding ActivityType}"
+                                   HorizontalTextAlignment="Center"/>
                         </Frame>
                         <Button Text="Delete from project"
                                 Command="{Binding Source={x:Reference ActivityInProjectCollectionView}, Path=BindingContext.DeleteFromProjectCommand}"
-                                CommandParameter="{Binding Id}">
+                                CommandParameter="{Binding Id}"
+                                HeightRequest="15">
                         </Button>
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Label Text="My Activities not in Project"></Label>
+
+        <Label Text="My Activities not in Project:"
+               Margin="0,20,0,10"></Label>
         <CollectionView ItemsSource="{Binding Activities}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:ActivityListModel">
                     <HorizontalStackLayout>
-                        <Frame>
-                            <Label Text="{Binding ActivityType}"/>
+                        <Frame Padding="10"
+                               WidthRequest="150"
+                               Margin="0,0,90,0">
+                            <Label Text="{Binding ActivityType}"
+                                   HorizontalTextAlignment="Center"/>
                         </Frame>
                         <Button Text="Add to project"
                                 Command="{Binding Source={x:Reference ActivityInProjectCollectionView}, Path=BindingContext.AddToProjectCommand}"
-                                CommandParameter="{Binding Id}">
+                                CommandParameter="{Binding Id}"
+                                HeightRequest="15"
+                                WidthRequest="160">
                         </Button>
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Save" Command="{Binding SaveDataCommand}"></Button>
-        <Button Text="Delete Project" Command="{Binding DeleteProjectCommand}"></Button>
+
+        <HorizontalStackLayout Margin="0,50,0,0">
+            <Button Text="Delete Project" Command="{Binding DeleteProjectCommand}"
+                    HeightRequest="15"
+                    WidthRequest="160"
+                    Margin="0,0,80,0"></Button>
+            <Button Text="Save"
+                    Command="{Binding SaveDataCommand}"
+                    HeightRequest="15"
+                    WidthRequest="160"></Button>
+        </HorizontalStackLayout>
+        
     </VerticalStackLayout>
-
-
 </views:ContentPageBase>

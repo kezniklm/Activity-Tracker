@@ -8,20 +8,23 @@
                        x:DataType="vm:ProjectCreateViewModel"
                        Title="Projects">
 
-    
-    <VerticalStackLayout>
-        <Label Text="In createView"
-               TextColor="Red"></Label>
+
+    <VerticalStackLayout HorizontalOptions="Center"
+                         WidthRequest="300"
+                         Margin="0,100,0,0">
         <Label
-            Text="Name">
+            Text="Project Name:">
         </Label>
         <Entry
-            Text="{Binding Project.Name}">
+            Text="{Binding Project.Name}"
+            Margin="0,10,0,30">
         </Entry>
 
         <Button
             Text="Save"
-            Command="{Binding SaveProjectCommand}">
+            Command="{Binding SaveProjectCommand}"
+            HeightRequest="20"
+            WidthRequest="150">
         </Button>
     </VerticalStackLayout>
     
