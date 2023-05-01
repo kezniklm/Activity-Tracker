@@ -17,7 +17,7 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     private readonly IUserProjectFacade _userProjectFacade;
 
     public ProjectListViewModel(INavigationService navigationService,
-        IMessengerService messengerService, IProjectFacade projectFacade, IUserFacade userFacade,
+        IMessengerService messengerService, IUserFacade userFacade,
         IUserProjectFacade userProjectFacade, IEnumerable<ProjectListModel?> myProjects, IEnumerable<ProjectListModel?> otherProjects) : base(messengerService)
     {
         _navigationService = navigationService;
@@ -42,7 +42,7 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
         await base.LoadDataAsync();
         User = await _userFacade.GetAsync(Id, "Projects");
 
-        Tuple<IEnumerable<ProjectListModel?>, IEnumerable<ProjectListModel?>> projectsList =
+        Tuple<IEnumerable<ProjectListModel>, IEnumerable<ProjectListModel>> projectsList =
             await _userProjectFacade.DisplayProjectsOfUser(Id);
         MyProjects = projectsList.Item1;
         OtherProjects = projectsList.Item2;
@@ -54,29 +54,29 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
             new Dictionary<string, object?> { [nameof(Id)] = Id });
 
     [RelayCommand]
-    public async Task GotoEditProjectAsync(Guid selectedProjectID) =>
+    public async Task GotoEditProjectAsync(Guid selectedProjectId) =>
         await _navigationService.GoToAsync("/edit",
             new Dictionary<string, object?>
             {
-                [nameof(ProjectEditViewModel.ActualProjectId)] = selectedProjectID, [nameof(Id)] = Id
+                [nameof(ProjectEditViewModel.ActualProjectId)] = selectedProjectId, [nameof(Id)] = Id
             });
 
     [RelayCommand]
-    public async Task LogOutFromProjectAsync(Guid selectedProjectID)
+    public async Task LogOutFromProjectAsync(Guid selectedProjectId)
     {
-        UserProjectDetailModel? UserProject = await _userProjectFacade.GetUserProjectByIds(Id, selectedProjectID);
-        if (UserProject != null)
+        UserProjectDetailModel? userProject = await _userProjectFacade.GetUserProjectByIds(Id, selectedProjectId);
+        if (userProject != null)
         {
-            await _userProjectFacade.DeleteAsync(UserProject.Id);
+            await _userProjectFacade.DeleteAsync(userProject.Id);
         }
 
         MessengerService.Send(new LogOutFromProjectMessage());
     }
 
     [RelayCommand]
-    public async Task JoinProjectAsync(Guid selectedProjectID)
+    public async Task JoinProjectAsync(Guid selectedProjectId)
     {
-        UserProjectDetailModel newUserProject = new() { ProjectId = selectedProjectID, UserId = Id };
+        UserProjectDetailModel newUserProject = new() { ProjectId = selectedProjectId, UserId = Id };
         await _userProjectFacade.SaveAsync(newUserProject);
         MessengerService.Send(new JoinProjectMessage());
     }
