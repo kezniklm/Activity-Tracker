@@ -5,16 +5,38 @@
              xmlns:vm="clr-namespace:Project.App.ViewModels"
              x:Class="Project.App.Views.Login.UserDetailView"
              x:DataType="vm:UserDetailViewModel"
-             Title="UserDetailView">
-    <VerticalStackLayout>
-        <Label Text="{Binding User.Name}"></Label>
-        <Label Text="{Binding User.Surname}"></Label>
-        <Button
-            Text="Edit User"
-            Command="{Binding GoToEditUserCommand}">
-        </Button>
-        <Button Text="Delete User"
-                Command="{Binding DeleteCommand}">
-        </Button>
+             Title="User">
+    <VerticalStackLayout
+        HorizontalOptions="Center">
+        <Frame WidthRequest="500"
+               Margin="0,100,0,30"
+               HeightRequest="80">
+            <Grid>
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <Label Text="{Binding User.Name}"
+                           Margin="0,0,6,0"
+                           FontSize="30"
+                           Padding="0,0,0,10"></Label>
+                    <Label Text="{Binding User.Surname}"
+                           FontSize="30"
+                           Padding="0,0,0,10"></Label>
+                </HorizontalStackLayout>
+            </Grid>
+        </Frame>
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Button Text="Delete User"
+                    Command="{Binding DeleteCommand}"
+                    WidthRequest="140"
+                    HeightRequest="50"
+                    Margin="0,0,30,0">
+            </Button>
+            <Button
+                Text="Edit User"
+                Command="{Binding GoToEditUserCommand}"
+                WidthRequest="140"
+                HeightRequest="50"
+                Margin="30,0,0,0">
+            </Button>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </views:ContentPageBase>

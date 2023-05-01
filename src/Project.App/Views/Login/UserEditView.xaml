@@ -6,16 +6,20 @@
              xmlns:vm="clr-namespace:Project.App.ViewModels"
              Title="UserEditView"
              x:DataType="vm:UserEditViewModel">
-    <VerticalStackLayout>
+    <VerticalStackLayout HorizontalOptions="Center"
+                         Margin="0,100,0,0"
+                         WidthRequest="300">
         <Label
-            Text="Name">
+            Text="Name"
+            Margin="0,0,0,5">
         </Label>
         <Entry
             Text="{Binding User.Name}">
         </Entry>
 
         <Label
-            Text="Surname">
+            Text="Surname"
+            Margin="0,20,0,5">
         </Label>
         <Entry
             Text="{Binding User.Surname}">
@@ -23,7 +27,8 @@
 
         <Button
             Text="Save"
-            Command="{Binding SaveUserCommand}">
+            Command="{Binding SaveUserCommand}"
+            Margin="0,30,0,0">
         </Button>
     </VerticalStackLayout>
 </views:ContentPageBase>
