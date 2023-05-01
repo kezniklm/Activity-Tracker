@@ -15,16 +15,18 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     private readonly INavigationService _navigationService;
     private readonly IUserFacade _userFacade;
     private readonly IUserProjectFacade _userProjectFacade;
+    private readonly IActivityFacade _activityFacade;
 
     public ProjectListViewModel(INavigationService navigationService,
         IMessengerService messengerService, IUserFacade userFacade,
-        IUserProjectFacade userProjectFacade, IEnumerable<ProjectListModel?> myProjects, IEnumerable<ProjectListModel?> otherProjects) : base(messengerService)
+        IUserProjectFacade userProjectFacade, IEnumerable<ProjectListModel?> myProjects, IEnumerable<ProjectListModel?> otherProjects, IActivityFacade activityFacade) : base(messengerService)
     {
         _navigationService = navigationService;
         _userFacade = userFacade;
         _userProjectFacade = userProjectFacade;
         MyProjects = myProjects;
         OtherProjects = otherProjects;
+        _activityFacade = activityFacade;
     }
 
     public UserDetailModel? User { get; set; }
@@ -64,6 +66,7 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     [RelayCommand]
     public async Task LogOutFromProjectAsync(Guid selectedProjectId)
     {
+        await _activityFacade.RemoveActivitiesFromProject(Id, selectedProjectId);
         UserProjectDetailModel? userProject = await _userProjectFacade.GetUserProjectByIds(Id, selectedProjectId);
         if (userProject != null)
         {

@@ -185,4 +185,20 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
 
         return result;
     }
+
+    public async Task RemoveActivitiesFromProject(Guid userId, Guid projectId)
+    {
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+
+        List<ActivityEntity> activityList = await repository.Get().Where(i => i.UserId == userId && i.ProjectId == projectId).ToListAsync();
+
+        foreach (ActivityEntity activity in activityList)
+        {
+            activity.ProjectId = null;
+            ActivityEntity updatedActivity = await repository.UpdateAsync(activity);
+        }
+
+        await uow.CommitAsync();
+    }
 }
