@@ -55,6 +55,7 @@ public partial class LoginViewModel : ViewModelBase, IRecipient<UserEditMessage>
     {
         if (SelectedUser != null)
         {
+            Id = SelectedUser.Id;
             await _navigationService.GoToAsync<UserDetailViewModel>(
                 new Dictionary<string, object?> { [nameof(Id)] = SelectedUser.Id });
         }
