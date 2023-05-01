@@ -54,8 +54,8 @@ public partial class UserDetailViewModel : ViewModelBase, IRecipient<UserEditMes
     {
         if (User != null)
         {
-            await _navigationService.GoToAsync("/edit",
-                new Dictionary<string, object?> { [nameof(Id)] = User.Id });
+            await _navigationService.GoToAsync<UserEditViewModel>(
+                new Dictionary<string, object?> { [nameof(Id)] = Id, [nameof(Id)] = Id });
         }
     }
 }

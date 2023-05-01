@@ -13,23 +13,23 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
         IRecipient<LogOutFromProjectMessage>, IRecipient<JoinProjectMessage>, IRecipient<ProjectDeleteMessage>
 {
     private readonly INavigationService _navigationService;
-    private readonly IProjectFacade _projectFacade;
     private readonly IUserFacade _userFacade;
     private readonly IUserProjectFacade _userProjectFacade;
 
     public ProjectListViewModel(INavigationService navigationService,
         IMessengerService messengerService, IProjectFacade projectFacade, IUserFacade userFacade,
-        IUserProjectFacade userProjectFacade) : base(messengerService)
+        IUserProjectFacade userProjectFacade, IEnumerable<ProjectListModel?> myProjects, IEnumerable<ProjectListModel?> otherProjects) : base(messengerService)
     {
         _navigationService = navigationService;
-        _projectFacade = projectFacade;
         _userFacade = userFacade;
         _userProjectFacade = userProjectFacade;
+        MyProjects = myProjects;
+        OtherProjects = otherProjects;
     }
 
     public UserDetailModel? User { get; set; }
-    public IEnumerable<ProjectListModel>? MyProjects { get; set; }
-    public IEnumerable<ProjectListModel>? OtherProjects { get; set; }
+    public IEnumerable<ProjectListModel?> MyProjects { get; set; }
+    public IEnumerable<ProjectListModel?> OtherProjects { get; set; }
 
     public async void Receive(UserLoginMessage message)
     {
@@ -65,7 +65,11 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     public async Task LogOutFromProjectAsync(Guid selectedProjectID)
     {
         UserProjectDetailModel? UserProject = await _userProjectFacade.GetUserProjectByIds(Id, selectedProjectID);
-        await _userProjectFacade.DeleteAsync(UserProject.Id);
+        if (UserProject != null)
+        {
+            await _userProjectFacade.DeleteAsync(UserProject.Id);
+        }
+
         MessengerService.Send(new LogOutFromProjectMessage());
     }
 
