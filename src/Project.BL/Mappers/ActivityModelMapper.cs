@@ -33,6 +33,21 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
 
     public override ActivityEntity MapToEntity(ActivityDetailModel model) => throw new NotImplementedException();
 
+    public IEnumerable<ActivityListModel> MapToEnumerableList(ICollection<ActivityEntity> activities)
+    {
+        IEnumerable<ActivityListModel> result = new List<ActivityListModel>();
+        foreach (ActivityEntity activity in activities)
+        {
+            ActivityListModel activityListModel = new()
+            {
+                ActivityType = activity.ActivityType, Start = activity.Start, End = activity.End, Id = activity.Id
+            };
+            result = result.Append(activityListModel);
+        }
+
+        return result;
+    }
+
     public static ActivityEntity MapToActivityEntity(ActivityDetailModel model, UserEntity? user)
         => new()
         {
@@ -45,18 +60,4 @@ public class ActivityModelMapper : ModelMapperBase<ActivityEntity, ActivityListM
             ProjectId = model.ProjectId,
             User = user
         };
-
-    public IEnumerable<ActivityListModel> MapToEnumerableList(ICollection<ActivityEntity> activities)
-    {
-        IEnumerable<ActivityListModel> result = new List<ActivityListModel>();
-        foreach (ActivityEntity activity in activities)
-        {
-            ActivityListModel activityListModel = new()
-            {
-                ActivityType = activity.ActivityType, Start = activity.Start, End = activity.End, Id = activity.Id
-            };
-            result = result.Append(activityListModel);
-        }
-        return result;
-    }
 }

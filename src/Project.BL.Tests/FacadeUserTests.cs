@@ -2,8 +2,8 @@
 
 public class FacadeUserTests : FacadeTestsBase
 {
-    private readonly IUserFacade _userFacadeSUT;
     private readonly IActivityFacade _activityFacadeSUT;
+    private readonly IUserFacade _userFacadeSUT;
 
     public FacadeUserTests()
     {

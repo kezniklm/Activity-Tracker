@@ -11,10 +11,10 @@ namespace Project.App.ViewModels;
 public partial class ActivityEditViewModel : ViewModelBase
 {
     private readonly IActivityFacade _activityFacade;
+    private readonly IAlertService _alertService;
     private readonly INavigationService _navigationService;
     private readonly IUserFacade _userFacade;
     private readonly IUserProjectFacade _userProjectFacade;
-    private readonly IAlertService _alertService;
 
     public ActivityEditViewModel(
         IMessengerService messengerService,

@@ -4,16 +4,11 @@ namespace Project.App.Services;
 
 public class MessengerService : IMessengerService
 {
+    public MessengerService(IMessenger messenger) => Messenger = messenger;
+
     public IMessenger Messenger { get; }
 
-    public MessengerService(IMessenger messenger)
-    {
-        Messenger = messenger;
-    }
-
     public void Send<TMessage>(TMessage message)
-        where TMessage : class
-    {
+        where TMessage : class =>
         Messenger.Send(message);
-    }
 }

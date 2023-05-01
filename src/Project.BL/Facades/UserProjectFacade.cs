@@ -24,12 +24,12 @@ public class UserProjectFacade :
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
         IQueryable<UserProjectEntity> query = uow.GetRepository<UserProjectEntity, UserProjectEntityMapper>().Get();
-        UserProjectEntity? entity = await query.SingleOrDefaultAsync(e => e.UserId == userId && e.ProjectId == projectId);
+        UserProjectEntity? entity =
+            await query.SingleOrDefaultAsync(e => e.UserId == userId && e.ProjectId == projectId);
 
         return entity is null
             ? null
             : ModelMapper.MapToDetailModel(entity);
-
     }
 
     public async Task<Tuple<IEnumerable<ProjectListModel>, IEnumerable<ProjectListModel>>>
@@ -48,13 +48,14 @@ public class UserProjectFacade :
             result1.Add(ProjectMapper.MapToListModel(projectEntity));
         }
 
-        List<ProjectEntity> projects = await uow.GetRepository<ProjectEntity, ProjectEntityMapper>().Get().ToListAsync();
+        List<ProjectEntity> projects =
+            await uow.GetRepository<ProjectEntity, ProjectEntityMapper>().Get().ToListAsync();
         List<ProjectListModel> result2 = new();
 
         foreach (ProjectEntity project in projects)
         {
             bool inProject = false;
-            foreach (UserProjectEntity user in project.Users )
+            foreach (UserProjectEntity user in project.Users)
             {
                 if (user.UserId == userId)
                 {
@@ -66,7 +67,6 @@ public class UserProjectFacade :
             {
                 result2.Add(ProjectMapper.MapToListModel(project));
             }
-            
         }
 
         return Tuple.Create(result1.AsEnumerable(), result2.AsEnumerable());
@@ -75,7 +75,8 @@ public class UserProjectFacade :
     public async Task<IEnumerable<ProjectListModel>?> DisplayOtherProjectsForUser(Guid userId)
     {
         await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-        List<ProjectEntity> entities = await uow.GetRepository<ProjectEntity, ProjectEntityMapper>().Get().ToListAsync();
+        List<ProjectEntity> entities =
+            await uow.GetRepository<ProjectEntity, ProjectEntityMapper>().Get().ToListAsync();
         List<ProjectListModel> result = new();
 
         foreach (ProjectEntity entity in entities)

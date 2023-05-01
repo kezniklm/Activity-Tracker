@@ -8,7 +8,8 @@ using Project.BL.Models;
 namespace Project.App.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
-public partial class ActivityListViewModel : ViewModelBase, IRecipient<UserLoginMessage>, IRecipient<ActivityEditMessage>,
+public partial class ActivityListViewModel : ViewModelBase, IRecipient<UserLoginMessage>,
+    IRecipient<ActivityEditMessage>,
     IRecipient<ActivityDeleteMessage>
 {
     private readonly IActivityFacade _activityFacade;
@@ -38,6 +39,10 @@ public partial class ActivityListViewModel : ViewModelBase, IRecipient<UserLogin
     public UserDetailModel? User { get; set; }
 
     public IEnumerable<ActivityListModel> ListOfActivities { get; set; } = null!;
+
+    public async void Receive(ActivityDeleteMessage message) => await LoadDataAsync();
+
+    public async void Receive(ActivityEditMessage message) => await LoadDataAsync();
 
     public async void Receive(UserLoginMessage message)
     {
@@ -119,8 +124,4 @@ public partial class ActivityListViewModel : ViewModelBase, IRecipient<UserLogin
             {
                 [nameof(ActivityEditViewModel.ActivityId)] = SelectedActivityId, [nameof(Id)] = Id
             });
-
-    public async void Receive(ActivityEditMessage message) => await LoadDataAsync();
-
-    public async void Receive(ActivityDeleteMessage message) => await LoadDataAsync();
 }

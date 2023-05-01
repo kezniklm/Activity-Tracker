@@ -9,17 +9,18 @@ namespace Project.App.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
 public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginMessage>,
-        IRecipient<ProjectCreateMessage>, IRecipient<ProjectEditMessage>,
-        IRecipient<LogOutFromProjectMessage>, IRecipient<JoinProjectMessage>, IRecipient<ProjectDeleteMessage>
+    IRecipient<ProjectCreateMessage>, IRecipient<ProjectEditMessage>,
+    IRecipient<LogOutFromProjectMessage>, IRecipient<JoinProjectMessage>, IRecipient<ProjectDeleteMessage>
 {
+    private readonly IActivityFacade _activityFacade;
     private readonly INavigationService _navigationService;
     private readonly IUserFacade _userFacade;
     private readonly IUserProjectFacade _userProjectFacade;
-    private readonly IActivityFacade _activityFacade;
 
     public ProjectListViewModel(INavigationService navigationService,
         IMessengerService messengerService, IUserFacade userFacade,
-        IUserProjectFacade userProjectFacade, IEnumerable<ProjectListModel?> myProjects, IEnumerable<ProjectListModel?> otherProjects, IActivityFacade activityFacade) : base(messengerService)
+        IUserProjectFacade userProjectFacade, IEnumerable<ProjectListModel?> myProjects,
+        IEnumerable<ProjectListModel?> otherProjects, IActivityFacade activityFacade) : base(messengerService)
     {
         _navigationService = navigationService;
         _userFacade = userFacade;
@@ -32,6 +33,16 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     public UserDetailModel? User { get; set; }
     public IEnumerable<ProjectListModel?> MyProjects { get; set; }
     public IEnumerable<ProjectListModel?> OtherProjects { get; set; }
+
+    public async void Receive(JoinProjectMessage message) => await LoadDataAsync();
+
+    public async void Receive(LogOutFromProjectMessage message) => await LoadDataAsync();
+
+    public async void Receive(ProjectCreateMessage message) => await LoadDataAsync();
+
+    public async void Receive(ProjectDeleteMessage message) => await LoadDataAsync();
+
+    public async void Receive(ProjectEditMessage message) => await LoadDataAsync();
 
     public async void Receive(UserLoginMessage message)
     {
@@ -82,30 +93,5 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
         UserProjectDetailModel newUserProject = new() { ProjectId = selectedProjectId, UserId = Id };
         await _userProjectFacade.SaveAsync(newUserProject);
         MessengerService.Send(new JoinProjectMessage());
-    }
-
-    public async void Receive(ProjectCreateMessage message)
-    {
-        await LoadDataAsync();
-    }
-
-    public async void Receive(ProjectEditMessage message)
-    {
-        await LoadDataAsync();
-    }
-
-    public async void Receive(LogOutFromProjectMessage message)
-    {
-        await LoadDataAsync();
-    }
-
-    public async void Receive(JoinProjectMessage message)
-    {
-        await LoadDataAsync();
-    }
-
-    public async void Receive(ProjectDeleteMessage message)
-    {
-        await LoadDataAsync();
     }
 }

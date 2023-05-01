@@ -1,5 +1,3 @@
-using Project.BL.Mappers.Interfaces;
-
 namespace Project.BL.Tests;
 
 public class FacadeTestsBase : IAsyncLifetime

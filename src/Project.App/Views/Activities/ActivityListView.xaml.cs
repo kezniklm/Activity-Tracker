@@ -4,8 +4,5 @@ namespace Project.App.Views.Activities;
 
 public partial class ActivityListView : ContentPageBase
 {
-	public ActivityListView(ActivityListViewModel viewModel) : base(viewModel)
-	{
-		InitializeComponent();
-	}
+    public ActivityListView(ActivityListViewModel viewModel) : base(viewModel) => InitializeComponent();
 }

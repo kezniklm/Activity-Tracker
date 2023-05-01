@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <views:ContentPageBase
     x:Class="Project.App.Views.Activities.ActivityListView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -22,12 +23,12 @@
                                      HorizontalOptions="Start">
                             <Label Text="From"
                                    Margin="0,0,0,10"
-                                   FontAttributes="Bold"/>
+                                   FontAttributes="Bold" />
                             <HorizontalStackLayout>
                                 <DatePicker Date="{Binding StartDate}"
-                                            Margin="0,0,10,10"/>
+                                            Margin="0,0,10,10" />
                                 <TimePicker Time="{Binding StartTime}"
-                                            Margin="0,10,0,10"/>
+                                            Margin="0,10,0,10" />
                             </HorizontalStackLayout>
                         </StackLayout>
                         <StackLayout Grid.Column="1"
@@ -36,12 +37,12 @@
                                      Margin="0,0,0,0">
                             <Label Text="To"
                                    Margin="0,0,0,10"
-                                   FontAttributes="Bold"/>
+                                   FontAttributes="Bold" />
                             <HorizontalStackLayout>
                                 <DatePicker Date="{Binding EndDate}"
-                                            Margin="0,0,10,10"/>
+                                            Margin="0,0,10,10" />
                                 <TimePicker Time="{Binding EndTime}"
-                                            Margin="0,10,0,10"/>
+                                            Margin="0,10,0,10" />
                             </HorizontalStackLayout>
                         </StackLayout>
                     </Grid>
@@ -53,45 +54,44 @@
                                 Text="Filter this week"
                                 VerticalOptions="End"
                                 WidthRequest="150"
-                                BackgroundColor="#8B929A"/>
+                                BackgroundColor="#8B929A" />
                             <Button
                                 Command="{Binding ActivityFilterThisMonthCommand}"
                                 Text="Filter this month"
                                 VerticalOptions="End"
                                 WidthRequest="150"
-                                BackgroundColor="#8B929A"/>
+                                BackgroundColor="#8B929A" />
                             <Button
                                 Command="{Binding ActivityFilterThisYearCommand}"
                                 Text="Filter this year"
                                 VerticalOptions="End"
                                 WidthRequest="150"
-                                BackgroundColor="#8B929A"/>
+                                BackgroundColor="#8B929A" />
                             <Button
                                 Command="{Binding ActivityFilterLastMonthCommand}"
                                 Text="Filter last month"
                                 VerticalOptions="End"
                                 WidthRequest="150"
-                                BackgroundColor="#8B929A"/>
+                                BackgroundColor="#8B929A" />
                             <Button
                                 Command="{Binding ResetFiltersCommand}"
                                 Text="Reset filters"
                                 VerticalOptions="End"
                                 WidthRequest="150"
-                                BackgroundColor="#C08485"/>
+                                BackgroundColor="#C08485" />
                             <Button
                                 Command="{Binding ActivityFilterByDateCommand}"
                                 Text="Apply filter"
                                 BackgroundColor="#77C2FE"
                                 VerticalOptions="End"
-                                WidthRequest="150"
-                                />
-                            </StackLayout>
-                        </HorizontalStackLayout>
-                    </Grid>
+                                WidthRequest="150" />
+                        </StackLayout>
+                    </HorizontalStackLayout>
+                </Grid>
             </Frame>
 
             <Label Margin="20" Text="MY ACTIVITIES:"
-                   FontAttributes="Bold"/>
+                   FontAttributes="Bold" />
             <VerticalStackLayout>
                 <CollectionView x:Name="ActivitiesCollection" ItemsSource="{Binding ListOfActivities}">
                     <CollectionView.ItemTemplate>

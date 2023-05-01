@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Project.BL.Tests;
+﻿namespace Project.BL.Tests;
 
 public class FacadeActivityTests : FacadeTestsBase
 {
@@ -174,7 +172,10 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity { Id = Guid.Parse("0E1C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E1C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -184,7 +185,10 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 22, 15, 0, 0),
             End = new DateTime(2023, 3, 22, 16, 0, 0),
-            User = new UserEntity { Id = Guid.Parse("0E0C72C8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72C8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity3 = new()
@@ -194,7 +198,10 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 23, 15, 0, 0),
             End = new DateTime(2023, 3, 23, 16, 0, 0),
-            User = new UserEntity { Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -211,7 +218,8 @@ public class FacadeActivityTests : FacadeTestsBase
         DateTime end = new(2023, 3, 24, 15, 0, 0);
 
         // Exercise
-        IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.Filter(start, end, activityEntity3.UserId);
+        IEnumerable<ActivityListModel> filteredList =
+            await _activityFacadeSUT.Filter(start, end, activityEntity3.UserId);
 
         // Verify
         IEnumerable<ActivityListModel> activityListModels =
@@ -232,7 +240,10 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity { Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -274,7 +285,10 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 1, 20, 15, 0, 0),
             End = new DateTime(2023, 1, 20, 16, 0, 0),
-            User = new UserEntity { Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -316,7 +330,10 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = new DateTime(2023, 5, 1, 15, 0, 0),
             End = new DateTime(2023, 5, 1, 16, 0, 0),
-            User = new UserEntity { Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity2 = new()
@@ -361,7 +378,10 @@ public class FacadeActivityTests : FacadeTestsBase
             ActivityType = "Activity",
             Start = today.AddDays(-8),
             End = today.AddDays(-8),
-            User = new UserEntity { Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity2 = new()

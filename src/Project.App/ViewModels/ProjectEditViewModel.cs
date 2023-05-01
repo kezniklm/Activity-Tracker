@@ -11,10 +11,10 @@ namespace Project.App.ViewModels;
 [QueryProperty(nameof(Id), nameof(Id))]
 public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEditMessage>
 {
-    private readonly INavigationService _navigationService;
-    private readonly IProjectFacade _projectFacade;
     private readonly IActivityFacade _activityFacade;
     private readonly IAlertService _alertService;
+    private readonly INavigationService _navigationService;
+    private readonly IProjectFacade _projectFacade;
 
     public ProjectEditViewModel(INavigationService navigationService,
         IMessengerService messengerService, IProjectFacade projectFacade,
@@ -51,6 +51,7 @@ public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEd
         {
             await _alertService.DisplayAsync("Project Error", ex.Message);
         }
+
         MessengerService.Send(new ProjectEditMessage { ProjectId = Project.Id });
         _navigationService.SendBackButtonPressed();
     }

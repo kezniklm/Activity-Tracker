@@ -1,37 +1,32 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="using:Project.App.Views"
-             x:Class="Project.App.Views.Login.UserEditView"
-             xmlns:vm="clr-namespace:Project.App.ViewModels"
-             Title="Edit User"
-             x:DataType="vm:UserEditViewModel">
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="using:Project.App.Views"
+                       x:Class="Project.App.Views.Login.UserEditView"
+                       xmlns:vm="clr-namespace:Project.App.ViewModels"
+                       Title="Edit User"
+                       x:DataType="vm:UserEditViewModel">
     <VerticalStackLayout HorizontalOptions="Center"
                          Margin="0,100,0,0"
                          WidthRequest="300">
         <Label
             Text="Name"
-            Margin="0,0,0,5"
-            >
-        </Label>
+            Margin="0,0,0,5" />
         <Entry
             Text="{Binding User.Name}"
-            FontAttributes="Bold">
-        </Entry>
+            FontAttributes="Bold" />
 
         <Label
             Text="Surname"
-            Margin="0,20,0,5">
-        </Label>
+            Margin="0,20,0,5" />
         <Entry
             Text="{Binding User.Surname}"
-            FontAttributes="Bold">
-        </Entry>
+            FontAttributes="Bold" />
 
         <Button
             Text="Save"
             Command="{Binding SaveUserCommand}"
-            Margin="0,30,0,0">
-        </Button>
+            Margin="0,30,0,0" />
     </VerticalStackLayout>
 </views:ContentPageBase>

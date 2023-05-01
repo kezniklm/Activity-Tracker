@@ -1,9 +1,9 @@
-﻿using Project.App.Options;
-using Project.DAL.Factories;
-using Project.DAL;
-using Project.DAL.Mappers;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Project.App.Options;
+using Project.DAL;
+using Project.DAL.Factories;
+using Project.DAL.Mappers;
 
 namespace Project.App;
 
@@ -14,7 +14,7 @@ public static class DALInstaller
         DALOptions dalOptions = new();
         configuration.GetSection("Project:DAL").Bind(dalOptions);
 
-        services.AddSingleton<DALOptions>(dalOptions);
+        services.AddSingleton(dalOptions);
 
         if (dalOptions.Sqlite is null)
         {

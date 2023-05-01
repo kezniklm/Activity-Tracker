@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Project.App.Messages;
 using Project.App.Services;
 using Project.BL.Facades.Interfaces;
@@ -9,9 +8,9 @@ namespace Project.App.ViewModels;
 
 public partial class ProjectCreateViewModel : ViewModelBase
 {
+    private readonly IAlertService _alertService;
     private readonly INavigationService _navigationService;
     private readonly IProjectFacade _projectFacade;
-    private readonly IAlertService _alertService;
 
     public ProjectCreateViewModel(IProjectFacade projectFacade,
         INavigationService navigationService, IMessengerService messengerService, IAlertService alertService)

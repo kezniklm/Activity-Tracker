@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                        xmlns:m="clr-namespace:Project.BL.Models;assembly=Project.BL"
@@ -12,10 +13,10 @@
         <VerticalStackLayout>
             <Button Text="Create new project"
                     Margin="50,30,50,10"
-                    Command="{Binding GoToCreateProjectCommand}"/>
-            
+                    Command="{Binding GoToCreateProjectCommand}" />
+
             <Label Text="MY PROJECTS:"
-                   Margin="20"></Label>
+                   Margin="20" />
             <VerticalStackLayout>
                 <CollectionView ItemsSource="{Binding MyProjects}" x:Name="ProjectsCollection">
                     <CollectionView.ItemTemplate>
@@ -23,57 +24,55 @@
                             <Frame>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="600"></ColumnDefinition>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="600" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
                                     </Grid.ColumnDefinitions>
-                                    
+
                                     <Label FontSize="15"
                                            Text="{Binding Name}"
                                            FontAttributes="Bold"
                                            HorizontalTextAlignment="Center"
                                            VerticalOptions="Center"
                                            HorizontalOptions="Start"
-                                           Grid.Column="0"/>
-                                    
-                                    <Button  Text="Edit"
-                                             TextColor="White"
-                                             BackgroundColor="#8B929A"
-                                             HeightRequest="15"
-                                             WidthRequest="110"
-                                             Margin="0,0,30,0"
-                                             Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.GotoEditProjectCommand}"
-                                             CommandParameter="{Binding Id}"
-                                             Grid.Column="1">
-                                    </Button>
-                                    <Button  Text="Log out"
-                                                 Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.LogOutFromProjectCommand}"
-                                                 CommandParameter="{Binding Id}"
-                                                 TextColor="White"
-                                                 BackgroundColor="#C08485"
-                                                 HeightRequest="15"
-                                                 WidthRequest="110"
-                                                 Margin="30,0,0,0"
-                                                 Grid.Column="2">
-                                    </Button>
+                                           Grid.Column="0" />
+
+                                    <Button Text="Edit"
+                                            TextColor="White"
+                                            BackgroundColor="#8B929A"
+                                            HeightRequest="15"
+                                            WidthRequest="110"
+                                            Margin="0,0,30,0"
+                                            Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.GotoEditProjectCommand}"
+                                            CommandParameter="{Binding Id}"
+                                            Grid.Column="1" />
+                                    <Button Text="Log out"
+                                            Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.LogOutFromProjectCommand}"
+                                            CommandParameter="{Binding Id}"
+                                            TextColor="White"
+                                            BackgroundColor="#C08485"
+                                            HeightRequest="15"
+                                            WidthRequest="110"
+                                            Margin="30,0,0,0"
+                                            Grid.Column="2" />
                                 </Grid>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </VerticalStackLayout>
-            
+
 
             <Label Text="OTHER PROJECTS:"
-                   Margin="20"></Label>
+                   Margin="20" />
             <CollectionView ItemsSource="{Binding OtherProjects}" x:Name="OtherProjectsCollection">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="m:ProjectListModel">
                         <Frame>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="600"></ColumnDefinition>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="600" />
+                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <Label FontSize="15"
                                        Text="{Binding Name}"
@@ -81,16 +80,15 @@
                                        HorizontalTextAlignment="Center"
                                        HorizontalOptions="Start"
                                        VerticalOptions="Center"
-                                       Grid.Column="0"/>
-                                
-                                <Button  Text="Join project"
-                                         Command="{Binding Source={x:Reference OtherProjectsCollection}, Path=BindingContext.JoinProjectCommand}"
-                                         CommandParameter="{Binding Id}"
-                                         TextColor="White"
-                                         HeightRequest="15"
-                                         WidthRequest="110"
-                                         Grid.Column="1">
-                                </Button>
+                                       Grid.Column="0" />
+
+                                <Button Text="Join project"
+                                        Command="{Binding Source={x:Reference OtherProjectsCollection}, Path=BindingContext.JoinProjectCommand}"
+                                        CommandParameter="{Binding Id}"
+                                        TextColor="White"
+                                        HeightRequest="15"
+                                        WidthRequest="110"
+                                        Grid.Column="1" />
                             </Grid>
                         </Frame>
                     </DataTemplate>

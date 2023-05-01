@@ -8,8 +8,8 @@ namespace Project.BL.Mappers;
 public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDetailModel>,
     IUserModelMapper
 {
-    private readonly IUserProjectModelMapper _userProjectModelMapper;
     private readonly IActivityModelMapper _activityModelMapper;
+    private readonly IUserProjectModelMapper _userProjectModelMapper;
 
     public UserModelMapper(IUserProjectModelMapper userProjectModelMapper, IActivityModelMapper activityModelMapper)
     {
@@ -50,13 +50,11 @@ public class UserModelMapper : ModelMapperBase<UserEntity, UserListModel, UserDe
         {
             UserListModel userListModel = new()
             {
-                Name = user.Name,
-                Surname = user.Surname,
-                PhotoUrl = user.PhotoUrl,
-                Id = user.Id
+                Name = user.Name, Surname = user.Surname, PhotoUrl = user.PhotoUrl, Id = user.Id
             };
             result = result.Append(userListModel);
         }
+
         return result;
     }
 }

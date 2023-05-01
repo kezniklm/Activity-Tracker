@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Project.App.Messages;
 using Project.App.Services;
@@ -9,7 +8,8 @@ using Project.BL.Models;
 namespace Project.App.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
-public partial class OverviewViewModel : ViewModelBase, IRecipient<UserLoginMessage>, IRecipient<ActivityEditMessage>, IRecipient<ActivityDeleteMessage>
+public partial class OverviewViewModel : ViewModelBase, IRecipient<UserLoginMessage>, IRecipient<ActivityEditMessage>,
+    IRecipient<ActivityDeleteMessage>
 {
     private readonly INavigationService _navigationService;
     private readonly IUserFacade _userFacade;
@@ -26,6 +26,10 @@ public partial class OverviewViewModel : ViewModelBase, IRecipient<UserLoginMess
 
 
     public UserDetailModel? User { get; set; }
+
+    public async void Receive(ActivityDeleteMessage message) => await LoadDataAsync();
+
+    public async void Receive(ActivityEditMessage message) => await LoadDataAsync();
 
 
     public async void Receive(UserLoginMessage message)
@@ -51,14 +55,4 @@ public partial class OverviewViewModel : ViewModelBase, IRecipient<UserLoginMess
         {
             [nameof(ActivityEditViewModel.ActivityId)] = SelectedActivityId, [nameof(Id)] = Id
         });
-
-    public async void Receive(ActivityEditMessage message)
-    {
-        await LoadDataAsync();
-    }
-
-    public async void Receive(ActivityDeleteMessage message)
-    {
-        await LoadDataAsync();
-    }
 }

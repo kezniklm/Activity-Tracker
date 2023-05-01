@@ -145,6 +145,36 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         return ModelMapper.MapToListModel(entities);
     }
 
+    public async Task<IEnumerable<ActivityListModel?>> GetUserActivitiesNotInProject(Guid userId)
+    {
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+
+        List<ActivityEntity> activityList =
+            await repository.Get().Where(i => i.UserId == userId && i.ProjectId == null).ToListAsync();
+
+        IEnumerable<ActivityListModel> result = ModelMapper.MapToListModel(activityList);
+
+        return result;
+    }
+
+    public async Task RemoveActivitiesFromProject(Guid userId, Guid projectId)
+    {
+        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+        IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+
+        List<ActivityEntity> activityList =
+            await repository.Get().Where(i => i.UserId == userId && i.ProjectId == projectId).ToListAsync();
+
+        foreach (ActivityEntity activity in activityList)
+        {
+            activity.ProjectId = null;
+            ActivityEntity updatedActivity = await repository.UpdateAsync(activity);
+        }
+
+        await uow.CommitAsync();
+    }
+
     public void GuardTwoActivitiesNotAtTheSameTime(ActivityDetailModel model)
     {
         IUnitOfWork uow = UnitOfWorkFactory.Create();
@@ -172,33 +202,5 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
         {
             throw new InvalidOperationException("Activity start cannot be greater than end.");
         }
-    }
-
-    public async Task<IEnumerable<ActivityListModel?>> GetUserActivitiesNotInProject(Guid userId)
-    {
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-        IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
-
-        List<ActivityEntity> activityList = await repository.Get().Where(i => i.UserId == userId && i.ProjectId == null).ToListAsync();
-
-        IEnumerable<ActivityListModel> result = ModelMapper.MapToListModel(activityList);
-
-        return result;
-    }
-
-    public async Task RemoveActivitiesFromProject(Guid userId, Guid projectId)
-    {
-        await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-        IRepository<ActivityEntity> repository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
-
-        List<ActivityEntity> activityList = await repository.Get().Where(i => i.UserId == userId && i.ProjectId == projectId).ToListAsync();
-
-        foreach (ActivityEntity activity in activityList)
-        {
-            activity.ProjectId = null;
-            ActivityEntity updatedActivity = await repository.UpdateAsync(activity);
-        }
-
-        await uow.CommitAsync();
     }
 }

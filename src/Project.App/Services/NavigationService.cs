@@ -9,22 +9,18 @@ namespace Project.App.Services;
 
 public class NavigationService : INavigationService
 {
-    public IEnumerable<RouteModel> Routes { get; } = new List<RouteModel>()
+    public IEnumerable<RouteModel> Routes { get; } = new List<RouteModel>
     {
         new("//activities", typeof(ActivityListView), typeof(ActivityListViewModel)),
         new("//projects", typeof(ProjectListView), typeof(ProjectListViewModel)),
         new("//overview", typeof(OverviewView), typeof(OverviewViewModel)),
         new("//login", typeof(LoginView), typeof(LoginViewModel)),
-
         new("//overview/edit", typeof(ActivityEditView), typeof(ActivityEditViewModel)),
-
         new("//login/edit", typeof(UserEditView), typeof(UserEditViewModel)),
         new("//login/detail", typeof(UserDetailView), typeof(UserDetailViewModel)),
         new("//login/detail/edit", typeof(UserEditView), typeof(UserEditViewModel)),
-
         new("//projects/create", typeof(ProjectCreateView), typeof(ProjectCreateViewModel)),
         new("//projects/edit", typeof(ProjectEditView), typeof(ProjectEditViewModel))
-
     };
 
     public async Task GoToAsync<TViewModel>()
@@ -33,6 +29,7 @@ public class NavigationService : INavigationService
         string route = GetRouteByViewModel<TViewModel>();
         await Shell.Current.GoToAsync(route);
     }
+
     public async Task GoToAsync<TViewModel>(IDictionary<string, object?> parameters)
         where TViewModel : IViewModel
     {

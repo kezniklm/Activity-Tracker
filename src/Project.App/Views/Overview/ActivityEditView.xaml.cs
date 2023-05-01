@@ -4,8 +4,5 @@ namespace Project.App.Views.Overview;
 
 public partial class ActivityEditView : ContentPageBase
 {
-	public ActivityEditView(ActivityEditViewModel viewModel) : base(viewModel)
-	{
-		InitializeComponent();
-	}
+    public ActivityEditView(ActivityEditViewModel viewModel) : base(viewModel) => InitializeComponent();
 }
