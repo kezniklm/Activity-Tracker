@@ -5,40 +5,63 @@
              x:Class="Project.App.Views.Overview.ActivityEditView"
              xmlns:vm="clr-namespace:Project.App.ViewModels"
              x:DataType="vm:ActivityEditViewModel"
-             Title="ActivityEditView">
+             Title="Activities">
     <VerticalStackLayout>
-        <Label Text="Activity Type"></Label>
+        <Label Text="Activity Type"
+               Margin="10,10,0,0"></Label>
         <Entry
-            Text="{Binding Activity.ActivityType}"></Entry>
+            Text="{Binding Activity.ActivityType}"
+            Margin="10,0,0,10"></Entry>
 
-        <Label Text="Description"></Label>
+        <Label Text="Description"
+               Margin="10,10,0,0"></Label>
         <Entry
-            Text="{Binding Activity.Description}"></Entry>
+            Text="{Binding Activity.Description}"
+            Margin="10,0,0,10"></Entry>
 
         <Label
-            Text="Start"></Label>
-        <HorizontalStackLayout>
+            Text="Start"
+            Margin="10,10,0,0"></Label>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
             <DatePicker
                 MinimumDate="01/01/2022"
                 MaximumDate="12/31/2050"
-                Date="{Binding StartDate}"></DatePicker>
+                Date="{Binding StartDate}"
+                Grid.Column="0"
+                Margin="10,0,0,10"></DatePicker>
             <TimePicker
-                Time="{Binding StartTime}"></TimePicker>
-        </HorizontalStackLayout>
+                Time="{Binding StartTime}"
+                VerticalOptions="Center"
+                Grid.Column="1"></TimePicker>
+        </Grid>
 
         <Label
-            Text="End"></Label>
-        <HorizontalStackLayout>
+            Text="End"
+            Margin="10,10,0,0"></Label>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
             <DatePicker
                 MinimumDate="01/01/2022"
                 MaximumDate="12/31/2050"
-                Date="{Binding EndDate}"></DatePicker>
+                Date="{Binding EndDate}"
+                Grid.Column="0"
+                Margin="10,0,0,10"></DatePicker>
             <TimePicker
-                Time="{Binding EndTime}"></TimePicker>
-        </HorizontalStackLayout>
+                Time="{Binding EndTime}"
+                VerticalOptions="Center"
+                Grid.Column="1"></TimePicker>
+        </Grid>
 
         <Picker
             Title="Add to project"
+            Margin="10"
             ItemsSource="{Binding Projects}"
             ItemDisplayBinding="{Binding Name}"
             SelectedItem="{Binding SelectedProject}">
@@ -46,8 +69,13 @@
 
         <Button
             Text="Save"
-            Command="{Binding SaveCommand}"
-            VerticalOptions="End">
+            Margin="10,40"
+            Command="{Binding SaveCommand}">
         </Button>
+
+        <Button
+            Text="Delete Activity"
+            Command="{Binding Path=DeleteActivityCommand}"
+            CommandParameter="{Binding Path=ActivityId}"></Button>
     </VerticalStackLayout>
 </views:ContentPageBase>

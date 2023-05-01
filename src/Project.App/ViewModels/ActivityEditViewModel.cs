@@ -81,4 +81,12 @@ public partial class ActivityEditViewModel : ViewModelBase
         MessengerService.Send(new ActivityEditMessage() { ActivityId = Activity.Id });
         _navigationService.SendBackButtonPressed();
     }
+
+    [RelayCommand]
+    public async Task DeleteActivityAsync(Guid SelectedActivityId)
+    {
+        await _activityFacade.DeleteAsync(SelectedActivityId);
+        MessengerService.Send(new ActivityDeleteMessage());
+        _navigationService.SendBackButtonPressed();
+    }
 }
