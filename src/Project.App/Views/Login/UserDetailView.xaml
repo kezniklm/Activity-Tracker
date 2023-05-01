@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="using:Project.App.Views"
+                       xmlns:vm="clr-namespace:Project.App.ViewModels"
+                       x:Class="Project.App.Views.Login.UserDetailView"
+                       x:DataType="vm:UserDetailViewModel"
+                       Title="Detail">
+    <VerticalStackLayout
+        HorizontalOptions="Center">
+        <Frame WidthRequest="500"
+               Margin="0,100,0,30"
+               HeightRequest="80">
+            <Grid>
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <Label Text="{Binding User.Name}"
+                           Margin="0,0,6,0"
+                           FontSize="30"
+                           Padding="0,0,0,10"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding User.Surname}"
+                           FontSize="30"
+                           Padding="0,0,0,10"
+                           FontAttributes="Bold" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Frame>
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Button Text="Delete User"
+                    Command="{Binding DeleteCommand}"
+                    WidthRequest="140"
+                    HeightRequest="50"
+                    Margin="0,0,30,0"
+                    BackgroundColor="#C08485" />
+            <Button
+                Text="Edit User"
+                Command="{Binding GoToEditUserCommand}"
+                WidthRequest="140"
+                HeightRequest="50"
+                Margin="30,0,0,0" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</views:ContentPageBase>

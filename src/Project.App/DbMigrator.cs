@@ -1,6 +1,6 @@
-﻿using Project.App.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.App.Options;
 using Project.DAL;
-using Microsoft.EntityFrameworkCore;
 
 namespace Project.App;
 
@@ -18,7 +18,8 @@ public class DbMigrator : IDbMigrator
     public DbMigrator(IDbContextFactory<ProjectDbContext> dbContextFactory, DALOptions dalOptions)
     {
         _dbContextFactory = dbContextFactory;
-        _options = dalOptions.Sqlite ?? throw new ArgumentNullException(nameof(dalOptions), $@"{nameof(DALOptions.Sqlite)} are not set");
+        _options = dalOptions.Sqlite ??
+                   throw new ArgumentNullException(nameof(dalOptions), $@"{nameof(DALOptions.Sqlite)} are not set");
     }
 
     public void Migrate() => MigrateAsync(CancellationToken.None).GetAwaiter().GetResult();

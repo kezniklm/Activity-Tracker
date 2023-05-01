@@ -1,21 +1,41 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Project.App.Views.Login.LoginView"
-             xmlns:views="clr-namespace:Project.App.Views"
-             xmlns:m="clr-namespace:Project.BL.Models;assembly=Project.BL"
-             xmlns:vm="clr-namespace:Project.App.ViewModels"
-             x:DataType="vm:LoginViewModel"
-             Title="Login">
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       x:Class="Project.App.Views.Login.LoginView"
+                       xmlns:views="clr-namespace:Project.App.Views"
+                       xmlns:vm="clr-namespace:Project.App.ViewModels"
+                       x:DataType="vm:LoginViewModel"
+                       Title="Login">
     <VerticalStackLayout>
-        <CollectionView ItemsSource="{Binding Users}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="m:UserListModel">
-                    <Label FontSize="20"
-                           Text="{Binding Path=Name}"
-                           TextColor="Red"/>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <Picker
+            ItemsSource="{Binding Users}"
+            ItemDisplayBinding="{Binding Name}"
+            SelectedItem="{Binding SelectedUser}"
+            SelectedIndex="0"
+            HorizontalOptions="Center"
+            Margin="0,100,0,15"
+            FontSize="30"
+            WidthRequest="300"
+            TextColor="white" />
+        <HorizontalStackLayout
+            HorizontalOptions="Center">
+            <Button
+                Text="User Detail"
+                Command="{Binding GoToUserDetailCommand}"
+                WidthRequest="140"
+                Margin="10" />
+            <Button
+                Text="Login"
+                Command="{Binding GoToOverviewCommand}"
+                WidthRequest="140"
+                Margin="10" />
+        </HorizontalStackLayout>
+        <Button
+            Text="Create User"
+            Command="{Binding GoToCreateUserCommand}"
+            HorizontalOptions="Center"
+            WidthRequest="300"
+            Margin="100" />
     </VerticalStackLayout>
 </views:ContentPageBase>

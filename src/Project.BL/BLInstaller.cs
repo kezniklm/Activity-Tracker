@@ -1,7 +1,7 @@
-﻿using Project.BL.Mappers;
-using Project.DAL.UnitOfWork;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Project.BL.Facades.Interfaces;
+using Project.BL.Mappers;
+using Project.DAL.UnitOfWork;
 
 namespace Project.BL;
 

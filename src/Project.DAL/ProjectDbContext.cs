@@ -24,7 +24,7 @@ public class ProjectDbContext : DbContext
             .HasMany<ActivityEntity>(i => i.Activities)
             .WithOne(i => i.Project)
             .HasForeignKey(i => i.ProjectId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<UserEntity>()
             .HasMany<ActivityEntity>(i => i.Activities)
@@ -50,6 +50,7 @@ public class ProjectDbContext : DbContext
             UserSeeds.Seed(modelBuilder);
             ProjectSeeds.Seed(modelBuilder);
             ActivitySeeds.Seed(modelBuilder);
+            UserProjectsSeeds.Seed(modelBuilder);
         }
     }
 }

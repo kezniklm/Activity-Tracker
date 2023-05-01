@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:vm="clr-namespace:Project.App.ViewModels"
+                       xmlns:views="clr-namespace:Project.App.Views"
+                       x:Class="Project.App.Views.Projects.ProjectCreateView"
+                       x:DataType="vm:ProjectCreateViewModel"
+                       Title="Projects">
+
+    <ScrollView>
+        <VerticalStackLayout HorizontalOptions="Center"
+                             WidthRequest="300"
+                             Margin="0,100,0,0">
+            <Label
+                Text="Project Name:" />
+            <Entry
+                Text="{Binding Project.Name}"
+                Margin="0,10,0,30"
+                FontAttributes="Bold" />
+
+            <Button
+                Text="Save"
+                Command="{Binding SaveProjectCommand}"
+                HeightRequest="20"
+                WidthRequest="150" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</views:ContentPageBase>

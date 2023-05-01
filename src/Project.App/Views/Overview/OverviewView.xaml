@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                        xmlns:m="clr-namespace:Project.BL.Models;assembly=Project.BL"
@@ -6,14 +7,61 @@
                        xmlns:views="clr-namespace:Project.App.Views"
                        x:Class="Project.App.Views.Overview.OverviewView"
                        x:DataType="vm:OverviewViewModel"
-                       Title="Overview">
-    <CollectionView ItemsSource="{Binding Users}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="m:UserListModel">
-                <Label FontSize="20"
-                       Text="{Binding Path=Name}"
-                       TextColor="Red"/>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                       Title="Activity Overview">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Button
+                Text="Add Activity"
+                Command="{Binding CreateActivityCommand}"
+                Margin="50,30,50,10" />
+
+            <Label
+                Text="MY ACTIVITIES:"
+                Margin="20"
+                FontAttributes="Bold" />
+            <VerticalStackLayout>
+                <CollectionView ItemsSource="{Binding User.Activities}" x:Name="ActivitiesCollection">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="m:ActivityListModel">
+                            <Grid>
+                                <Frame HeightRequest="100">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="400" />
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label FontSize="20"
+                                               Text="{Binding Path=ActivityType}"
+                                               FontAttributes="Bold"
+                                               VerticalTextAlignment="Center"
+                                               Grid.Column="0" />
+                                        <Label Text="{Binding Path=Start}"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"
+                                               Padding="10,0,10,0"
+                                               Grid.Column="1" />
+                                        <Label Text="{Binding Path=End}"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"
+                                               Padding="10,0,10,0"
+                                               Grid.Column="2" />
+                                        <Button
+                                            Text="Edit"
+                                            Grid.Column="3"
+                                            Margin="20,0,0,0"
+                                            WidthRequest="110"
+                                            HeightRequest="15"
+                                            Command="{Binding Source={x:Reference ActivitiesCollection}, Path=BindingContext.EditActivityCommand}"
+                                            CommandParameter="{Binding Path=Id}" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </views:ContentPageBase>

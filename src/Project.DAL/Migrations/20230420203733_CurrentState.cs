@@ -2,44 +2,43 @@
 
 #nullable disable
 
-namespace Project.DAL.Migrations
+namespace Project.DAL.Migrations;
+
+/// <inheritdoc />
+public partial class CurrentState : Migration
 {
     /// <inheritdoc />
-    public partial class CurrentState : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_UsersProjects",
-                table: "UsersProjects");
+        migrationBuilder.DropPrimaryKey(
+            name: "PK_UsersProjects",
+            table: "UsersProjects");
 
-            migrationBuilder.DropIndex(
-                name: "IX_UsersProjects_UserId",
-                table: "UsersProjects");
+        migrationBuilder.DropIndex(
+            name: "IX_UsersProjects_UserId",
+            table: "UsersProjects");
 
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_UsersProjects",
-                table: "UsersProjects",
-                columns: new[] { "UserId", "ProjectId" });
-        }
+        migrationBuilder.AddPrimaryKey(
+            name: "PK_UsersProjects",
+            table: "UsersProjects",
+            columns: new[] { "UserId", "ProjectId" });
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_UsersProjects",
-                table: "UsersProjects");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropPrimaryKey(
+            name: "PK_UsersProjects",
+            table: "UsersProjects");
 
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_UsersProjects",
-                table: "UsersProjects",
-                column: "Id");
+        migrationBuilder.AddPrimaryKey(
+            name: "PK_UsersProjects",
+            table: "UsersProjects",
+            column: "Id");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersProjects_UserId",
-                table: "UsersProjects",
-                column: "UserId");
-        }
+        migrationBuilder.CreateIndex(
+            name: "IX_UsersProjects_UserId",
+            table: "UsersProjects",
+            column: "UserId");
     }
 }

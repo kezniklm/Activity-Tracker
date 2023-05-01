@@ -1,0 +1,80 @@
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:m="clr-namespace:Project.BL.Models;assembly=Project.BL"
+                       xmlns:vm="clr-namespace:Project.App.ViewModels"
+                       xmlns:views="clr-namespace:Project.App.Views"
+                       x:Class="Project.App.Views.Projects.ProjectEditView"
+                       x:DataType="vm:ProjectEditViewModel"
+                       Title="Projects">
+
+    <VerticalStackLayout HorizontalOptions="Center"
+                         WidthRequest="400"
+                         Margin="0,10,0,10">
+        <Label Text="Name:" />
+        <Entry Text="{Binding Project.Name}"
+               WidthRequest="400"
+               Margin="0,10,0,10"
+               FontAttributes="Bold" />
+
+        <Label Text="My Activities in Project:"
+               Margin="0,10,0,10" />
+        <CollectionView ItemsSource="{Binding Project.Activities}"
+                        x:Name="ActivityInProjectCollectionView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ActivityListModel">
+                    <HorizontalStackLayout>
+                        <Frame Padding="10"
+                               WidthRequest="150"
+                               Margin="0,0,90,0">
+                            <Label Text="{Binding ActivityType}"
+                                   HorizontalTextAlignment="Center"
+                                   FontAttributes="Bold" />
+                        </Frame>
+                        <Button Text="Delete from project"
+                                Command="{Binding Source={x:Reference ActivityInProjectCollectionView}, Path=BindingContext.DeleteFromProjectCommand}"
+                                CommandParameter="{Binding Id}"
+                                HeightRequest="15"
+                                BackgroundColor="#8B929A" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Text="My Activities not in Project:"
+               Margin="0,20,0,10" />
+        <CollectionView ItemsSource="{Binding Activities}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ActivityListModel">
+                    <HorizontalStackLayout>
+                        <Frame Padding="10"
+                               WidthRequest="150"
+                               Margin="0,0,90,0">
+                            <Label Text="{Binding ActivityType}"
+                                   HorizontalTextAlignment="Center"
+                                   FontAttributes="Bold" />
+                        </Frame>
+                        <Button Text="Add to project"
+                                Command="{Binding Source={x:Reference ActivityInProjectCollectionView}, Path=BindingContext.AddToProjectCommand}"
+                                CommandParameter="{Binding Id}"
+                                HeightRequest="15"
+                                WidthRequest="160"
+                                BackgroundColor="#77C2FE" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <HorizontalStackLayout Margin="0,50,0,0">
+            <Button Text="Delete Project" Command="{Binding DeleteProjectCommand}"
+                    HeightRequest="15"
+                    WidthRequest="160"
+                    Margin="0,0,80,0"
+                    BackgroundColor="#C08485" />
+            <Button Text="Save"
+                    Command="{Binding SaveDataCommand}"
+                    HeightRequest="15"
+                    WidthRequest="160" />
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+</views:ContentPageBase>

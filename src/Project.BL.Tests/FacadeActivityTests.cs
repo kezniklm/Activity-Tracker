@@ -168,31 +168,40 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityEntity activityEntity1 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72C8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E1C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity2 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72C8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 22, 15, 0, 0),
             End = new DateTime(2023, 3, 22, 16, 0, 0),
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72C8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity3 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 23, 15, 0, 0),
             End = new DateTime(2023, 3, 23, 16, 0, 0),
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -209,13 +218,14 @@ public class FacadeActivityTests : FacadeTestsBase
         DateTime end = new(2023, 3, 24, 15, 0, 0);
 
         // Exercise
-        IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.Filter(start, end);
+        IEnumerable<ActivityListModel> filteredList =
+            await _activityFacadeSUT.Filter(start, end, activityEntity3.UserId);
 
         // Verify
         IEnumerable<ActivityListModel> activityListModels =
             filteredList as ActivityListModel[] ?? filteredList.ToArray();
         Assert.DoesNotContain(list1, activityListModels);
-        Assert.Contains(list2, activityListModels);
+        Assert.DoesNotContain(list2, activityListModels);
         Assert.Contains(list3, activityListModels);
     }
 
@@ -226,21 +236,24 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityEntity activityEntity1 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
             Start = new DateTime(2023, 3, 20, 15, 0, 0),
             End = new DateTime(2023, 3, 20, 16, 0, 0),
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity2 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
             Start = new DateTime(2022, 3, 22, 15, 0, 0),
             End = new DateTime(2022, 3, 22, 16, 0, 0),
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = activityEntity1.User
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -252,7 +265,7 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityListModel list2 = ActivityModelMapper.MapToListModel(activityEntity2);
 
         // Exercise
-        IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterThisYear();
+        IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterThisYear(activityEntity1.UserId);
 
         // Verify
         IEnumerable<ActivityListModel> activityListModels =
@@ -268,21 +281,24 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityEntity activityEntity1 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
             Start = new DateTime(2023, 1, 20, 15, 0, 0),
             End = new DateTime(2023, 1, 20, 16, 0, 0),
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity2 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
-            Start = new DateTime(2023, 4, 5, 15, 0, 0),
-            End = new DateTime(2023, 4, 5, 16, 0, 0),
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            Start = new DateTime(2023, 5, 5, 15, 0, 0),
+            End = new DateTime(2023, 5, 5, 16, 0, 0),
+            User = activityEntity1.User
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -294,7 +310,7 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityListModel list2 = ActivityModelMapper.MapToListModel(activityEntity2);
 
         // Exercise
-        IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterThisMonth();
+        IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterThisMonth(activityEntity1.UserId);
 
         // Verify
         IEnumerable<ActivityListModel> activityListModels =
@@ -310,21 +326,24 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityEntity activityEntity1 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
-            Start = new DateTime(2023, 4, 1, 15, 0, 0),
-            End = new DateTime(2023, 4, 1, 16, 0, 0),
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            Start = new DateTime(2023, 5, 1, 15, 0, 0),
+            End = new DateTime(2023, 5, 1, 16, 0, 0),
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity2 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
-            Start = new DateTime(2023, 3, 31, 15, 0, 0),
-            End = new DateTime(2023, 3, 31, 16, 0, 0),
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            Start = new DateTime(2023, 4, 29, 15, 0, 0),
+            End = new DateTime(2023, 4, 29, 16, 0, 0),
+            User = activityEntity1.User
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -336,7 +355,7 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityListModel list2 = ActivityModelMapper.MapToListModel(activityEntity2);
 
         // Exercise
-        IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterLastMonth();
+        IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterLastMonth(activityEntity1.UserId);
 
         // Verify
         IEnumerable<ActivityListModel> activityListModels =
@@ -355,21 +374,24 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityEntity activityEntity1 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
             Start = today.AddDays(-8),
             End = today.AddDays(-8),
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = new UserEntity
+            {
+                Id = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"), Name = "Name", Surname = "Surname"
+            }
         };
 
         ActivityEntity activityEntity2 = new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            UserId = Guid.Parse("0E0C72D8-C205-4C07-B515-59EB01226056"),
             ActivityType = "Activity",
             Start = today,
             End = today,
-            User = new UserEntity { Id = Guid.NewGuid(), Name = "Name", Surname = "Surname" }
+            User = activityEntity1.User
         };
 
         await using ProjectDbContext dbContext = await DbContextFactory.CreateDbContextAsync();
@@ -381,7 +403,7 @@ public class FacadeActivityTests : FacadeTestsBase
         ActivityListModel list2 = ActivityModelMapper.MapToListModel(activityEntity2);
 
         // Exercise
-        IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterThisWeek();
+        IEnumerable<ActivityListModel> filteredList = await _activityFacadeSUT.FilterThisWeek(activityEntity1.UserId);
 
         // Verify
         IEnumerable<ActivityListModel> activityListModels =

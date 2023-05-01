@@ -1,16 +1,20 @@
-﻿using CommunityToolkit.Maui;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Resources;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
+using Project.App.Models;
 using Project.App.Services;
 using Project.BL;
 
-[assembly: System.Resources.NeutralResourcesLanguage("en")]
+[assembly: NeutralResourcesLanguage("en")]
+
 namespace Project.App;
+
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
-        var builder = MauiApp.CreateBuilder();
+        MauiAppBuilder builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
@@ -26,7 +30,7 @@ public static class MauiProgram
             .AddBLServices()
             .AddAppServices();
 
-        var app = builder.Build();
+        MauiApp app = builder.Build();
         app.Services.GetRequiredService<IDbMigrator>().Migrate();
         RegisterRouting(app.Services.GetRequiredService<INavigationService>());
 
@@ -35,23 +39,23 @@ public static class MauiProgram
 
     private static void ConfigureAppSettings(MauiAppBuilder builder)
     {
-        var configurationBuilder = new ConfigurationBuilder();
+        ConfigurationBuilder configurationBuilder = new();
 
-        var assembly = Assembly.GetExecutingAssembly();
+        Assembly assembly = Assembly.GetExecutingAssembly();
         const string appSettingsFilePath = "Project.App.appsettings.json";
-        using var appSettingsStream = assembly.GetManifestResourceStream(appSettingsFilePath);
+        using Stream? appSettingsStream = assembly.GetManifestResourceStream(appSettingsFilePath);
         if (appSettingsStream is not null)
         {
             configurationBuilder.AddJsonStream(appSettingsStream);
         }
 
-        var configuration = configurationBuilder.Build();
+        IConfigurationRoot configuration = configurationBuilder.Build();
         builder.Configuration.AddConfiguration(configuration);
     }
 
     private static void RegisterRouting(INavigationService navigationService)
     {
-        foreach (var route in navigationService.Routes)
+        foreach (RouteModel route in navigationService.Routes)
         {
             Routing.RegisterRoute(route.Route, route.ViewType);
         }

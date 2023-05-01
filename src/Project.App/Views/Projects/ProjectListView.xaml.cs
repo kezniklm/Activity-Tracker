@@ -1,9 +1,8 @@
+using Project.App.ViewModels;
+
 namespace Project.App.Views.Projects;
 
-public partial class ProjectListView : ContentPage
+public partial class ProjectListView : ContentPageBase
 {
-	public ProjectListView()
-	{
-		InitializeComponent();
-	}
+    public ProjectListView(ProjectListViewModel viewModel) : base(viewModel) => InitializeComponent();
 }

@@ -1,18 +1,20 @@
-﻿using Project.App.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Project.App.Services;
 
 namespace Project.App.ViewModels;
 
 public abstract class ViewModelBase : ObservableRecipient, IViewModel
 {
-    private bool _isRefreshRequired = true;
     protected readonly IMessengerService MessengerService;
+    private bool _isRefreshRequired = true;
 
     protected ViewModelBase(IMessengerService messengerService) : base(messengerService.Messenger)
     {
         MessengerService = messengerService;
         IsActive = true;
     }
+
+    public static Guid Id { get; set; }
 
     public async Task OnAppearingAsync()
     {
@@ -24,6 +26,6 @@ public abstract class ViewModelBase : ObservableRecipient, IViewModel
         }
     }
 
-    public virtual Task LoadDataAsync()
+    protected virtual Task LoadDataAsync()
         => Task.CompletedTask;
 }

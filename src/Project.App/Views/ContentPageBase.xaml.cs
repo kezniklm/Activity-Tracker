@@ -4,14 +4,14 @@ namespace Project.App.Views;
 
 public partial class ContentPageBase
 {
-    protected IViewModel ViewModel { get; }
-
     public ContentPageBase(IViewModel viewModel)
     {
         InitializeComponent();
 
         BindingContext = ViewModel = viewModel;
     }
+
+    protected IViewModel ViewModel { get; }
 
     protected override async void OnAppearing()
     {

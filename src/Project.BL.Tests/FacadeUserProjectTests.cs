@@ -8,9 +8,9 @@ public class FacadeUserProjectTests : FacadeTestsBase
 
     public FacadeUserProjectTests()
     {
-        _userProjectFacadeSUT = new UserProjectFacade(UnitOfWorkFactory, UserProjectModelMapper);
         _userFacadeSUT = new UserFacade(UnitOfWorkFactory, UserModelMapper);
         _projectFacadeSUT = new ProjectFacade(UnitOfWorkFactory, ProjectModelMapper);
+        _userProjectFacadeSUT = new UserProjectFacade(UnitOfWorkFactory, UserProjectModelMapper, ProjectModelMapper);
     }
 
     [Fact]
