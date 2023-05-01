@@ -21,7 +21,8 @@
                                  WidthRequest="300"
                                  HorizontalOptions="Start">
                         <Label Text="From"
-                               Margin="0,0,0,10"/>
+                               Margin="0,0,0,10"
+                               FontAttributes="Bold"/>
                         <HorizontalStackLayout>
                             <DatePicker Date="{Binding StartDate}"
                                         Margin="0,0,10,10"/>
@@ -34,7 +35,8 @@
                                  HorizontalOptions="Start"
                                  Margin="0,0,0,0">
                         <Label Text="To"
-                               Margin="0,0,0,10"/>
+                               Margin="0,0,0,10"
+                               FontAttributes="Bold"/>
                         <HorizontalStackLayout>
                             <DatePicker Date="{Binding EndDate}"
                                         Margin="0,0,10,10"/>
@@ -50,38 +52,46 @@
                             Command="{Binding ActivityFilterThisWeekCommand}"
                             Text="Filter this week"
                             VerticalOptions="End"
-                            WidthRequest="150"/>
+                            WidthRequest="150"
+                            BackgroundColor="#8B929A"/>
                         <Button
                             Command="{Binding ActivityFilterThisMonthCommand}"
                             Text="Filter this month"
                             VerticalOptions="End"
-                            WidthRequest="150"/>
+                            WidthRequest="150"
+                            BackgroundColor="#8B929A"/>
                         <Button
                             Command="{Binding ActivityFilterThisYearCommand}"
                             Text="Filter this year"
                             VerticalOptions="End"
-                            WidthRequest="150"/>
+                            WidthRequest="150"
+                            BackgroundColor="#8B929A"/>
                         <Button
                             Command="{Binding ActivityFilterLastMonthCommand}"
                             Text="Filter last month"
                             VerticalOptions="End"
-                            WidthRequest="150"/>
+                            WidthRequest="150"
+                            BackgroundColor="#8B929A"/>
                         <Button
                             Command="{Binding ResetFiltersCommand}"
                             Text="Reset filters"
                             VerticalOptions="End"
-                            WidthRequest="150"/>
+                            WidthRequest="150"
+                            BackgroundColor="#C08485"/>
                         <Button
                             Command="{Binding ActivityFilterByDateCommand}"
                             Text="Apply filter"
+                            BackgroundColor="#77C2FE"
                             VerticalOptions="End"
-                            WidthRequest="150"/>
+                            WidthRequest="150"
+                            />
                         </StackLayout>
                     </HorizontalStackLayout>
                 </Grid>
         </Frame>
 
-        <Label Margin="20" Text="My activities:" />
+        <Label Margin="20" Text="MY ACTIVITIES:"
+               FontAttributes="Bold"/>
         <VerticalStackLayout>
             <CollectionView x:Name="ActivitiesCollection" ItemsSource="{Binding ListOfActivities}">
                 <CollectionView.ItemTemplate>
@@ -99,7 +109,6 @@
                                         Grid.Column="0"
                                         FontSize="20"
                                         Text="{Binding Path=ActivityType}"
-                                        TextColor="Red"
                                         VerticalTextAlignment="Center" />
                                     <Label
                                         Grid.Column="1"

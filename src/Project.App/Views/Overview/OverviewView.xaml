@@ -12,13 +12,12 @@
         <Button
             Text="Add Activity"
             Command="{Binding CreateActivityCommand}"
-            Margin="10">
+            Margin="50,30,50,10">
             </Button>
 
             <Label
-            Text="My activities:"
+            Text="MY ACTIVITIES:"
             Margin="20"
-            TextColor="#151E3D"
             FontAttributes="Bold"></Label>
             <VerticalStackLayout>
                 <CollectionView ItemsSource="{Binding User.Activities}" x:Name="ActivitiesCollection">
@@ -35,20 +34,17 @@
                                         </Grid.ColumnDefinitions>
                                         <Label FontSize="20"
                                            Text="{Binding Path=ActivityType}"
-                                           TextColor="#151E3D"
                                            FontAttributes="Bold"
                                            VerticalTextAlignment="Center"
                                            Grid.Column="0"></Label>
                                         <Label Text="{Binding Path=Start}"
                                            HorizontalTextAlignment="Center"
                                            VerticalTextAlignment="Center"
-                                           TextColor="#151E3D"
                                            Padding="10,0,10,0"
                                            Grid.Column="1"></Label>
                                         <Label Text="{Binding Path=End}"
                                            HorizontalTextAlignment="Center"
                                            VerticalTextAlignment="Center"
-                                           TextColor="#151E3D"
                                            Padding="10,0,10,0"
                                            Grid.Column="2"></Label>
                                         <Button

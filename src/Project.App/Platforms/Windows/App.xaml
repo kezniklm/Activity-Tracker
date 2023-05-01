@@ -4,9 +4,4 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
     xmlns:local="using:Project.App.WinUI">
-
-    <maui:MauiWinUIApplication.Resources>
-        <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="#151E3D" />
-        <SolidColorBrush x:Key="ComboBoxForegroundPressed" Color="#151E3D" />
-    </maui:MauiWinUIApplication.Resources>
 </maui:MauiWinUIApplication>

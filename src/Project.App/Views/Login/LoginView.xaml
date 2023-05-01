@@ -16,8 +16,7 @@
             Margin="0,100,0,15"
             FontSize="30"
             WidthRequest="300"
-            TextColor="#151E3D"
-            TitleColor="#151E3D"
+            TextColor="white"
             >
         </Picker>
         <HorizontalStackLayout

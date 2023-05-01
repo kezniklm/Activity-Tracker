@@ -12,7 +12,6 @@
         <Label
             Text="Name"
             Margin="0,0,0,5"
-            TextColor="#151E3D"
             >
         </Label>
         <Entry
@@ -22,8 +21,7 @@
 
         <Label
             Text="Surname"
-            Margin="0,20,0,5"
-            TextColor="#151E3D">
+            Margin="0,20,0,5">
         </Label>
         <Entry
             Text="{Binding User.Surname}"

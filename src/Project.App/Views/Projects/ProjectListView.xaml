@@ -10,10 +10,10 @@
                        Title="Projects">
     <VerticalStackLayout>
         <Button Text="Create new project"
-                Margin="10"
+                Margin="50,30,50,10"
                 Command="{Binding GoToCreateProjectCommand}"/>
         
-        <Label Text="My projects:"
+        <Label Text="MY PROJECTS:"
                Margin="20"></Label>
         <VerticalStackLayout>
             <CollectionView ItemsSource="{Binding MyProjects}" x:Name="ProjectsCollection">
@@ -29,7 +29,7 @@
                                 
                                 <Label FontSize="15"
                                        Text="{Binding Name}"
-                                       TextColor="Blue"
+                                       FontAttributes="Bold"
                                        HorizontalTextAlignment="Center"
                                        VerticalOptions="Center"
                                        HorizontalOptions="Start"
@@ -37,7 +37,7 @@
                                 
                                 <Button  Text="Edit"
                                          TextColor="White"
-                                         BackgroundColor="Green"
+                                         BackgroundColor="#8B929A"
                                          HeightRequest="15"
                                          WidthRequest="110"
                                          Margin="0,0,30,0"
@@ -49,7 +49,7 @@
                                              Command="{Binding Source={x:Reference ProjectsCollection}, Path=BindingContext.LogOutFromProjectCommand}"
                                              CommandParameter="{Binding Id}"
                                              TextColor="White"
-                                             BackgroundColor="Red"
+                                             BackgroundColor="#C08485"
                                              HeightRequest="15"
                                              WidthRequest="110"
                                              Margin="30,0,0,0"
@@ -63,7 +63,7 @@
         </VerticalStackLayout>
         
 
-        <Label Text="Other projects:"
+        <Label Text="OTHER PROJECTS:"
                Margin="20"></Label>
         <CollectionView ItemsSource="{Binding OtherProjects}" x:Name="OtherProjectsCollection">
             <CollectionView.ItemTemplate>
@@ -76,7 +76,7 @@
                             </Grid.ColumnDefinitions>
                             <Label FontSize="15"
                                    Text="{Binding Name}"
-                                   TextColor="Red"
+                                   FontAttributes="Bold"
                                    HorizontalTextAlignment="Center"
                                    HorizontalOptions="Start"
                                    VerticalOptions="Center"
@@ -86,7 +86,6 @@
                                      Command="{Binding Source={x:Reference OtherProjectsCollection}, Path=BindingContext.JoinProjectCommand}"
                                      CommandParameter="{Binding Id}"
                                      TextColor="White"
-                                     BackgroundColor="Green"
                                      HeightRequest="15"
                                      WidthRequest="110"
                                      Grid.Column="1">

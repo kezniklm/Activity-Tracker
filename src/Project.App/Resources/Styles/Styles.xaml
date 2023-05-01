@@ -66,7 +66,7 @@
     </Style>
 
     <Style TargetType="DatePicker">
-        <Setter Property="TextColor" Value="#151E3D" />
+        <Setter Property="TextColor" Value="white" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
         <Setter Property="FontSize" Value="14"/>
@@ -78,7 +78,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="#151E3D" />
+                            <Setter Property="TextColor" Value="white" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -109,7 +109,7 @@
     </Style>
 
     <Style TargetType="Entry">
-        <Setter Property="TextColor" Value="#151E3D" />
+        <Setter Property="TextColor" Value="white" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
         <Setter Property="FontSize" Value="14" />
@@ -122,7 +122,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="#151E3D" />
+                            <Setter Property="TextColor" Value="white" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -169,7 +169,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="#151E3D" />
+                            <Setter Property="TextColor" Value="white" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -183,8 +183,8 @@
     </Style>
 
     <Style TargetType="Picker">
-        <Setter Property="TextColor" Value="#151E3D" />
-        <Setter Property="TitleColor" Value="#151E3D" />
+        <Setter Property="TextColor" Value="white" />
+        <Setter Property="TitleColor" Value="white" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
         <Setter Property="FontSize" Value="14"/>
@@ -196,8 +196,8 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="#151E3D" />
-                            <Setter Property="TitleColor" Value="#151E3D" />
+                            <Setter Property="TextColor" Value="white" />
+                            <Setter Property="TitleColor" Value="white" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -352,7 +352,7 @@
     </Style>
 
     <Style TargetType="TimePicker">
-        <Setter Property="TextColor" Value="#151E3D" />
+        <Setter Property="TextColor" Value="white" />
         <Setter Property="BackgroundColor" Value="Transparent"/>
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
         <Setter Property="FontSize" Value="14"/>
@@ -364,7 +364,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="#151E3D" />
+                            <Setter Property="TextColor" Value="white" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -374,7 +374,7 @@
 
     <Style TargetType="Page" ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="BackgroundColor" Value="#B6DCE9"></Setter>
+        <Setter Property="BackgroundColor" Value="#000d10"></Setter>
     </Style>
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
