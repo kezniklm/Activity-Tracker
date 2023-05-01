@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using System.Linq.Expressions;
+using CommunityToolkit.Mvvm.Input;
 using Project.App.Messages;
 using Project.App.Services;
 using Project.BL.Facades.Interfaces;
@@ -10,13 +11,15 @@ public partial class ProjectCreateViewModel : ViewModelBase
 {
     private readonly INavigationService _navigationService;
     private readonly IProjectFacade _projectFacade;
+    private readonly IAlertService _alertService;
 
     public ProjectCreateViewModel(IProjectFacade projectFacade,
-        INavigationService navigationService, IMessengerService messengerService)
+        INavigationService navigationService, IMessengerService messengerService, IAlertService alertService)
         : base(messengerService)
     {
         _projectFacade = projectFacade;
         _navigationService = navigationService;
+        _alertService = alertService;
     }
 
     public ProjectDetailModel Project { get; set; } = ProjectDetailModel.Empty;
@@ -31,7 +34,15 @@ public partial class ProjectCreateViewModel : ViewModelBase
     [RelayCommand]
     private async Task SaveProjectAsync()
     {
-        await _projectFacade.SaveAsync(Project);
+        try
+        {
+            await _projectFacade.SaveAsync(Project);
+        }
+        catch (Exception ex)
+        {
+            await _alertService.DisplayAsync("Project Error", ex.Message);
+        }
+
         MessengerService.Send(new ProjectCreateMessage { ProjectId = Project.Id });
         _navigationService.SendBackButtonPressed();
     }

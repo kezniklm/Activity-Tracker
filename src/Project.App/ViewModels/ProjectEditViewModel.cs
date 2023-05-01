@@ -14,14 +14,16 @@ public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEd
     private readonly INavigationService _navigationService;
     private readonly IProjectFacade _projectFacade;
     private readonly IActivityFacade _activityFacade;
+    private readonly IAlertService _alertService;
 
     public ProjectEditViewModel(INavigationService navigationService,
         IMessengerService messengerService, IProjectFacade projectFacade,
-        IActivityFacade activityFacade) : base(messengerService)
+        IActivityFacade activityFacade, IAlertService alertService) : base(messengerService)
     {
         _navigationService = navigationService;
         _projectFacade = projectFacade;
         _activityFacade = activityFacade;
+        _alertService = alertService;
     }
 
     public Guid ActualProjectId { get; set; }
@@ -41,7 +43,14 @@ public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEd
     [RelayCommand]
     private async Task SaveDataAsync()
     {
-        await _projectFacade.SaveAsync(Project);
+        try
+        {
+            await _projectFacade.SaveAsync(Project);
+        }
+        catch (Exception ex)
+        {
+            await _alertService.DisplayAsync("Project Error", ex.Message);
+        }
         MessengerService.Send(new ProjectEditMessage { ProjectId = Project.Id });
         _navigationService.SendBackButtonPressed();
     }
