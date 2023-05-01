@@ -14,18 +14,6 @@ public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEd
     private readonly IActivityFacade _activityFacade;
     private readonly INavigationService _navigationService;
     private readonly IProjectFacade _projectFacade;
-    private readonly IActivityFacade _activityFacade;
-    private readonly IActivityFacade _activityFacade;
-    public Guid ActualProjectId { get; set; }
-    public Guid UserId { get; set; }
-    public ProjectDetailModel? Project { get; set; }
-    public ActivityDetailModel? Activity { get; set; } = ActivityDetailModel.Empty;
-    public IEnumerable<ActivityListModel?> Activities { get; set; }
-
-    public Guid ActualProjectId { get; set; }
-    public Guid UserId { get; set; }
-    public ProjectDetailModel? Project { get; set; }
-    public IEnumerable<ActivityListModel?> Activities { get; set; }
 
     public ProjectEditViewModel(INavigationService navigationService,
         IMessengerService messengerService, IProjectFacade projectFacade,
@@ -37,8 +25,9 @@ public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEd
     }
 
     public Guid ActualProjectId { get; set; }
-    
+
     public ProjectDetailModel? Project { get; set; }
+    public ActivityDetailModel? Activity { get; set; } = ActivityDetailModel.Empty;
     public IEnumerable<ActivityListModel?> Activities { get; set; }
 
     public async void Receive(ActivityEditMessage message) => await LoadDataAsync();
@@ -54,13 +43,17 @@ public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEd
     private async Task SaveDataAsync()
     {
         await _projectFacade.SaveAsync(Project);
+        MessengerService.Send(new ProjectEditMessage { ProjectId = Project.Id });
+        _navigationService.SendBackButtonPressed();
+    }
+
+    [RelayCommand]
     private async Task DeleteFromProjectAsync(Guid RemoveId)
     {
         Activity = await _activityFacade.GetAsync(RemoveId, "User");
         Activity.ProjectId = null;
         await _activityFacade.SaveAsync(Activity);
-        MessengerService.Send(new ActivityEditMessage() { ActivityId = Activity.Id });
-
+        MessengerService.Send(new ActivityEditMessage { ActivityId = Activity.Id });
     }
 
     [RelayCommand]
@@ -69,16 +62,6 @@ public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEd
         Activity = await _activityFacade.GetAsync(AddId, "User");
         Activity.ProjectId = ActualProjectId;
         await _activityFacade.SaveAsync(Activity);
-        MessengerService.Send(new ActivityEditMessage() { ActivityId = Activity.Id });
-    }
-
-    public async void Receive(ActivityEditMessage message)
-    {
-        await LoadDataAsync();
-    }
-
-    public async void Receive(ActivityEditMessage message)
-    {
-        await LoadDataAsync();
+        MessengerService.Send(new ActivityEditMessage { ActivityId = Activity.Id });
     }
 }

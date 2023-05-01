@@ -59,15 +59,14 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     [RelayCommand]
     public async Task GoToCreateProjectAsync() =>
         await _navigationService.GoToAsync("/create",
-            new Dictionary<string, object?> { [nameof(ProjectCreateViewModel.Id)] = Id });
+            new Dictionary<string, object?> { [nameof(Id)] = Id });
 
     [RelayCommand]
     public async Task GotoEditProjectAsync(Guid selectedProjectID) =>
         await _navigationService.GoToAsync("/edit",
             new Dictionary<string, object?>
             {
-                [nameof(ProjectEditViewModel.ActualProjectId)] = selectedProjectID,
-                [nameof(ProjectEditViewModel.Id)] = Id
+                [nameof(ProjectEditViewModel.ActualProjectId)] = selectedProjectID, [nameof(Id)] = Id
             });
 
     [RelayCommand]

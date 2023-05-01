@@ -40,10 +40,10 @@ public partial class LoginViewModel : ViewModelBase, IRecipient<UserEditMessage>
     {
         if (SelectedUser != null)
         {
-            Id =  SelectedUser.Id;
-                MessengerService.Send(new UserLoginMessage { UserId = SelectedUser.Id });
+            Id = SelectedUser.Id;
+            MessengerService.Send(new UserLoginMessage { UserId = SelectedUser.Id });
             await _navigationService.GoToAsync<OverviewViewModel>(
-                new Dictionary<string, object?> { [nameof(OverviewViewModel.Id)] = SelectedUser.Id });
+                new Dictionary<string, object?> { [nameof(Id)] = SelectedUser.Id });
         }
     }
 
@@ -56,7 +56,7 @@ public partial class LoginViewModel : ViewModelBase, IRecipient<UserEditMessage>
         if (SelectedUser != null)
         {
             await _navigationService.GoToAsync<UserDetailViewModel>(
-                new Dictionary<string, object?> { [nameof(UserDetailViewModel.Id)] = SelectedUser.Id });
+                new Dictionary<string, object?> { [nameof(Id)] = SelectedUser.Id });
         }
     }
 
@@ -66,7 +66,7 @@ public partial class LoginViewModel : ViewModelBase, IRecipient<UserEditMessage>
         if (SelectedUser != null)
         {
             await _navigationService.GoToAsync<ActivityListViewModel>(
-                new Dictionary<string, object?> { [nameof(ActivityListViewModel.Id)] = SelectedUser.Id });
+                new Dictionary<string, object?> { [nameof(Id)] = SelectedUser.Id });
         }
     }
 }

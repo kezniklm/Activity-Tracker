@@ -11,7 +11,7 @@ public partial class UserEditViewModel : ViewModelBase
 {
     private readonly INavigationService _navigationService;
     private readonly IUserFacade _userFacade;
-    
+
     public UserEditViewModel(IMessengerService messengerService, INavigationService navigationService,
         IUserFacade userFacade) : base(messengerService)
     {
@@ -21,7 +21,7 @@ public partial class UserEditViewModel : ViewModelBase
 
     public UserDetailModel User { get; set; } = UserDetailModel.Empty;
 
-    
+
     protected override async Task LoadDataAsync()
     {
         await base.LoadDataAsync();

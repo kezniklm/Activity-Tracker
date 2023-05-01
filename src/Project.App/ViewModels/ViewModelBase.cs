@@ -8,13 +8,13 @@ public abstract class ViewModelBase : ObservableRecipient, IViewModel
     protected readonly IMessengerService MessengerService;
     private bool _isRefreshRequired = true;
 
-    public static Guid Id { get; set; }
-
     protected ViewModelBase(IMessengerService messengerService) : base(messengerService.Messenger)
     {
         MessengerService = messengerService;
         IsActive = true;
     }
+
+    public static Guid Id { get; set; }
 
     public async Task OnAppearingAsync()
     {
