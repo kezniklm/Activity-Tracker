@@ -6,10 +6,10 @@
                        xmlns:views="clr-namespace:Project.App.Views"
                        x:Class="Project.App.Views.Overview.OverviewView"
                        x:DataType="vm:OverviewViewModel"
-                       x:Name="OverviewViewRoot"
-                       Title="Overview">
-    <VerticalStackLayout>
-        <Button
+                       Title="Activity Overview">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Button
             Text="Add Activity"
             Command="{Binding CreateActivityCommand}"
             Margin="50,30,50,10">
@@ -28,8 +28,8 @@
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="400"></ColumnDefinition>
-                                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="150"></ColumnDefinition>
+                                            <ColumnDefinition Width="150"></ColumnDefinition>
                                             <ColumnDefinition Width="auto"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Label FontSize="20"
@@ -62,5 +62,6 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </VerticalStackLayout>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </views:ContentPageBase>

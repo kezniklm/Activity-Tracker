@@ -8,134 +8,135 @@
     xmlns:views="clr-namespace:Project.App.Views"
     Title="Activities"
     x:DataType="viewModels:ActivityListViewModel">
-
-    <VerticalStackLayout>
-        <Frame HeightRequest="200">
-            <Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackLayout Grid.Column="0"
-                                 WidthRequest="300"
-                                 HorizontalOptions="Start">
-                        <Label Text="From"
-                               Margin="0,0,0,10"
-                               FontAttributes="Bold"/>
-                        <HorizontalStackLayout>
-                            <DatePicker Date="{Binding StartDate}"
-                                        Margin="0,0,10,10"/>
-                            <TimePicker Time="{Binding StartTime}"
-                                        Margin="0,10,0,10"/>
-                        </HorizontalStackLayout>
-                    </StackLayout>
-                    <StackLayout Grid.Column="1"
-                                 WidthRequest="300"
-                                 HorizontalOptions="Start"
-                                 Margin="0,0,0,0">
-                        <Label Text="To"
-                               Margin="0,0,0,10"
-                               FontAttributes="Bold"/>
-                        <HorizontalStackLayout>
-                            <DatePicker Date="{Binding EndDate}"
-                                        Margin="0,0,10,10"/>
-                            <TimePicker Time="{Binding EndTime}"
-                                        Margin="0,10,0,10"/>
-                        </HorizontalStackLayout>
-                    </StackLayout>
-                </Grid>
-
-                <HorizontalStackLayout>
-                    <StackLayout Orientation="Horizontal" Spacing="30">
-                        <Button
-                            Command="{Binding ActivityFilterThisWeekCommand}"
-                            Text="Filter this week"
-                            VerticalOptions="End"
-                            WidthRequest="150"
-                            BackgroundColor="#8B929A"/>
-                        <Button
-                            Command="{Binding ActivityFilterThisMonthCommand}"
-                            Text="Filter this month"
-                            VerticalOptions="End"
-                            WidthRequest="150"
-                            BackgroundColor="#8B929A"/>
-                        <Button
-                            Command="{Binding ActivityFilterThisYearCommand}"
-                            Text="Filter this year"
-                            VerticalOptions="End"
-                            WidthRequest="150"
-                            BackgroundColor="#8B929A"/>
-                        <Button
-                            Command="{Binding ActivityFilterLastMonthCommand}"
-                            Text="Filter last month"
-                            VerticalOptions="End"
-                            WidthRequest="150"
-                            BackgroundColor="#8B929A"/>
-                        <Button
-                            Command="{Binding ResetFiltersCommand}"
-                            Text="Reset filters"
-                            VerticalOptions="End"
-                            WidthRequest="150"
-                            BackgroundColor="#C08485"/>
-                        <Button
-                            Command="{Binding ActivityFilterByDateCommand}"
-                            Text="Apply filter"
-                            BackgroundColor="#77C2FE"
-                            VerticalOptions="End"
-                            WidthRequest="150"
-                            />
-                        </StackLayout>
-                    </HorizontalStackLayout>
-                </Grid>
-        </Frame>
-
-        <Label Margin="20" Text="MY ACTIVITIES:"
-               FontAttributes="Bold"/>
+    <ScrollView>
         <VerticalStackLayout>
-            <CollectionView x:Name="ActivitiesCollection" ItemsSource="{Binding ListOfActivities}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="m:ActivityListModel">
-                        <Grid>
-                            <Frame HeightRequest="100">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="400" />
-                                        <ColumnDefinition Width="auto" />
-                                        <ColumnDefinition Width="auto" />
-                                        <ColumnDefinition Width="auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        FontSize="20"
-                                        Text="{Binding Path=ActivityType}"
-                                        VerticalTextAlignment="Center" />
-                                    <Label
-                                        Grid.Column="1"
-                                        Padding="10,0,10,0"
-                                        HorizontalTextAlignment="Center"
-                                        Text="{Binding Path=Start}"
-                                        VerticalTextAlignment="Center" />
-                                    <Label
-                                        Grid.Column="2"
-                                        Padding="10,0,10,0"
-                                        HorizontalTextAlignment="Center"
-                                        Text="{Binding Path=End}"
-                                        VerticalTextAlignment="Center" />
-                                    <Button
-                                        Grid.Column="3"
-                                        Margin="20,0,0,0"
-                                        Command="{Binding Source={x:Reference ActivitiesCollection}, Path=BindingContext.EditActivityCommand}"
-                                        CommandParameter="{Binding Path=Id}"
-                                        HeightRequest="15"
-                                        Text="Edit"
-                                        WidthRequest="100" />
-                                </Grid>
-                            </Frame>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <Frame HeightRequest="200">
+                <Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="0"
+                                     WidthRequest="300"
+                                     HorizontalOptions="Start">
+                            <Label Text="From"
+                                   Margin="0,0,0,10"
+                                   FontAttributes="Bold"/>
+                            <HorizontalStackLayout>
+                                <DatePicker Date="{Binding StartDate}"
+                                            Margin="0,0,10,10"/>
+                                <TimePicker Time="{Binding StartTime}"
+                                            Margin="0,10,0,10"/>
+                            </HorizontalStackLayout>
+                        </StackLayout>
+                        <StackLayout Grid.Column="1"
+                                     WidthRequest="300"
+                                     HorizontalOptions="Start"
+                                     Margin="0,0,0,0">
+                            <Label Text="To"
+                                   Margin="0,0,0,10"
+                                   FontAttributes="Bold"/>
+                            <HorizontalStackLayout>
+                                <DatePicker Date="{Binding EndDate}"
+                                            Margin="0,0,10,10"/>
+                                <TimePicker Time="{Binding EndTime}"
+                                            Margin="0,10,0,10"/>
+                            </HorizontalStackLayout>
+                        </StackLayout>
+                    </Grid>
+
+                    <HorizontalStackLayout>
+                        <StackLayout Orientation="Horizontal" Spacing="30">
+                            <Button
+                                Command="{Binding ActivityFilterThisWeekCommand}"
+                                Text="Filter this week"
+                                VerticalOptions="End"
+                                WidthRequest="150"
+                                BackgroundColor="#8B929A"/>
+                            <Button
+                                Command="{Binding ActivityFilterThisMonthCommand}"
+                                Text="Filter this month"
+                                VerticalOptions="End"
+                                WidthRequest="150"
+                                BackgroundColor="#8B929A"/>
+                            <Button
+                                Command="{Binding ActivityFilterThisYearCommand}"
+                                Text="Filter this year"
+                                VerticalOptions="End"
+                                WidthRequest="150"
+                                BackgroundColor="#8B929A"/>
+                            <Button
+                                Command="{Binding ActivityFilterLastMonthCommand}"
+                                Text="Filter last month"
+                                VerticalOptions="End"
+                                WidthRequest="150"
+                                BackgroundColor="#8B929A"/>
+                            <Button
+                                Command="{Binding ResetFiltersCommand}"
+                                Text="Reset filters"
+                                VerticalOptions="End"
+                                WidthRequest="150"
+                                BackgroundColor="#C08485"/>
+                            <Button
+                                Command="{Binding ActivityFilterByDateCommand}"
+                                Text="Apply filter"
+                                BackgroundColor="#77C2FE"
+                                VerticalOptions="End"
+                                WidthRequest="150"
+                                />
+                            </StackLayout>
+                        </HorizontalStackLayout>
+                    </Grid>
+            </Frame>
+
+            <Label Margin="20" Text="MY ACTIVITIES:"
+                   FontAttributes="Bold"/>
+            <VerticalStackLayout>
+                <CollectionView x:Name="ActivitiesCollection" ItemsSource="{Binding ListOfActivities}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="m:ActivityListModel">
+                            <Grid>
+                                <Frame HeightRequest="100">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="400" />
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Column="0"
+                                            FontSize="20"
+                                            Text="{Binding Path=ActivityType}"
+                                            VerticalTextAlignment="Center" />
+                                        <Label
+                                            Grid.Column="1"
+                                            Padding="10,0,10,0"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding Path=Start}"
+                                            VerticalTextAlignment="Center" />
+                                        <Label
+                                            Grid.Column="2"
+                                            Padding="10,0,10,0"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding Path=End}"
+                                            VerticalTextAlignment="Center" />
+                                        <Button
+                                            Grid.Column="3"
+                                            Margin="20,0,0,0"
+                                            Command="{Binding Source={x:Reference ActivitiesCollection}, Path=BindingContext.EditActivityCommand}"
+                                            CommandParameter="{Binding Path=Id}"
+                                            HeightRequest="15"
+                                            Text="Edit"
+                                            WidthRequest="100" />
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
         </VerticalStackLayout>
-    </VerticalStackLayout>
+    </ScrollView>
 </views:ContentPageBase>

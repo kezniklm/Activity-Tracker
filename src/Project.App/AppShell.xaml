@@ -7,6 +7,7 @@
     xmlns:o="clr-namespace:Project.App.Views.Overview"
     xmlns:p="clr-namespace:Project.App.Views.Projects"
     xmlns:l="clr-namespace:Project.App.Views.Login"
+    Title="Activity Tracker"
     FlyoutHeaderBehavior="CollapseOnScroll"
     FlyoutBackgroundColor="#022D36"
     >

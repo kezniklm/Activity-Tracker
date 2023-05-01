@@ -4,7 +4,7 @@
              xmlns:views="using:Project.App.Views"
              x:Class="Project.App.Views.Login.UserEditView"
              xmlns:vm="clr-namespace:Project.App.ViewModels"
-             Title="UserEditView"
+             Title="Edit User"
              x:DataType="vm:UserEditViewModel">
     <VerticalStackLayout HorizontalOptions="Center"
                          Margin="0,100,0,0"
