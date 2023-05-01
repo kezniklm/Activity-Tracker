@@ -6,7 +6,8 @@
              xmlns:vm="clr-namespace:Project.App.ViewModels"
              x:DataType="vm:ActivityEditViewModel"
              Title="Activities">
-    <VerticalStackLayout HorizontalOptions="Center"
+    <ScrollView>
+        <VerticalStackLayout HorizontalOptions="Center"
                          WidthRequest="400">
         <Label Text="Activity Type"
                Margin="0,10,0,10"></Label>
@@ -25,7 +26,7 @@
             WidthRequest="400"
             FontAttributes="Bold"></Entry>
 
-        <Label
+            <Label
             Text="Start"
             Margin="0,10,0,10"></Label>
         <Grid>
@@ -39,13 +40,13 @@
                 Date="{Binding StartDate}"
                 Grid.Column="0"
                 Margin="0,0,20,10"></DatePicker>
-            <TimePicker
+                <TimePicker
                 Time="{Binding StartTime}"
                 VerticalOptions="Center"
                 Grid.Column="1"></TimePicker>
-        </Grid>
+            </Grid>
 
-        <Label
+            <Label
             Text="End"
             Margin="0,10,0,10"></Label>
         <Grid>
@@ -59,23 +60,23 @@
                 Date="{Binding EndDate}"
                 Grid.Column="0"
                 Margin="0,0,20,10"></DatePicker>
-            <TimePicker
+                <TimePicker
                 Time="{Binding EndTime}"
                 VerticalOptions="Center"
                 Grid.Column="1"></TimePicker>
-        </Grid>
+            </Grid>
 
-        <Picker
+            <Picker
             Title="Add to project"
             Margin="0,10,0,0"
             WidthRequest="400"
             ItemsSource="{Binding Projects}"
             ItemDisplayBinding="{Binding Name}"
             SelectedItem="{Binding SelectedProject}">
-        </Picker>
+            </Picker>
 
-        <HorizontalStackLayout>
-            <Button
+            <HorizontalStackLayout>
+                <Button
                 Text="Delete Activity"
                 Command="{Binding Path=DeleteActivityCommand}"
                 CommandParameter="{Binding Path=ActivityId}"
@@ -83,15 +84,16 @@
                 WidthRequest="150"
                 Margin="0,20,20,0"
                 BackgroundColor="#C08485">
-            </Button>
-            <Button
+                </Button>
+                <Button
                 Text="Save"
                 HeightRequest="20"
                 WidthRequest="150"
                 Margin="77,20,0,0"
                 Command="{Binding SaveCommand}">
-            </Button>
-        </HorizontalStackLayout>
-        
-    </VerticalStackLayout>
+                </Button>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </views:ContentPageBase>

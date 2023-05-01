@@ -38,7 +38,7 @@ public partial class ActivityEditViewModel : ViewModelBase
     public DateTime EndDate { get; set; } = DateTime.Today;
     public TimeSpan EndTime { get; set; }
 
-    public List<ProjectListModel?> Projects { get; set; } = null!;
+    public List<ProjectListModel> Projects { get; set; } = null!;
     public ProjectListModel? SelectedProject { get; set; } = ProjectListModel.Empty;
 
     public ActivityDetailModel? Activity { get; set; } = ActivityDetailModel.Empty;
@@ -46,7 +46,7 @@ public partial class ActivityEditViewModel : ViewModelBase
     protected override async Task LoadDataAsync()
     {
         await base.LoadDataAsync();
-        Tuple<IEnumerable<ProjectListModel?>, IEnumerable<ProjectListModel?>> projects =
+        Tuple<IEnumerable<ProjectListModel>, IEnumerable<ProjectListModel>> projects =
             await _userProjectFacade.DisplayProjectsOfUser(Id);
         Projects = projects.Item1.ToList();
 

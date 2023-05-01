@@ -181,20 +181,8 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
 
         List<ActivityEntity> activityList = await repository.Get().Where(i => i.UserId == userId && i.ProjectId == null).ToListAsync();
 
-        IEnumerable<ActivityListModel>? result = ModelMapper.MapToListModel(activityList);
+        IEnumerable<ActivityListModel> result = ModelMapper.MapToListModel(activityList);
 
-        return result is not null
-            ? result
-            : null;
+        return result;
     }
-
-    //public async void DeleteProjectInActivities(Guid userId, Guid projectId)
-    //{
-    //    await using IUnitOfWork uow = UnitOfWorkFactory.Create();
-    //    IRepository<ActivityEntity> activityRepository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
-
-    //    var activities = await activityRepository.Get().Where(i => i.UserId == userId && i.ProjectId == projectId).ToListAsync();
-    //    var activityList = ModelMapper.MapToListModel(activities);
-        
-    //}
 }
