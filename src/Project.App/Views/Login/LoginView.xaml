@@ -11,19 +11,33 @@
             ItemsSource="{Binding Users}"
             ItemDisplayBinding="{Binding Name}"
             SelectedItem="{Binding SelectedUser}"
-            SelectedIndex="0">
+            SelectedIndex="0"
+            HorizontalOptions="Center"
+            Margin="0,100,0,15"
+            FontSize="30"
+            WidthRequest="300">
         </Picker>
-        <Button
-            Text="Login"
-            Command="{Binding GoToOverviewCommand}">
-        </Button>
+        <HorizontalStackLayout
+            HorizontalOptions="Center">
+            <Button
+                Text="User Detail"
+                Command="{Binding GoToUserDetailCommand}"
+                WidthRequest="140"
+                Margin="10">
+            </Button>
+            <Button
+                Text="Login"
+                Command="{Binding GoToOverviewCommand}"
+                WidthRequest="140"
+                Margin="10">
+            </Button>
+        </HorizontalStackLayout>
         <Button
             Text="Create User"
-            Command="{Binding GoToCreateUserCommand}">
-        </Button>
-        <Button
-            Text="User Detail"
-            Command="{Binding GoToUserDetailCommand}">
+            Command="{Binding GoToCreateUserCommand}"
+            HorizontalOptions="Center"
+            WidthRequest="300"
+            Margin="100">
         </Button>
     </VerticalStackLayout>
 </views:ContentPageBase>
