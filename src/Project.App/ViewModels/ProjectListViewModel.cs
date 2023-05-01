@@ -31,14 +31,6 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     public IEnumerable<ProjectListModel>? MyProjects { get; set; }
     public IEnumerable<ProjectListModel>? OtherProjects { get; set; }
 
-    public async void Receive(JoinProjectMessage message) => await LoadDataAsync();
-
-    public async void Receive(LogOutFromProjectMessage message) => await LoadDataAsync();
-
-    public async void Receive(ProjectCreateMessage message) => await LoadDataAsync();
-
-    public async void Receive(ProjectEditMessage message) => await LoadDataAsync();
-
     public async void Receive(UserLoginMessage message)
     {
         Id = message.UserId;

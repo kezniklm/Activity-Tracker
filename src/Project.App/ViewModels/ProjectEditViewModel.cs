@@ -13,7 +13,6 @@ namespace Project.App.ViewModels;
 [QueryProperty(nameof(Id), nameof(Id))]
 public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEditMessage>
 {
-    private readonly IActivityFacade _activityFacade;
     private readonly INavigationService _navigationService;
     private readonly IProjectFacade _projectFacade;
     private readonly IActivityFacade _activityFacade;
