@@ -44,6 +44,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Button Text="Save" Command="{Binding SaveDataCommand}"></Button>
+        <Button Text="Delete Project" Command="{Binding DeleteProjectCommand}"></Button>
     </VerticalStackLayout>
 
 

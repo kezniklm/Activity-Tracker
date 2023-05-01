@@ -8,7 +8,9 @@ using Project.BL.Models;
 namespace Project.App.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
-public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginMessage>, IRecipient<ProjectCreateMessage>, IRecipient<ProjectEditMessage>, IRecipient<LogOutFromProjectMessage>, IRecipient<JoinProjectMessage>
+public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginMessage>,
+        IRecipient<ProjectCreateMessage>, IRecipient<ProjectEditMessage>,
+        IRecipient<LogOutFromProjectMessage>, IRecipient<JoinProjectMessage>, IRecipient<ProjectDeleteMessage>
 {
     private readonly INavigationService _navigationService;
     private readonly IProjectFacade _projectFacade;
@@ -94,6 +96,11 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     }
 
     public async void Receive(JoinProjectMessage message)
+    {
+        await LoadDataAsync();
+    }
+
+    public async void Receive(ProjectDeleteMessage message)
     {
         await LoadDataAsync();
     }

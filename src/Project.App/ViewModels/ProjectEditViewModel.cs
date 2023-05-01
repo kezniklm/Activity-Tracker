@@ -1,7 +1,9 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Project.App.Messages;
 using Project.App.Services;
+using Project.BL.Facades;
 using Project.BL.Facades.Interfaces;
 using Project.BL.Models;
 using Windows.System;
@@ -16,6 +18,8 @@ public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEd
     private readonly INavigationService _navigationService;
     private readonly IProjectFacade _projectFacade;
     private readonly IActivityFacade _activityFacade;
+    private readonly IUserProjectFacade _userProjectFacade;
+    private readonly IUserFacade _userFacade;
 
     public Guid ActualProjectId { get; set; }
     public Guid UserId { get; set; }
@@ -25,11 +29,13 @@ public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEd
 
     public ProjectEditViewModel(INavigationService navigationService,
         IMessengerService messengerService, IProjectFacade projectFacade,
-        IActivityFacade activityFacade) : base(messengerService)
+        IActivityFacade activityFacade, IUserProjectFacade userProjectFacade, IUserFacade userFacade) : base(messengerService)
     {
         _navigationService = navigationService;
         _projectFacade = projectFacade;
         _activityFacade = activityFacade;
+        _userProjectFacade = userProjectFacade;
+        _userFacade = userFacade;
     }
 
     protected override async Task LoadDataAsync()
@@ -44,6 +50,17 @@ public partial class ProjectEditViewModel : ViewModelBase, IRecipient<ActivityEd
     {
         await _projectFacade.SaveAsync(Project);
         MessengerService.Send(new ProjectEditMessage(){ProjectId = Project.Id});
+        _navigationService.SendBackButtonPressed();
+    }
+
+    [RelayCommand]
+    private async Task DeleteProjectAsync()
+    {
+        //UserProjectDetailModel? UserProject = await _userProjectFacade.GetUserProjectByIds(UserId, ActualProjectId);
+        //await _userProjectFacade.DeleteAsync(UserProject.Id);
+        
+        await _projectFacade.DeleteAsync(Project.Id);
+        MessengerService.Send(new ProjectDeleteMessage());
         _navigationService.SendBackButtonPressed();
     }
 
