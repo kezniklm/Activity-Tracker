@@ -1,20 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using Project.App.Messages;
 using Project.App.Services;
-using Project.BL.Facades;
 using Project.BL.Facades.Interfaces;
 using Project.BL.Models;
-using Windows.System;
 
 namespace Project.App.ViewModels;
+
 public partial class ProjectCreateViewModel : ViewModelBase
 {
-    private readonly IProjectFacade _projectFacade;
     private readonly INavigationService _navigationService;
-
-    public ProjectDetailModel Project { get; set; } = ProjectDetailModel.Empty;
-    public Guid Id { get; set; }
+    private readonly IProjectFacade _projectFacade;
 
     public ProjectCreateViewModel(IProjectFacade projectFacade,
         INavigationService navigationService, IMessengerService messengerService)
@@ -23,6 +18,9 @@ public partial class ProjectCreateViewModel : ViewModelBase
         _projectFacade = projectFacade;
         _navigationService = navigationService;
     }
+
+    public ProjectDetailModel Project { get; set; } = ProjectDetailModel.Empty;
+
 
     protected override async Task LoadDataAsync()
     {
@@ -34,7 +32,7 @@ public partial class ProjectCreateViewModel : ViewModelBase
     private async Task SaveProjectAsync()
     {
         await _projectFacade.SaveAsync(Project);
-        MessengerService.Send(new ProjectCreateMessage() { ProjectId = Project.Id });
+        MessengerService.Send(new ProjectCreateMessage { ProjectId = Project.Id });
         _navigationService.SendBackButtonPressed();
     }
 }

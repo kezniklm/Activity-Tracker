@@ -49,15 +49,13 @@
                                            HorizontalTextAlignment="Center"
                                            VerticalTextAlignment="Center"
                                            Grid.Column="2"></Label>
-                                        <Button IsEnabled="True"
+                                        <Button
                                             Text="Edit"
-                                            HorizontalOptions="End"
-                                            VerticalOptions="Center"
                                             Grid.Column="3"
                                             Command="{Binding Source={x:Reference ActivitiesCollection}, Path=BindingContext.EditActivityCommand}"
                                             CommandParameter="{Binding Path=Id}"></Button>
                                     </Grid>
-                                </Frame>
+                            </Frame>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

@@ -187,4 +187,14 @@ public class ActivityFacade : FacadeBase<ActivityEntity, ActivityListModel, Acti
             ? result
             : null;
     }
+
+    //public async void DeleteProjectInActivities(Guid userId, Guid projectId)
+    //{
+    //    await using IUnitOfWork uow = UnitOfWorkFactory.Create();
+    //    IRepository<ActivityEntity> activityRepository = uow.GetRepository<ActivityEntity, ActivityEntityMapper>();
+
+    //    var activities = await activityRepository.Get().Where(i => i.UserId == userId && i.ProjectId == projectId).ToListAsync();
+    //    var activityList = ModelMapper.MapToListModel(activities);
+        
+    //}
 }
