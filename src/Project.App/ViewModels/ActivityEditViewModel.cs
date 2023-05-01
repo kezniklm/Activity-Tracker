@@ -63,36 +63,43 @@ public partial class ActivityEditViewModel : ViewModelBase
     [RelayCommand]
     public async Task SaveAsync()
     {
-        Activity.Start = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, StartTime.Hours,
-            StartTime.Minutes, StartTime.Seconds);
-        Activity.End = new DateTime(EndDate.Year, EndDate.Month, EndDate.Day, EndTime.Hours, EndTime.Minutes,
-            EndTime.Seconds);
+        if (Activity != null)
+        {
+            Activity.Start = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, StartTime.Hours,
+                StartTime.Minutes, StartTime.Seconds);
+            Activity.End = new DateTime(EndDate.Year, EndDate.Month, EndDate.Day, EndTime.Hours, EndTime.Minutes,
+                EndTime.Seconds);
 
 
-        UserDetailModel? user = await _userFacade.GetAsync(Id, string.Empty);
-        Activity.UserId = user.Id;
-        Activity.UserName = user.Name;
-        Activity.UserSurname = user.Surname;
+            UserDetailModel? user = await _userFacade.GetAsync(Id, string.Empty);
+            if (user != null)
+            {
+                Activity.UserId = user.Id;
+                Activity.UserName = user.Name;
+                Activity.UserSurname = user.Surname;
+            }
 
-        if (SelectedProject != null)
-        {
-            Activity.ProjectId = SelectedProject.Id;
-        }
-        else
-        {
-            Activity.ProjectId = null;
+            if (SelectedProject != null)
+            {
+                Activity.ProjectId = SelectedProject.Id;
+            }
+            else
+            {
+                Activity.ProjectId = null;
+            }
+
+            try
+            {
+                await _activityFacade.SaveAsync(Activity);
+            }
+            catch (Exception ex)
+            {
+                await _alertService.DisplayAsync("Activity Error", ex.Message);
+            }
+
+            MessengerService.Send(new ActivityEditMessage { ActivityId = Activity.Id });
         }
 
-        try
-        {
-            await _activityFacade.SaveAsync(Activity);
-        }
-        catch (Exception ex)
-        {
-            await _alertService.DisplayAsync("Activity Error", ex.Message);
-        }
-        
-        MessengerService.Send(new ActivityEditMessage { ActivityId = Activity.Id });
         _navigationService.SendBackButtonPressed();
     }
 
