@@ -7,11 +7,12 @@
     xmlns:o="clr-namespace:Project.App.Views.Overview"
     xmlns:p="clr-namespace:Project.App.Views.Projects"
     xmlns:l="clr-namespace:Project.App.Views.Login"
-    FlyoutHeaderBehavior="CollapseOnScroll">
-
-    <FlyoutItem Title="Login">
+    FlyoutHeaderBehavior="CollapseOnScroll"
+    FlyoutBackgroundColor="#022D36"
+    >
+    <FlyoutItem Title="Login" >
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate l:LoginView}" Route="login" />
+            <ShellContent ContentTemplate="{DataTemplate l:LoginView}" Route="login"  />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Overview">
