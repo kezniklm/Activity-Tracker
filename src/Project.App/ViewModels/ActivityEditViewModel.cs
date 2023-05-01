@@ -10,31 +10,17 @@ namespace Project.App.ViewModels;
 [QueryProperty(nameof(ActivityId), nameof(ActivityId))]
 public partial class ActivityEditViewModel : ViewModelBase
 {
-    private readonly INavigationService _navigationService;
     private readonly IActivityFacade _activityFacade;
+    private readonly INavigationService _navigationService;
     private readonly IUserFacade _userFacade;
     private readonly IUserProjectFacade _userProjectFacade;
-
-    public Guid Id { get; set; }
-
-    public Guid ActivityId { get; set; } 
-
-    public DateTime StartDate { get; set; } = DateTime.Today;
-    public TimeSpan StartTime { get; set; }
-    public DateTime EndDate { get; set; } = DateTime.Today;
-    public TimeSpan EndTime { get; set; } 
-
-    public List<ProjectListModel> Projects { get; set; } = null!;
-    public ProjectListModel? SelectedProject { get; set; } = ProjectListModel.Empty;
-
-    public ActivityDetailModel? Activity { get; set; } = ActivityDetailModel.Empty;
 
     public ActivityEditViewModel(
         IMessengerService messengerService,
         INavigationService navigationService,
         IActivityFacade activityFacade,
         IUserFacade userFacade,
-        IUserProjectFacade userProjectFacade ) : base(messengerService)
+        IUserProjectFacade userProjectFacade) : base(messengerService)
     {
         _navigationService = navigationService;
         _activityFacade = activityFacade;
@@ -42,10 +28,24 @@ public partial class ActivityEditViewModel : ViewModelBase
         _userProjectFacade = userProjectFacade;
     }
 
+
+    public Guid ActivityId { get; set; }
+
+    public DateTime StartDate { get; set; } = DateTime.Today;
+    public TimeSpan StartTime { get; set; }
+    public DateTime EndDate { get; set; } = DateTime.Today;
+    public TimeSpan EndTime { get; set; }
+
+    public List<ProjectListModel> Projects { get; set; } = null!;
+    public ProjectListModel? SelectedProject { get; set; } = ProjectListModel.Empty;
+
+    public ActivityDetailModel? Activity { get; set; } = ActivityDetailModel.Empty;
+
     protected override async Task LoadDataAsync()
     {
         await base.LoadDataAsync();
-        var projects = await _userProjectFacade.DisplayProjectsOfUser(Id);
+        Tuple<IEnumerable<ProjectListModel?>, IEnumerable<ProjectListModel?>> projects =
+            await _userProjectFacade.DisplayProjectsOfUser(Id);
         Projects = projects.Item1.ToList();
 
         if (ActivityId != Guid.Empty)
@@ -63,7 +63,7 @@ public partial class ActivityEditViewModel : ViewModelBase
             EndTime.Seconds);
 
 
-        var user = await _userFacade.GetAsync(Id, String.Empty);
+        UserDetailModel? user = await _userFacade.GetAsync(Id, string.Empty);
         Activity.UserId = user.Id;
         Activity.UserName = user.Name;
         Activity.UserSurname = user.Surname;
@@ -78,7 +78,7 @@ public partial class ActivityEditViewModel : ViewModelBase
         }
 
         await _activityFacade.SaveAsync(Activity);
-        MessengerService.Send(new ActivityEditMessage() { ActivityId = Activity.Id });
+        MessengerService.Send(new ActivityEditMessage { ActivityId = Activity.Id });
         _navigationService.SendBackButtonPressed();
     }
 }

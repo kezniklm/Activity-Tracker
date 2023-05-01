@@ -1,29 +1,76 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <views:ContentPageBase
-                        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                       xmlns:m="clr-namespace:Project.BL.Models;assembly=Project.BL"
-                       xmlns:viewModels="using:Project.App.ViewModels"
-                       x:Class="Project.App.Views.Activities.ActivityListView"
-                       x:DataType="viewModels:ActivityListViewModel"
-                        xmlns:views="clr-namespace:Project.App.Views"
-                       Title="Activities">
-    
+    x:Class="Project.App.Views.Activities.ActivityListView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:m="clr-namespace:Project.BL.Models;assembly=Project.BL"
+    xmlns:viewModels="using:Project.App.ViewModels"
+    xmlns:views="clr-namespace:Project.App.Views"
+    Title="Activities"
+    x:DataType="viewModels:ActivityListViewModel">
+
     <VerticalStackLayout>
-       <CollectionView ItemsSource="{Binding ListOfActivities}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="m:ActivityListModel">
+        <Frame HeightRequest="215">
+            <Grid>
+                <VerticalStackLayout>
+                    <Label FontSize="24" Text="Filters" />
+                    <HorizontalStackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Grid.Column="0" Padding="0,0,5,0">
+                                <Label Text="From" />
+                                <DatePicker Date="{Binding StartDate}" />
+                                <TimePicker Time="{Binding StartTime}" />
+                            </StackLayout>
+                            <StackLayout Grid.Column="1" Padding="40,0,0,0">
+                                <Label Text="To" />
+                                <DatePicker Date="{Binding EndDate}" />
+                                <TimePicker Time="{Binding EndTime}" />
+                            </StackLayout>
+                        </Grid>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <StackLayout Orientation="Horizontal" Spacing="20">
+                            <Button
+                                Command="{Binding ActivityFilterThisWeekCommand}"
+                                Text="Filter this week"
+                                VerticalOptions="End" />
+                            <Button
+                                Command="{Binding ActivityFilterThisMonthCommand}"
+                                Text="Filter this month"
+                                VerticalOptions="End" />
+                            <Button
+                                Command="{Binding ActivityFilterThisYearCommand}"
+                                Text="Filter this year"
+                                VerticalOptions="End" />
+                            <Button
+                                Command="{Binding ActivityFilterLastMonthCommand}"
+                                Text="Filter last month"
+                                VerticalOptions="End" />
+                        </StackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+
+        <CollectionView ItemsSource="{Binding ListOfActivities}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:ActivityListModel">
                     <Grid>
                         <Frame>
-                            <Label FontSize="15"
-                                   Text="{Binding ActivityType}"
-                                   TextColor="Blue"
-                                   HorizontalTextAlignment="Center"
-                                   HorizontalOptions="Start"
-                                   />
+                            <Label
+                                FontSize="15"
+                                HorizontalOptions="Start"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding ActivityType}"
+                                TextColor="Blue" />
                         </Frame>
                     </Grid>
-                    </DataTemplate>
+                </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
     </VerticalStackLayout>

@@ -17,13 +17,9 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     private readonly IUserFacade _userFacade;
     private readonly IUserProjectFacade _userProjectFacade;
 
-    public Guid Id { get; set; }
-    public UserDetailModel? User { get; set; }
-    public IEnumerable<ProjectListModel>? MyProjects { get; set; }
-    public IEnumerable<ProjectListModel>? OtherProjects { get; set; }
-
     public ProjectListViewModel(INavigationService navigationService,
-        IMessengerService messengerService, IProjectFacade projectFacade, IUserFacade userFacade, IUserProjectFacade userProjectFacade) : base(messengerService)
+        IMessengerService messengerService, IProjectFacade projectFacade, IUserFacade userFacade,
+        IUserProjectFacade userProjectFacade) : base(messengerService)
     {
         _navigationService = navigationService;
         _projectFacade = projectFacade;
@@ -31,15 +27,17 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
         _userProjectFacade = userProjectFacade;
     }
 
-    protected override async Task LoadDataAsync()
-    {
-        await base.LoadDataAsync();
-        User = await _userFacade.GetAsync(Id, "Projects");
+    public UserDetailModel? User { get; set; }
+    public IEnumerable<ProjectListModel>? MyProjects { get; set; }
+    public IEnumerable<ProjectListModel>? OtherProjects { get; set; }
 
-        var projectsList = await _userProjectFacade.DisplayProjectsOfUser(Id);
-        MyProjects = projectsList.Item1;
-        OtherProjects = projectsList.Item2;
-    }
+    public async void Receive(JoinProjectMessage message) => await LoadDataAsync();
+
+    public async void Receive(LogOutFromProjectMessage message) => await LoadDataAsync();
+
+    public async void Receive(ProjectCreateMessage message) => await LoadDataAsync();
+
+    public async void Receive(ProjectEditMessage message) => await LoadDataAsync();
 
     public async void Receive(UserLoginMessage message)
     {
@@ -47,19 +45,29 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
         await LoadDataAsync();
     }
 
-    [RelayCommand]
-    public async Task GoToCreateProjectAsync()
+    protected override async Task LoadDataAsync()
     {
-        await _navigationService.GoToAsync( "/create",
-            new Dictionary<string, object?> { [nameof(ProjectCreateViewModel.Id)] = Id });
+        await base.LoadDataAsync();
+        User = await _userFacade.GetAsync(Id, "Projects");
+
+        Tuple<IEnumerable<ProjectListModel?>, IEnumerable<ProjectListModel?>> projectsList =
+            await _userProjectFacade.DisplayProjectsOfUser(Id);
+        MyProjects = projectsList.Item1;
+        OtherProjects = projectsList.Item2;
     }
 
     [RelayCommand]
-    public async Task GotoEditProjectAsync(Guid selectedProjectID)
-    {
+    public async Task GoToCreateProjectAsync() =>
+        await _navigationService.GoToAsync("/create",
+            new Dictionary<string, object?> { [nameof(Id)] = Id });
+
+    [RelayCommand]
+    public async Task GotoEditProjectAsync(Guid selectedProjectID) =>
         await _navigationService.GoToAsync("/edit",
-            new Dictionary<string, object?> { [nameof(ProjectEditViewModel.ActualProjectId)] = selectedProjectID, [nameof(ProjectEditViewModel.UserId)] = Id });
-    }
+            new Dictionary<string, object?>
+            {
+                [nameof(ProjectEditViewModel.ActualProjectId)] = selectedProjectID, [nameof(Id)] = Id
+            });
 
     [RelayCommand]
     public async Task LogOutFromProjectAsync(Guid selectedProjectID)
@@ -72,10 +80,7 @@ public partial class ProjectListViewModel : ViewModelBase, IRecipient<UserLoginM
     [RelayCommand]
     public async Task JoinProjectAsync(Guid selectedProjectID)
     {
-        UserProjectDetailModel newUserProject = new UserProjectDetailModel()
-        {
-            ProjectId = selectedProjectID, UserId = Id
-        };
+        UserProjectDetailModel newUserProject = new() { ProjectId = selectedProjectID, UserId = Id };
         await _userProjectFacade.SaveAsync(newUserProject);
         MessengerService.Send(new JoinProjectMessage());
     }
