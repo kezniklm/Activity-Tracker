@@ -3,7 +3,7 @@
 - ### Vytvorenie aplikácie umožňujúcej jej užívateľom správu aktivít a meranie času stráveného danou aktivitou
   
 # Tím: ics-2023-xjanos19
-Výsledné hodnotenie
+Výsledné hodnotenie: 50/50 bodov
 
 ## Členovia:
 - Simona Jánošíková
