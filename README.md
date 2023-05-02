@@ -3,6 +3,7 @@
 - ### Vytvorenie aplikácie umožňujúcej jej užívateľom správu aktivít a meranie času stráveného danou aktivitou
   
 # Tím: ics-2023-xjanos19
+Výsledné hodnotenie
 
 ## Členovia:
 - Simona Jánošíková
@@ -22,7 +23,7 @@
 -   využití **Entity Framework Core - Code First** přístupu na vytvoření databáze z entitních tříd
 -   existenci databázových migrací (alespoň InitialMigration)
 
-## Druhá fáza
+## Druhá fáza :white_check_mark:
 - opravení chyb a zapracování připomínek, které jsme vám dali v rámci hodnocení fáze 1
 - návrh a funkčnost repositářů
 - návrh a funkčnost fasád
@@ -32,7 +33,7 @@
 - funkční build v Azure DevOps
 - výsledek testů v Azure DevOps po buildu
 
-## Tretia fáza
+## Tretia fáza :white_check_mark:
 - opravení chyb a zapracování připomínek, které jsme vám dali v rámci hodnocení fází 1 a 2
 - funkčnost celé výsledné aplikace
 - vytvoření View, ViewModelů
