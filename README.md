@@ -1,3 +1,4 @@
+
 # ICS Project - Time Tracking and Activity Management Application
 
 ![Project Logo](.\src\Project.App\Resources\Images\logo.png)
