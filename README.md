@@ -1,7 +1,7 @@
 
 # ICS Project - Time Tracking and Activity Management Application
 
-![Project Logo](.\src\Project.App\Resources\Images\logo.png)
+![Project Logo](./src/Project.App/Resources/Images/logo.png)
 
 This repository contains the code and documentation for our ICS project, a comprehensive time tracking and activity management application. This project was successfully completed and received a full score.
 
